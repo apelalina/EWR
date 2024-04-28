@@ -78,7 +78,7 @@ def main():
     plt.grid()
     plt.title("Darstellung der generierten Zahlen") # Beschriftungen
     plt.xlabel("Generierte Zahl")
-    ylabel = "Generierte Zahl zur Basis " + str(basis)
+    ylabel = "Generierte Zahl auf logarithmischer Skala zur Basis " + str(basis)
     plt.ylabel(ylabel)
     plt.show()
 
