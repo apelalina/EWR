@@ -6,7 +6,7 @@ pylint 2.16.2
 astroid 2.14.2
 Python 3.11.7 | packaged by Anaconda, Inc. 
 | (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)]
-10/10
+9.71/10
 """
 
 import numpy
@@ -25,7 +25,7 @@ def py_logspace(start: int, stop: int, num=2, basis=10):
 
     Returns:
         list[int]: Liste von ganzen Zahlen auf einer logarithmischen Skala
-        
+   
     Throws:
         ValueError: wenn num < 2 uebergeben wird
     """
@@ -66,16 +66,20 @@ def main():
     except ValueError as error:
         print("Fehler:", error)
 
-    #Vergleich mit numpy.logspace
+    # Vergleich mit numpy.logspace
     print("py_logspace(): ", py_logspace(start, stop, num, basis))
     print("numpy.logspace(): ", numpy.logspace(start, stop, num, basis))
 
-    #Grafik
-    ergebnis = py_logspace(start, stop, num, basis)
-    plt.plot(ergebnis, ergebnis)
-    plt.plot(ergebnis, ergebnis, 'ro')
-    plt.yscale('log',base=basis)
+    # Plot
+    ergebnis = py_logspace(start, stop, num, basis) # Funktionsaufruf
+    plt.plot(ergebnis, ergebnis) # Plot mit Linie
+    plt.plot(ergebnis, ergebnis, 'ro') # Punkte über der Linie
+    plt.yscale('log',base=basis) # logarithmische Skalierung der y-Achse
     plt.grid()
+    plt.title("Darstellung der generierten Zahlen") # Beschriftungen
+    plt.xlabel("Generierte Zahl")
+    ylabel = "Generierte Zahl zur Basis " + str(basis)
+    plt.ylabel(ylabel)
     plt.show()
 
 if __name__ == "__main__":
