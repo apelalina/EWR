@@ -71,7 +71,11 @@ def main():
     print("numpy.logspace(): ", numpy.logspace(start, stop, num, basis))
 
     #Grafik
-    plt.plot(py_logspace(start, stop, num, basis))
+    ergebnis = py_logspace(start, stop, num, basis)
+    plt.plot(ergebnis, ergebnis)
+    plt.plot(ergebnis, ergebnis, 'ro')
+    plt.yscale('log',base=basis)
+    plt.grid()
     plt.show()
 
 if __name__ == "__main__":
