@@ -6,13 +6,13 @@ pylint 2.16.2
 astroid 2.14.2
 Python 3.11.7 | packaged by Anaconda, Inc. 
 | (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)]
-9.71/10
+10/10
 """
 
 import numpy
 import matplotlib.pyplot as plt
 
-def py_logspace(start: int, stop: int, num=2, basis=10):
+def py_logspace(start: int, stop: int, num: int =2, basis: int =10) -> list[int]:
 
     """
     Generiert eine Liste von ganzen Zahlen auf einer logarithmischen Skala.
@@ -63,11 +63,11 @@ def main():
 
     try:
         liste = py_logspace(start, stop, num, basis)
+        print("py_logspace():",liste)
     except ValueError as error:
         print("Fehler:", error)
-
+    print("hallo")
     # Vergleich mit numpy.logspace
-    print("py_logspace(): ", py_logspace(start, stop, num, basis))
     print("numpy.logspace(): ", numpy.logspace(start, stop, num, basis))
 
     # Plot
