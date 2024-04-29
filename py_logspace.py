@@ -96,21 +96,21 @@ def main():
     except ValueError:
         print("Funktionsaufruf gescheitert. Bitte neu aufrufen.")
 
-
     # Vergleich mit numpy.logspace
     print("py_logspace(): ", ergebnis)
     print("numpy.logspace(): ", numpy.logspace(start, stop, num, basis))
 
     # Plot
-    plt.plot(ergebnis, ergebnis) # Plot mit Linie
-    plt.plot(ergebnis, ergebnis, 'ro') # Punkte über der Linie
+    plt.plot(ergebnis, ergebnis, '-b') # Plot mit Linie
+    plt.plot(ergebnis, ergebnis, 'ro', label='Zahlen im Logspace') # Punkte über der Linie
+    plt.legend(loc='lower right')
     plt.yscale('log',base=basis) # logarithmische Skalierung der y-Achse
     plt.grid()
     plt.title("Darstellung der generierten Zahlen") # Beschriftungen
-    plt.xlabel("Generierte Zahl")
-    ylabel = "Generierte Zahl auf logarithmischer Skala zur Basis " + str(basis)
+    plt.xlabel("Lineare Skalierung")
+    ylabel= "Logarithmische Skalierung zur Basis "+str(basis)
     plt.ylabel(ylabel)
     plt.show()
-
+   
 if __name__ == "__main__":
     main()
