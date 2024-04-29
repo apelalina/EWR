@@ -6,13 +6,13 @@ pylint 2.16.2
 astroid 2.14.2
 Python 3.11.7 | packaged by Anaconda, Inc. 
 | (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)]
-10/10
+9.71/10
 """
 
 import numpy
 import matplotlib.pyplot as plt
 
-def py_logspace(start: int, stop: int, num: int =2, basis: int =10) -> list[int]:
+def py_logspace(start: int, stop: int, num=2, basis=10):
 
     """
     Generiert eine Liste von ganzen Zahlen auf einer logarithmischen Skala.
@@ -56,22 +56,51 @@ def main():
     """Hauptfunktion des Programms"""
 
     # Definition der Variablen
-    start = int(input("Start: "))
-    stop = int(input("Stop: "))
-    num = int(input("num: "))
-    basis = int(input("basis: "))
+    start = input("Start: ")
+    while True:
+        try:
+            start = int(start)
+            break
+        except ValueError:
+            start = input("Bitte geben Sie eine ganze Zahl ein. Start: ")
+    
+    stop = input("Stop: ")
+    while True:
+        try:
+            stop = int(stop)
+            break
+        except ValueError:
+            stop = input("Bitte geben Sie eine ganze Zahl ein. Stop: ")
+
+    num = input("Num: ")
+    while True:
+        try:
+            num = int(num)
+            if num >= 2:
+                break
+            else:
+                num = input("Bitte geben Sie eine Zahl >= 2 ein. Num: ")
+        except ValueError:
+            num = input("Bitte geben Sie eine ganze Zahl ein. Num: ")
+    
+    basis = input("Basis: ")
+    while True:
+        try:
+            basis = int(basis)
+            break
+        except ValueError:
+            basis = input("Bitte geben Sie eine ganze Zahl ein. Basis: ")
 
     try:
-        liste = py_logspace(start, stop, num, basis)
-        print("py_logspace():",liste)
-    except ValueError as error:
-        print("Fehler:", error)
-        num = int(input("Bitte geben sie num erneut ein: "))
+        ergebnis = py_logspace(start, stop, num, basis) # Funktionsaufruf
+    except ValueError:
+        print("Funktionsaufruf gescheitert. Bitte neu aufrufen.")
+
     # Vergleich mit numpy.logspace
+    print("py_logspace(): ", ergebnis)
     print("numpy.logspace(): ", numpy.logspace(start, stop, num, basis))
 
     # Plot
-    ergebnis = py_logspace(start, stop, num, basis) # Funktionsaufruf
     plt.plot(ergebnis, ergebnis, '-b') # Plot mit Linie
     plt.plot(ergebnis, ergebnis, 'ro', label='Zahlen im Logspace') # Punkte über der Linie
     plt.legend(loc='lower right')
