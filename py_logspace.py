@@ -95,10 +95,11 @@ def main():
         ergebnis = py_logspace(start, stop, num, basis) # Funktionsaufruf
     except ValueError:
         print("Funktionsaufruf gescheitert. Bitte neu aufrufen.")
+        
 
     # Vergleich mit numpy.logspace
     print("py_logspace(): ", ergebnis)
-    print("numpy.logspace(): ", numpy.logspace(start, stop, num, basis))
+    print("numpy.logspace(): ", numpy.logspace(start, stop, num, base = basis, dtype=numpy.int32))
 
     # Plot
     plt.plot(ergebnis, ergebnis, '-b') # Plot mit Linie
