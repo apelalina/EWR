@@ -13,10 +13,30 @@ def read_number(question: str,
                 data_type: type,
                 lower_limit: float = float('-Inf'),
                 upper_limit: float = float('Inf')) -> "data_type" :
+    """
+    Generiert eine Liste von ganzen Zahlen auf einer logarithmischen Skala.
+    Durch eine leere Eingabe kann das Programm abgebrochen werden.
+
+    Inputs:
+        question (str): Aufforderung zur Eingabe
+        data_type (type): Gewuenschter Datentyp
+        lower_limit: Untere Grenze
+        upper_limit: Obere Grenze
+
+    Returns:
+        Die eingegebene Zahl im gewuenschten Datentyp
+   
+    Throws:
+        ValueError: wenn eine leere Eingabe gemacht wird.
+    """
 
     eingabe = input(question) # interaktive Eingabe
 
     while True: # Schleife, die erst verlassen wird, wenn alle Tests bestanden wurden
+
+        if eingabe == "":
+            raise ValueError("Keine Eingabe. Programmabbruch.")
+
         try: # Funktioniert das Casting zum gewuenschten Datentyp?
             eingabe = data_type(eingabe)
             # ist die eingegebene Zahl >= der angegebenen unteren Grenze?
@@ -33,23 +53,65 @@ def read_number(question: str,
     return eingabe # Die Funktion gibt den eingelesenen Wert zurück
 
 def save_data(data, filepath: str):
-    np.savetxt(filepath, data, delimiter=',')
+    """
+    Speichert eine Liste von Zahlen in eine csv-Datei mit "," als Trennzeichen.
+    Inputs:
+        data: Eine Liste an Zahlen
+        filepath (string): Pfad der zu speichernden Datei
+    Throws:
+        RuntimeError: Wenn das Speichern fehlschlägt.
+    """
+    try:
+        np.savetxt(filepath, data, delimiter=',') # delimiter: "," als Trennzeichen
+        print(str(filepath) + " erfolgreich gespeichert.")
+    except:
+        raise RuntimeError("Speichern der Datei fehlgeschlagen.")
 
 def load_data(filepath: str):
-    npliste = np.loadtxt(filepath, delimiter=',', dtype=float)
-    return npliste.tolist()
+    """
+    Liest eine Liste von Zahlen aus einer csv-Datei mit "," als Trennzeichen ein.
+    Inputs:
+        filepath (string): Pfad der zu lesenden Datei
+    Throws:
+        RuntimeError: Wenn das Einlesen fehlschlägt.
+    """
+    try:
+        npliste = np.loadtxt(filepath, delimiter=',', dtype=float) # delimiter: "," als Trennzeichen
+        print(str(filepath) + " erfolgreich eingelesen.")
+        return npliste.tolist() # kein numpy-Array, sondern eine Liste zurückgeben
+    except:
+        raise RuntimeError("Einlesen der Datei fehlgeschlagen.")
 
 def main():
-    """Hauptfunktion des Programms"""
+    """Anwednungsbeispiele"""
+    # read_number()
+    print("Zunächst wird die Funktion load_data() getestet.")
+    print("Eine leere Eingabe ermöglicht den Abbruch und führt zum Test der nächsten Funktion.")
+
     anfrage = "Bitte geben Sie eine ganze Zahl x mit 3 <= x <= 7 ein."
-    eingabe_zahl = read_number(anfrage, float, 3.0, 7.0)
-    print(eingabe_zahl)
+    try: # Falls der Aufruf abgebrochen wird, soll das main-Programm trotzdem weiter laufen
+        eingabe_zahl = read_number(anfrage, int, 3.0, 7.0)
+        print("")
+        print("Die Funktion gibt zurück: " + str(eingabe_zahl) + ", Datentyp: " + str(type(eingabe_zahl)))
+    except:
+        print("Abbruch des Tests.")
 
-    liste = [1.1117634238476,1,2,3,4,5,6,7,8,9]
-    save_data(liste, "test.csv")
+    # read_number()
+    print("")
+    print("Nun wird eine Beispielliste erstellt und exportiert: [1.1117634, 2.55, 3.3, 144.0]")
+    liste = [1.1117634, 2.55, 3.3, 144.0] # eine Beispielliste
+    try:
+        save_data(liste, "test.csv")
+    except:
+        print("Speichern der Liste fehlgeschlagen.")
 
-    print(liste)
-    print(load_data("test.csv"))
+    # read_number()
+    print("")
+    print("Dieselbe Liste wird nun wieder eingelesen und ausgegeben.")
+    try:
+        print(load_data("test.csv"))
+    except:
+        print("Einlesen der Datei fehlgeschlagen.")
 
 if __name__ == "__main__":
     main()
