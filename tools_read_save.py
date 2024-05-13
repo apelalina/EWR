@@ -9,23 +9,27 @@ Python 3.11.7 | packaged by Anaconda, Inc.
 """
 import numpy as np # zum einlesen und speichern von Daten
 
-def read_number(question: str, data_type: type, lower_limit: float = float('-Inf'), upper_limit: float = float('Inf')) -> "data_type" :
-    
+def read_number(question: str,
+                data_type: type,
+                lower_limit: float = float('-Inf'),
+                upper_limit: float = float('Inf')) -> "data_type" :
+
     eingabe = input(question) # interaktive Eingabe
-    
-    while True: # Schleife, die unendlich laeuft und erst verlassen wird, wenn alle Tests bestanden wurden
+
+    while True: # Schleife, die erst verlassen wird, wenn alle Tests bestanden wurden
         try: # Funktioniert das Casting zum gewuenschten Datentyp?
             eingabe = data_type(eingabe)
-            if eingabe >= data_type(lower_limit): # ist die eingegebene Zahl >= der angegebenen unteren Grenze?
-                if eingabe <= data_type(upper_limit): # ist die eingegebene Zahl <= der angegebenen oberen Grenze?
+            # ist die eingegebene Zahl >= der angegebenen unteren Grenze?
+            if eingabe >= data_type(lower_limit):
+                # ist die eingegebene Zahl <= der angegebenen oberen Grenze?
+                if eingabe <= data_type(upper_limit):
                     break # Schleife wird verlassen, damit eingabe zurückgegeben werden kann
-                else:
-                    eingabe = input("Bitte geben Sie eine Zahl <= " + str(upper_limit) + " ein: ") # neue Eingabe ermoeglichen
-            else:
-                eingabe = input("Bitte geben Sie eine Zahl >= " + str(lower_limit) + " ein: ") # neue Eingabe ermoeglichen
-        except ValueError:
-            eingabe = input("Bitte geben Sie eine Zahl vom Typ " + str(data_type) + " ein: ") # neue Eingabe ermoeglichen
-    
+                eingabe = input("Bitte geben Sie eine Zahl <= " + str(upper_limit) + " ein: ")
+            else: # neue Eingabe ermoeglichen
+                eingabe = input("Bitte geben Sie eine Zahl >= " + str(lower_limit) + " ein: ")
+        except ValueError: # neue Eingabe ermoeglichen
+            eingabe = input("Bitte geben Sie eine Zahl vom Typ " + str(data_type) + " ein: ")
+
     return eingabe # Die Funktion gibt den eingelesenen Wert zurück
 
 def save_data(data, filepath: str):
