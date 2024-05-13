@@ -12,18 +12,18 @@ def read_number(question: str, data_type: type, lower_limit: float = float('-Inf
     
     eingabe = input(question) # interaktive Eingabe
     
-    while True: # Schleife, die unendlich läuft und erst verlassen wird, wenn alle Tests bestanden wurden
+    while True: # Schleife, die unendlich laeuft und erst verlassen wird, wenn alle Tests bestanden wurden
         try: # Funktioniert das Casting zum gewuenschten Datentyp?
             eingabe = data_type(eingabe)
             if eingabe >= data_type(lower_limit): # ist die eingegebene Zahl >= der angegebenen unteren Grenze?
                 if eingabe <= data_type(upper_limit): # ist die eingegebene Zahl <= der angegebenen oberen Grenze?
                     break # Schleife wird verlassen, damit eingabe zurückgegeben werden kann
                 else:
-                    eingabe = input("Bitte geben Sie eine Zahl <= " + str(upper_limit) + " ein: ") # neue Eingabe ermöglichen
+                    eingabe = input("Bitte geben Sie eine Zahl <= " + str(upper_limit) + " ein: ") # neue Eingabe ermoeglichen
             else:
-                eingabe = input("Bitte geben Sie eine Zahl >= " + str(lower_limit) + " ein: ") # neue Eingabe ermöglichen
+                eingabe = input("Bitte geben Sie eine Zahl >= " + str(lower_limit) + " ein: ") # neue Eingabe ermoeglichen
         except ValueError:
-            eingabe = input("Bitte geben Sie eine Zahl vom Typ " + str(data_type) + " ein: ") # neue Eingabe ermöglichen
+            eingabe = input("Bitte geben Sie eine Zahl vom Typ " + str(data_type) + " ein: ") # neue Eingabe ermoeglichen
     
     return eingabe # Die Funktion gibt den eingelesenen Wert zurück
 
