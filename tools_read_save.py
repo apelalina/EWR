@@ -9,37 +9,21 @@ Python 3.11.7 | packaged by Anaconda, Inc.
 """
 
 def read_number(question: str, data_type: type, lower_limit: float = float('-Inf'), upper_limit: float = float('Inf')) -> "data_type" :
+    
     eingabe = input(question) # interaktive Eingabe
-    if data_type == int: # für Integers
-        while True: # Schleife, die unendlich läuft und erst verlassen wird, wenn alle Tests bestanden wurden
-            try: # ist der Datytyp korrekt?
-                eingabe = int(eingabe)
-                if float(eingabe) >= float(lower_limit): # ist die eingegebene Zahl >= der angegebenen unteren Grenze?
-                    if float(eingabe) <= float(upper_limit): # ist die eingegebene Zahl <= der angegebenen oberen Grenze?
-                        break # Schleife wird verlassen, damit eingabe zurückgegeben werden kann
-                    else:
-                        eingabe = input("Bitte geben Sie eine ganze Zahl <= " + str(upper_limit) + " ein: ") # neue Eingabe ermöglichen
+    
+    while True: # Schleife, die unendlich läuft und erst verlassen wird, wenn alle Tests bestanden wurden
+        try: # Funktioniert das Casting zum gewuenschten Datentyp?
+            eingabe = data_type(eingabe)
+            if eingabe >= data_type(lower_limit): # ist die eingegebene Zahl >= der angegebenen unteren Grenze?
+                if eingabe <= data_type(upper_limit): # ist die eingegebene Zahl <= der angegebenen oberen Grenze?
+                    break # Schleife wird verlassen, damit eingabe zurückgegeben werden kann
                 else:
-                    eingabe = input("Bitte geben Sie eine ganze Zahl >= " + str(lower_limit) + " ein: ") # neue Eingabe ermöglichen
-            except ValueError:
-                eingabe = input("Bitte geben Sie eine ganze Zahl ein: ") # neue Eingabe ermöglichen
-
-    elif data_type == float: # Für Gleitkommazahlen
-        while True: # Schleife, die unendlich läuft und erst verlassen wird, wenn alle Tests bestanden wurden
-            try: # ist der Datytyp korrekt?
-                eingabe = float(eingabe)
-                if eingabe >= float(lower_limit): # ist die eingegebene Zahl >= der angegebenen unteren Grenze?
-                    if eingabe <= float(upper_limit): # ist die eingegebene Zahl <= der angegebenen oberen Grenze?
-                        break # Schleife wird verlassen, damit eingabe zurückgegeben werden kann
-                    else:
-                        eingabe = input("Bitte geben Sie eine Gleitkommazahl <= " + str(upper_limit) + " ein: ") # neue Eingabe ermöglichen
-                else:
-                    eingabe = input("Bitte geben Sie eine Gleitkommazahl >= " + str(lower_limit) + " ein: ") # neue Eingabe ermöglichen
-            except ValueError:
-                eingabe = input("Bitte geben Sie eine Gleitkommazahl ein: ") # neue Eingabe ermöglichen
-
-    else: 
-        raise ValueError("Datentyp (data_type) muss int oder float sein.") # falls der Datentyp nicht unterstützt wird (z.b. list): Fehlermeldung
+                    eingabe = input("Bitte geben Sie eine Zahl <= " + str(upper_limit) + " ein: ") # neue Eingabe ermöglichen
+            else:
+                eingabe = input("Bitte geben Sie eine Zahl >= " + str(lower_limit) + " ein: ") # neue Eingabe ermöglichen
+        except ValueError:
+            eingabe = input("Bitte geben Sie eine Zahl vom Typ " + str(data_type) + " ein: ") # neue Eingabe ermöglichen
     
     return eingabe # Die Funktion gibt den eingelesenen Wert zurück
 
