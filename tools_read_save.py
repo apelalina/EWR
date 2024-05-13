@@ -1,11 +1,10 @@
 """
 Dieses Modul wrmöglicht die Eingabe sowie das Speichern und Laden von Daten.
 
-pylint 2.16.2
-astroid 2.14.2
-Python 3.11.7 | packaged by Anaconda, Inc. 
-| (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)]
-9.71/10
+pylint 3.1.0
+astroid 3.1.0
+Python 3.12.3 (tags/v3.12.3:f6650f9, Apr  9 2024, 14:05:25) [MSC v.1938 64 bit (AMD64)]
+9.63/10
 """
 import numpy as np # zum einlesen und speichern von Daten
 
@@ -92,8 +91,9 @@ def main():
     try: # Falls der Aufruf abgebrochen wird, soll das main-Programm trotzdem weiter laufen
         eingabe_zahl = read_number(anfrage, int, 3.0, 7.0)
         print("")
-        print("Die Funktion gibt zurück: " + str(eingabe_zahl) + ", Datentyp: " + str(type(eingabe_zahl)))
-    except:
+        print("Die Funktion gibt zurück: " + str(eingabe_zahl) + ", Datentyp: " +
+              str(type(eingabe_zahl)))
+    except ValueError:
         print("Abbruch des Tests.")
 
     # read_number()
@@ -102,7 +102,7 @@ def main():
     liste = [1.1117634, 2.55, 3.3, 144.0] # eine Beispielliste
     try:
         save_data(liste, "test.csv")
-    except:
+    except RuntimeError:
         print("Speichern der Liste fehlgeschlagen.")
 
     # read_number()
@@ -110,7 +110,7 @@ def main():
     print("Dieselbe Liste wird nun wieder eingelesen und ausgegeben.")
     try:
         print(load_data("test.csv"))
-    except:
+    except RuntimeError:
         print("Einlesen der Datei fehlgeschlagen.")
 
 if __name__ == "__main__":
