@@ -1,6 +1,6 @@
 """
-Dieses Programm implementiert die Funktionen vorwärts_summation und kahan_summation,
-um die Partialsummen der harmonischen Reihe mittels Vorwärtssummation bzw. Kahan-Summation
+Dieses Programm implementiert die Funktionen vorwaerts_summation und rueckwaerts_summation,
+um Partialsummen der harmonischen Reihe mittels Vorwaertssummation bzw. Rueckwaertssummation
 zu berechnen.
 
 pylint 2.16.2
@@ -15,17 +15,17 @@ from py_logspace import py_logspace
 
 def vorwaerts_summation(start, stop, num, basis, data_type) -> list:
     """
-    Berechnet die Partialsummen der harmonischen Reihe mittels Vorwärtssummation.
+    Berechnet die Partialsummen der harmonischen Reihe mittels Vorwaertssummation.
 
     Inputs:
-        start (int): Der Anfangswert für den Logarithmusraum.
-        stop (int): Der Endwert für den Logarithmusraum.
-        num (int): Die Anzahl der Werte im Logarithmusraum.
+        start (int): Der Anfangswert f�r den Logarithmusraum.
+        stop (int): Der Endwert f�r den Logarithmusraum.
+        num (int): Die Anzahl der Partialsummen.
         basis (int): Die Basis des Logarithmusraums.
-        data_type (numpy.dtype): Der Datentyp für die Berechnung.
+        data_type (numpy.dtype): Der Datentyp f�r die Berechnung.
 
     Throws:
-        ValueError: Wenn ungültige Eingaben für start, stop, num oder basis gemacht werden.
+        ValueError: Wenn ungueltige Eingaben fuer start, stop, num oder basis gemacht werden.
 
     Returns:
         list: Eine Liste der berechneten Partialsummen.
@@ -39,44 +39,39 @@ def vorwaerts_summation(start, stop, num, basis, data_type) -> list:
         result.append(partialsumme)
     return result
 
-def kahan_summation(start, stop, num, basis, data_type) -> list:
+def rueckwaerts_summation(start, stop, num, basis, data_type) -> list:
     """
-    Berechnet die Partialsummen der harmonischen Reihe mittels Kahan-Summation.
+    Berechnet die Partialsummen der harmonischen Reihe mittels Rueckwaertssummation.
 
     Inputs:
-        start (int): Der Anfangswert für den Logarithmusraum.
-        stop (int): Der Endwert für den Logarithmusraum.
-        num (int): Die Anzahl der Werte im Logarithmusraum.
+        start (int): Der Anfangswert f�r den Logarithmusraum.
+        stop (int): Der Endwert f�r den Logarithmusraum.
+        num (int): Die Anzahl der Partialsummen.
         basis (int): Die Basis des Logarithmusraums.
-        data_type (numpy.dtype): Der Datentyp für die Berechnung.
+        data_type (numpy.dtype): Der Datentyp f�r die Berechnung.
 
     Throws:
-        ValueError: Wenn ungültige Eingaben für start, stop, num oder basis gemacht werden.
+        ValueError: Wenn ung�ltige Eingaben f�r start, stop, num oder basis gemacht werden.
 
     Returns:
         list: Eine Liste der berechneten Partialsummen.
-
     """
     result = []
     for k in py_logspace(start, stop, num, basis):
         partialsumme = data_type(0)
-        kompensation = data_type(0)
-        for variable in range(int(k)):
-            vorläufige_partialsumme = partialsumme + data_type(1 / (variable + 1))
-            if abs(partialsumme) >= abs(data_type(1 / (variable + 1))):
-                kompensation += (partialsumme - vorläufige_partialsumme) + (1 / (variable+1))
-            else:
-                kompensation += ((1 / (variable+1)) - vorläufige_partialsumme) + partialsumme
-            partialsumme = vorläufige_partialsumme
+        for variable in range(int(k), 0, -1):  # Rueckwaertsschleife
+            partialsumme += data_type(1 / variable)
         result.append(partialsumme)
     return result
 
+
 def main():
     """
-    Hauptfunktion des Programms, die die Berechnung und Ausgabe der Partialsummen durchführt.
+    Hauptfunktion des Programms, die die Berechnung und Ausgabe der Partialsummen durchfuehrt.
     """
     while True:
         try:
+            #Nutzereingaben
             start = int(input("Start: "))
             stop = int(input("Stop: "))
             num = int(input("Num: "))
@@ -93,19 +88,19 @@ def main():
             print("Vorwaertssummation mit np.float64:", result_vorwaerts_float64)
 
             # Kahan-Summation mit verschiedenen Datentypen
-            result_kahan_float16 = kahan_summation(start, stop, num, basis, np.float16)
-            print("Kahansummation mit np.float16:", result_kahan_float16)
+            result_rueckwaerts_float16 = rueckwaerts_summation(start, stop, num, basis, np.float16)
+            print("Rueckwaertssummation mit np.float16:", result_rueckwaerts_float16)
 
-            result_kahan_float32 = kahan_summation(start, stop, num, basis, np.float32)
-            print("Kahansummation mit np.float32:", result_kahan_float32)
+            result_rueckwaerts_float32 = rueckwaerts_summation(start, stop, num, basis, np.float32)
+            print("Rueckwaertssummation mit np.float32:", result_rueckwaerts_float32)
 
-            result_kahan_float64 = kahan_summation(start, stop, num, basis, np.float64)
-            print("Kahansummation mit np.float64:", result_kahan_float64)
+            result_rueckwaerts_float64 = rueckwaerts_summation(start, stop, num, basis, np.float64)
+            print("Rueckwaertssummation mit np.float64:", result_rueckwaerts_float64)
 
             break
 
         except ValueError:
-            print("Fehler beim Funktionsaufruf. Bitte überprüfen Sie die Eingabewerte.")
+            print("Fehler beim Funktionsaufruf. Bitte ueberpruefen Sie die Eingabewerte.")
             continue
 
 if __name__ == "__main__":
