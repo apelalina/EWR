@@ -101,6 +101,7 @@ def main():
 
         except ValueError:
             print("Fehler beim Funktionsaufruf. Bitte ueberpruefen Sie die Eingabewerte.")
+            
             continue
 
 if __name__ == "__main__":
