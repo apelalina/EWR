@@ -7,7 +7,7 @@ pylint 2.16.2
 astroid 2.14.2
 Python 3.11.7 | packaged by Anaconda, Inc.
 | (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)]
-
+8,96/10
 """
 
 import numpy as np
