@@ -1,5 +1,5 @@
 """
-Dieses Modul wrmöglicht die Eingabe sowie das Speichern und Laden von Daten.
+Dieses Modul ermöglicht die Eingabe sowie das Speichern und Laden von Daten.
 
 pylint 3.1.0
 astroid 3.1.0

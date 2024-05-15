@@ -14,7 +14,7 @@ Python 3.11.7 | packaged by Anaconda, Inc.
 
 import numpy as np
 import matplotlib.pyplot as plt
-from py_logspace import py_logspace
+from py_logspace import py_logspace # pylint: disable=import-error
 
 def vorwaerts_summation(start, stop, num, basis, data_type) -> list:
     """
@@ -123,7 +123,7 @@ def main():
             #Legende
             plt.legend()
             plt.show()
-            
+
             break
 
         except ValueError:
