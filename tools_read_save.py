@@ -39,9 +39,9 @@ def read_number(question: str,
         try: # Funktioniert das Casting zum gewuenschten Datentyp?
             eingabe = data_type(eingabe)
             # ist die eingegebene Zahl >= der angegebenen unteren Grenze?
-            if eingabe >= data_type(lower_limit):
+            if eingabe >= lower_limit:
                 # ist die eingegebene Zahl <= der angegebenen oberen Grenze?
-                if eingabe <= data_type(upper_limit):
+                if eingabe <= upper_limit:
                     break # Schleife wird verlassen, damit eingabe zurückgegeben werden kann
                 eingabe = input("Bitte geben Sie eine Zahl <= " + str(upper_limit) + " ein: ")
             else: # neue Eingabe ermoeglichen
@@ -89,12 +89,13 @@ def main():
 
     anfrage = "Bitte geben Sie eine ganze Zahl x mit 3 <= x <= 7 ein."
     try: # Falls der Aufruf abgebrochen wird, soll das main-Programm trotzdem weiter laufen
-        eingabe_zahl = read_number(anfrage, int, 3.0, 7.0)
+        eingabe_zahl = read_number(anfrage, int, lower_limit=2)
         print("")
         print("Die Funktion gibt zurück: " + str(eingabe_zahl) + ", Datentyp: " +
               str(type(eingabe_zahl)))
     except ValueError:
         print("Abbruch des Tests.")
+        exit()
 
     # read_number()
     print("")
