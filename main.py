@@ -9,7 +9,7 @@ from tools_read_save import read_number, save_data, load_data
 # Programm 2: Berechnung der Partialsummen der harmonischen Reihe
 import harmonic_convergence
 from harmonic_convergence import vorwaerts_summation, rueckwaerts_summation
-    
+
 def main():
     """
     Hauptfunktion des Experimentierskripts.
@@ -59,6 +59,31 @@ def main():
                 result_rueckwaerts_float64 = rueckwaerts_summation(start, stop, num, basis, np.float64)
                 print("\nRueckwaertssummation mit np.float64:", result_rueckwaerts_float64)
               
+                #Plot
+                #Werte
+                x_werte=range(stop)
+                y_werte1=result_vorwaerts_float16
+                y_werte2=result_vorwaerts_float32
+                y_werte3=result_vorwaerts_float64
+                y_werte4=result_rueckwaerts_float16
+                y_werte4=result_rueckwaerts_float16
+                y_werte5=result_rueckwaerts_float32
+                y_werte6=result_rueckwaerts_float64
+                #Plot der Linien
+                plt.plot(x_werte, y_werte1, label='Vorwaertssummation mit np.float16', color='black')
+                plt.plot(x_werte, y_werte2, label='Vorwaertssummation mit np.float32', color='blue')
+                plt.plot(x_werte, y_werte3, label='Vorwaertssummation mit np.float64', color='green')
+                plt.plot(x_werte, y_werte4, label='Rueckwaertssummation mit np.float16', color='red')
+                plt.plot(x_werte, y_werte5, label='Rueckwaertssummation mit np.float32', color='purple')
+                plt.plot(x_werte, y_werte6, label='Rueckwaertssummation mit np.float64', color='yellow')
+                #Achsenbeschriftung
+                plt.xlabel("Index der Partialsummen in linearer Skalierung")
+                plt.ylabel("Partialsummen")
+                plt.title("Darstellung der Partialsummen")
+                #Legende
+                plt.legend()
+                plt.show()
+                
             elif choice == "3":
                 print("Hilfe")
                 #Hier hab ich keinen Plan
