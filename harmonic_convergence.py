@@ -63,9 +63,9 @@ def rueckwaerts_summation(start, stop, num, basis, data_type) -> list:
     result = []
     partialsumme= data_type(0)
     for i in range(basis**stop, 0, -1):  # Rueckwaertsschleife
-         partialsumme += data_type(1 / i)
-         if i in py_logspace(start, stop, num, basis):
-             result.append(partialsumme)
+         partialsumme += data_type(1 / variable)
+        if i in py_logspace(start, stop, num, basis)
+            result.append(partialsumme)
     return result
 
 
