@@ -13,6 +13,7 @@ Python 3.11.7 | packaged by Anaconda, Inc.
 """
 
 import numpy as np
+import matplotlib.pyplot as plt
 from py_logspace import py_logspace
 
 def vorwaerts_summation(start, stop, num, basis, data_type) -> list:
@@ -99,6 +100,31 @@ def main():
             result_rueckwaerts_float64 = rueckwaerts_summation(start, stop, num, basis, np.float64)
             print("\nRueckwaertssummation mit np.float64:", result_rueckwaerts_float64)
 
+            #Plot
+            #Werte
+            x_werte=range(stop+1)
+            y_werte1=result_vorwaerts_float16
+            y_werte2=result_vorwaerts_float32
+            y_werte3=result_vorwaerts_float64
+            y_werte4=result_rueckwaerts_float16
+            y_werte4=result_rueckwaerts_float16
+            y_werte5=result_rueckwaerts_float32
+            y_werte6=result_rueckwaerts_float64
+            #Plot der Linien
+            plt.plot(x_werte, y_werte1, label='Vorwaertssummation mit np.float16', color='black')
+            plt.plot(x_werte, y_werte2, label='Vorwaertssummation mit np.float32', color='blue')
+            plt.plot(x_werte, y_werte3, label='Vorwaertssummation mit np.float64', color='green')
+            plt.plot(x_werte, y_werte4, label='Rueckwaertssummation mit np.float16', color='red')
+            plt.plot(x_werte, y_werte5, label='Rueckwaertssummation mit np.float32', color='purple')
+            plt.plot(x_werte, y_werte6, label='Rueckwaertssummation mit np.float64', color='yellow')
+            #Achsenbeschriftung
+            plt.xlabel("Index der Partialsummen in logarithmischer Skalierung")
+            plt.ylabel("Partialsummen")
+            plt.title("Darstellung der Partialsummen")
+            #Legende
+            plt.legend()
+            plt.show()
+            
             break
 
         except ValueError:
