@@ -35,12 +35,13 @@ def vorwaerts_summation(start, stop, num, basis, data_type) -> list:
 
     """
     result = []
-    for k in py_logspace(start, stop, num, basis):
-        partialsumme = data_type(0)
-        for variable in range(int(k)):
-            partialsumme += data_type(1 / (variable + 1))
-        result.append(partialsumme)
+    partialsumme=data_type(0)
+    for i in range(1, basis**stop +1):
+        partialsumme += data_type(1 / (i))
+        if i in py_logspace(start, stop, num, basis):
+            result.append(partialsumme)
     return result
+
 
 def rueckwaerts_summation(start, stop, num, basis, data_type) -> list:
     """
@@ -60,11 +61,11 @@ def rueckwaerts_summation(start, stop, num, basis, data_type) -> list:
         list: Eine Liste der berechneten Partialsummen.
     """
     result = []
-    for k in py_logspace(start, stop, num, basis):
-        partialsumme = data_type(0)
-        for variable in range(int(k), 0, -1):  # Rueckwaertsschleife
-            partialsumme += data_type(1 / variable)
-        result.append(partialsumme)
+    partialsumme= data_type(0)
+    for i in range(basis**stop, 0, -1):  # Rueckwaertsschleife
+         partialsumme += data_type(1 / i)
+         if i in py_logspace(start, stop, num, basis):
+             result.append(partialsumme)
     return result
 
 
@@ -102,11 +103,10 @@ def main():
 
             #Plot
             #Werte
-            x_werte=range(stop+1)
+            x_werte=py_logspace(start, stop, basis, num)
             y_werte1=result_vorwaerts_float16
             y_werte2=result_vorwaerts_float32
             y_werte3=result_vorwaerts_float64
-            y_werte4=result_rueckwaerts_float16
             y_werte4=result_rueckwaerts_float16
             y_werte5=result_rueckwaerts_float32
             y_werte6=result_rueckwaerts_float64
