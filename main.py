@@ -61,11 +61,10 @@ def main():
               
                 #Plot
                 #Werte
-                x_werte=range(stop)
+                x_werte=range(start, stop+1)
                 y_werte1=result_vorwaerts_float16
                 y_werte2=result_vorwaerts_float32
                 y_werte3=result_vorwaerts_float64
-                y_werte4=result_rueckwaerts_float16
                 y_werte4=result_rueckwaerts_float16
                 y_werte5=result_rueckwaerts_float32
                 y_werte6=result_rueckwaerts_float64
@@ -77,7 +76,7 @@ def main():
                 plt.plot(x_werte, y_werte5, label='Rueckwaertssummation mit np.float32', color='purple')
                 plt.plot(x_werte, y_werte6, label='Rueckwaertssummation mit np.float64', color='yellow')
                 #Achsenbeschriftung
-                plt.xlabel("Index der Partialsummen in linearer Skalierung")
+                plt.xlabel("Index der Partialsummen in logarithmischer Skalierung")
                 plt.ylabel("Partialsummen")
                 plt.title("Darstellung der Partialsummen")
                 #Legende
