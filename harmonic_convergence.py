@@ -9,7 +9,7 @@ pylint 2.16.2
 astroid 2.14.2
 Python 3.11.7 | packaged by Anaconda, Inc.
 | (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)]
-8,96/10
+9.84/10
 """
 
 import numpy as np
@@ -35,9 +35,10 @@ def vorwaerts_summation(start, stop, num, basis, data_type) -> list:
 
     """
     result = []
-    partialsumme=data_type(0)
+    partialsumme=data_type(0) # Casting zum gewuenschten Datentyp
     for i in range(1, basis**stop +1):
         partialsumme += data_type(1 / (i))
+        # damit nicht jedes mal "von vorne" aufsummiert werden muss:
         if i in py_logspace(start, stop, num, basis):
             result.append(partialsumme)
     return result
@@ -62,7 +63,7 @@ def rueckwaerts_summation(start, stop, num, basis, data_type) -> list:
     """
     result = []
     for k in py_logspace(start, stop, num, basis):
-        partialsumme = data_type(0)
+        partialsumme = data_type(0) # Casting zum gewuenschten Datentyp
         for variable in range(int(k), 0, -1):  # Rueckwaertsschleife
             partialsumme += data_type(1 / variable)
         result.append(partialsumme)
