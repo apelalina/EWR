@@ -4,7 +4,7 @@ Dieses Modul ermöglicht die Eingabe sowie das Speichern und Laden von Daten.
 pylint 3.1.0
 astroid 3.1.0
 Python 3.12.3 (tags/v3.12.3:f6650f9, Apr  9 2024, 14:05:25) [MSC v.1938 64 bit (AMD64)]
-9.63/10
+9.45/10
 """
 import numpy as np # zum einlesen und speichern von Daten
 

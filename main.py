@@ -5,7 +5,7 @@ Experimentierskript zur Konvergenz der Harmonischen Reihe
 pylint 3.1.0
 astroid 3.1.0
 Python 3.12.3 (tags/v3.12.3:f6650f9, Apr  9 2024, 14:05:25) [MSC v.1938 64 bit (AMD64)]
-9.63/10
+9.92/10
 """
 
 import sys
@@ -39,12 +39,13 @@ def main():
 
     if choice in ("1", "2"):
 
+        # Werte einlesen
         start = read_number("Anfangswert fuer den Logarithmusraum: ", int)
         stop = read_number("Endwert fuer den Logarithmusraum: ", int)
         basis = read_number("Basis des Logarithmusraums: ", int)
         num = read_number("Anzahl der zu berechnenden Partialsummen: ", int, lower_limit=2)
 
-
+        # Berechnen der Partialsummen
         result_vorwaerts_float16 = vorwaerts_summation(start, stop, num, basis,
                                                        np.float16)
         print("\nVorwaertssummation mit np.float16:\n", result_vorwaerts_float16)
@@ -69,7 +70,7 @@ def main():
                                                            np.float64)
         print("\nRueckwaertssummation mit np.float64:\n", result_rueckwaerts_float64)
 
-        if choice == "2":
+        if choice == "2": # Falls die Daten gespeichert werden sollen
             print("Die ausgegebenen Daten werden im Ordnder \"convergence_data_export\" "+
                   "im Arbeitsverzeichnis als .csv-Dateien abgespeichert.")
             save_data(result_vorwaerts_float16,
@@ -111,6 +112,7 @@ def main():
 
     if choice == "3":
 
+        # Vordefinierte Werte
         start = 1
         stop = 5
         basis = 10
@@ -122,7 +124,7 @@ def main():
         print("Anzahl der zu berechnenden Partialsummen: "+str(num))
         print("Basis des Logarithmusraums: "+str(basis))
 
-
+        # Berechnen der Partialsummen
         result_vorwaerts_float16 = vorwaerts_summation(start, stop, num, basis,
                                                        np.float16)
         print("\nVorwaertssummation mit np.float16:\n", result_vorwaerts_float16)
@@ -171,6 +173,7 @@ def main():
         plt.show()
 
     if choice == "4":
+        # Anweisungen an den User
         print("Die zu ladenden Daten werden aus dem Ordner \"convergence_data_import\" "+
               "im entsprechenden Arbeitsverzeichnis geladen. "+
               "Bitte stellen Sie die Daten im csv-Format in diesem Ordner bereit.")
@@ -184,6 +187,7 @@ def main():
         ip = input("Programm mit \"ok\" fortsetzen, sobald die Daten bereitgestellt sind: ")
 
         if ip == "ok":
+            # Der User hat die Daten bereitgestellt, also können sie eingelesen werden
             result_vorwaerts_float16 = load_data("convergence_data_import/"+
                                                  "result_vorwaerts_float16.csv")
             result_vorwaerts_float32 = load_data("convergence_data_import/"+
