@@ -1,0 +1,12 @@
+\babel@toc {ngerman}{}\relax 
+\contentsline {section}{\numberline {1}Einführung und Motivation}{3}{section.0.1}%
+\contentsline {section}{\numberline {2}Theoretische Grundlagen}{3}{section.0.2}%
+\contentsline {section}{\numberline {3}Experiment}{3}{section.0.3}%
+\contentsline {section}{\numberline {4}Schlussfolgerung}{5}{section.0.4}%
+\contentsline {section}{\numberline {5}Python-Dokumentation tools\textunderscore read\textunderscore save}{6}{section.0.5}%
+\contentsline {subsection}{\numberline {5.1}Schnittstellendokumentation}{6}{subsection.0.5.1}%
+\contentsline {subsubsection}{\nonumberline read\textunderscore number}{6}{subsubsection*.3}%
+\contentsline {subsubsection}{\nonumberline save\textunderscore data}{8}{subsubsection*.5}%
+\contentsline {subsubsection}{\nonumberline read\textunderscore data}{8}{subsubsection*.7}%
+\contentsline {subsection}{\numberline {5.2}Nutzungshinweise und Hauptprogramm}{9}{subsection.0.5.2}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

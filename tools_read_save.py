@@ -97,7 +97,7 @@ def main():
         print("Abbruch des Tests.")
         exit()
 
-    # read_number()
+    # save_data()
     print("")
     print("Nun wird eine Beispielliste erstellt und exportiert: [1.1117634, 2.55, 3.3, 144.0]")
     liste = [1.1117634, 2.55, 3.3, 144.0] # eine Beispielliste
@@ -106,7 +106,7 @@ def main():
     except RuntimeError:
         print("Speichern der Liste fehlgeschlagen.")
 
-    # read_number()
+    # read_data()
     print("")
     print("Dieselbe Liste wird nun wieder eingelesen und ausgegeben.")
     try:
