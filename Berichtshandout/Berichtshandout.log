@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.5.19)  21 MAY 2024 14:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.5.19)  21 MAY 2024 14:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -414,31 +414,20 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 77.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 77.
-
-
-LaTeX Warning: File `pictures/husiegel_bw.pdf' not found on input line 77.
-
-
-c:/Users/alina/Documents/EWR/Berichtshandout/Berichtshandout.tex:77: Package pdftex.def Error: File `pictures/husiegel_bw.pdf' not found: using draft setting.
-
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.77 \tableofcontents
-                     
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
+<husiegel_bw.pdf, id=3, 131.49126pt x 132.495pt>
+File: husiegel_bw.pdf Graphic file (type pdf)
+<use husiegel_bw.pdf>
+Package pdftex.def Info: husiegel_bw.pdf  used on input line 77.
+(pdftex.def)             Requested size: 78.89534pt x 79.49759pt.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <14.4> on input line 77.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 77.
-[1
+ [1
 
 
 
-{C:/Users/alina/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
+{C:/Users/alina/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map} <./husiegel_bw.pdf>]
 No file Berichtshandout.toc.
 \tf@toc=\write5
 \openout5 = `Berichtshandout.toc'.
@@ -446,12 +435,12 @@ No file Berichtshandout.toc.
 [2
 
 ]
-<plot_basis8_endwert9.png, id=18, 399.4925pt x 279.0425pt>
+<plot_basis8_endwert9.png, id=23, 399.4925pt x 279.0425pt>
 File: plot_basis8_endwert9.png Graphic file (type png)
 <use plot_basis8_endwert9.png>
 Package pdftex.def Info: plot_basis8_endwert9.png  used on input line 98.
 (pdftex.def)             Requested size: 376.42744pt x 262.9429pt.
-<plot_basis9_endwert9.png, id=20, 396.48125pt x 279.0425pt>
+<plot_basis9_endwert9.png, id=25, 396.48125pt x 279.0425pt>
 File: plot_basis9_endwert9.png Graphic file (type png)
 <use plot_basis9_endwert9.png>
 Package pdftex.def Info: plot_basis9_endwert9.png  used on input line 102.
@@ -519,7 +508,7 @@ Overfull \hbox (47.94354pt too wide) in paragraph at lines 155--156
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-<AB3-flow_cropped.pdf, id=48, 572.05719pt x 1154.1118pt>
+<AB3-flow_cropped.pdf, id=54, 572.05719pt x 1154.1118pt>
 File: AB3-flow_cropped.pdf Graphic file (type pdf)
 <use AB3-flow_cropped.pdf>
 Package pdftex.def Info: AB3-flow_cropped.pdf  used on input line 165.
@@ -804,17 +793,17 @@ Package rerunfilecheck Info: Checksums for `Berichtshandout.out':
 (rerunfilecheck)             After:  D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 16032 strings out of 474369
- 283404 string characters out of 5740514
+ 16009 strings out of 474369
+ 282557 string characters out of 5740514
  1963754 words of memory out of 5000000
- 38174 multiletter control sequences out of 15000+600000
+ 38151 multiletter control sequences out of 15000+600000
  565192 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,8n,107p,10975b,1251s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,9n,107p,10975b,1251s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\alina\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk><C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti8.pfb><C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Berichtshandout.pdf (12 pages, 1024884 bytes).
+Output written on Berichtshandout.pdf (12 pages, 1057110 bytes).
 PDF statistics:
- 260 PDF objects out of 1000 (max. 8388607)
+ 266 PDF objects out of 1000 (max. 8388607)
  82 named destinations out of 1000 (max. 500000)
- 72 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 83 words of extra memory for PDF output out of 10000 (max. 10000000)
 

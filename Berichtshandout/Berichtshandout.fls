@@ -181,7 +181,12 @@ INPUT C:\Users\alina\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi6.tfm
 INPUT C:\Users\alina\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
 INPUT C:\Users\alina\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy8.tfm
 INPUT C:\Users\alina\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy6.tfm
-INPUT C:\Users\alina\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmtt10.tfm
+INPUT .\husiegel_bw.pdf
+INPUT .\husiegel_bw.pdf
+INPUT .\husiegel_bw.pdf
+INPUT .\husiegel_bw.pdf
+INPUT .\husiegel_bw.pdf
+INPUT .\husiegel_bw.pdf
 INPUT C:\Users\alina\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx10.tfm
 INPUT C:\Users\alina\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
 INPUT C:\Users\alina\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmss10.tfm
@@ -208,6 +213,7 @@ INPUT .\plot_basis9_endwert9.png
 INPUT .\plot_basis9_endwert9.png
 INPUT .\plot_basis9_endwert9.png
 INPUT .\plot_basis9_endwert9.png
+INPUT C:\Users\alina\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmtt10.tfm
 INPUT C:\Users\alina\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcrm1095.tfm
 INPUT C:\Users\alina\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmtt10.tfm
 INPUT .\AB3-flow_cropped.pdf
