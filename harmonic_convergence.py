@@ -9,11 +9,10 @@ pylint 2.16.2
 astroid 2.14.2
 Python 3.11.7 | packaged by Anaconda, Inc.
 | (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)]
-9.84/10
+9.78/10
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
 from py_logspace import py_logspace # pylint: disable=import-error
 
 def vorwaerts_summation(start, stop, num, basis, data_type) -> list:
@@ -36,12 +35,11 @@ def vorwaerts_summation(start, stop, num, basis, data_type) -> list:
     """
     result = []
     logspace=py_logspace(start, stop, num, basis)
-    partialsumme=data_type(0) # Casting zum gewuenschten Datentyp
-    for i in range(1, basis**stop +1):
-        partialsumme += data_type(1)/data_type(i)
-        # damit nicht jedes mal "von vorne" aufsummiert werden muss:
-        if i in logspace:
-            result.append(partialsumme)
+    for k in logspace: 
+        partialsumme=data_type(0) # Casting zum gewuenschten Datentyp
+        for i in range(1, k+1):
+            partialsumme += data_type(1)/data_type(i)
+        result.append(partialsumme)
     return result
 
 
