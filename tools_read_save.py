@@ -19,8 +19,8 @@ def read_number(question: str,
     Inputs:
         question (str): Aufforderung zur Eingabe
         data_type (type): Gewünschter Datentyp
-        lower_limit: Untere Grenze (im Zieldatentyp)
-        upper_limit: Obere Grenze (im Zieldatentyp)
+        lower_limit (float): Untere Grenze
+        upper_limit (float): Obere Grenze
 
     Returns:
         Die eingegebene Zahl im gewünschten Datentyp
