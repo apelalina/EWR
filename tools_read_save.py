@@ -42,19 +42,18 @@ def read_number(question: str,
             if eingabe >= lower_limit:
                 # ist die eingegebene Zahl <= der angegebenen oberen Grenze?
                 if eingabe <= upper_limit:
-                    break # Schleife wird verlassen, damit eingabe zurückgegeben werden kann
+                    break # Schleife wird verlassen, damit eingabe zurueckgegeben werden kann
                 eingabe = input("Bitte geben Sie eine Zahl <= " + str(upper_limit) + " ein: ")
             else: # neue Eingabe ermoeglichen
                 eingabe = input("Bitte geben Sie eine Zahl >= " + str(lower_limit) + " ein: ")
         except ValueError: # neue Eingabe ermoeglichen
             eingabe = input("Bitte geben Sie eine Zahl vom Typ " + str(data_type) + " ein: ")
 
-    return eingabe # Die Funktion gibt den eingelesenen Wert zurück
+    return eingabe # Die Funktion gibt den eingelesenen Wert zurueck
 
 def save_data(data, filepath: str):
     """
-    Speichert eine Liste von Zahlen in eine csv-Datei mit "," als Trennzeichen.
-    Inputs:
+    Speichert eine Liste von Zahlen in eine csv-Datei.
         data: Eine Liste an Zahlen
         filepath (string): Pfad der zu speichernden Datei
     Throws:
@@ -64,7 +63,7 @@ def save_data(data, filepath: str):
         np.savetxt(filepath, data, delimiter=',') # delimiter: "," als Trennzeichen
         print(str(filepath) + " erfolgreich gespeichert.")
     except:
-        raise RuntimeError("Speichern der Datei fehlgeschlagen.")
+        raise FileNotFoundError("Speichern der Datei fehlgeschlagen.")
 
 def load_data(filepath: str):
     """
@@ -77,14 +76,14 @@ def load_data(filepath: str):
     try:
         npliste = np.loadtxt(filepath, delimiter=',', dtype=float) # delimiter: "," als Trennzeichen
         print(str(filepath) + " erfolgreich eingelesen.")
-        return npliste.tolist() # kein numpy-Array, sondern eine Liste zurückgeben
+        return npliste.tolist() # kein numpy-Array, sondern eine Liste zurueckgeben
     except:
-        raise RuntimeError("Einlesen der Datei fehlgeschlagen.")
+        raise FileNotFoundError("Einlesen der Datei fehlgeschlagen.")
 
 def main():
     """Anwednungsbeispiele"""
     # read_number()
-    print("Zunächst wird die Funktion load_data() getestet.")
+    print("Zunächst wird die Funktion read_number() getestet.")
     print("Eine leere Eingabe ermöglicht den Abbruch und führt zum Test der nächsten Funktion.")
 
     anfrage = "Bitte geben Sie eine ganze Zahl x mit 3 <= x <= 7 ein."
@@ -99,16 +98,16 @@ def main():
 
     # save_data()
     print("")
-    print("Nun wird eine Beispielliste erstellt und exportiert: [1.1117634, 2.55, 3.3, 144.0]")
+    print("Nun wird eine Beispielliste erstellt und mit save_data() exportiert: [1.1117634, 2.55, 3.3, 144.0]")
     liste = [1.1117634, 2.55, 3.3, 144.0] # eine Beispielliste
     try:
         save_data(liste, "test.csv")
     except RuntimeError:
         print("Speichern der Liste fehlgeschlagen.")
 
-    # read_data()
+    # load_data()
     print("")
-    print("Dieselbe Liste wird nun wieder eingelesen und ausgegeben.")
+    print("Dieselbe Liste wird nun mit load_data() wieder eingelesen und ausgegeben.")
     try:
         print(load_data("test.csv"))
     except RuntimeError:

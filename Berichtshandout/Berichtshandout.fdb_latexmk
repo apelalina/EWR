@@ -1,11 +1,11 @@
 # Fdb version 4
-["pdflatex"] 1716294436.89476 "c:/Users/alina/Documents/EWR/Berichtshandout/Berichtshandout.tex" "Berichtshandout.pdf" "Berichtshandout" 1716294442.56265 2
+["pdflatex"] 1716805791.54688 "c:/Users/alina/Documents/EWR/Berichtshandout/Berichtshandout.tex" "Berichtshandout.pdf" "Berichtshandout" 1716805803.46696 2
   "AB3-flow_cropped.pdf" 1716291380 775687 032e6b03823fe9799c43855ab6fec58b ""
-  "Berichtshandout.aux" 1716294441 5032 493b7de6ac2202c3f17ebbccb35a54a6 "pdflatex"
-  "Berichtshandout.out" 1716294441 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "Berichtshandout.tex" 1716294427 14836 296c174da4ccb819e8a58b873113db40 ""
-  "Berichtshandout.toc" 1716294441 1001 9c189219e7a8ccc806108df81e435ba1 "pdflatex"
-  "C:/Users/alina/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1716293958 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
+  "Berichtshandout.aux" 1716805802 5032 493b7de6ac2202c3f17ebbccb35a54a6 "pdflatex"
+  "Berichtshandout.out" 1716805801 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "Berichtshandout.tex" 1716805778 14836 296c174da4ccb819e8a58b873113db40 ""
+  "Berichtshandout.toc" 1716805802 1001 9c189219e7a8ccc806108df81e435ba1 "pdflatex"
+  "C:/Users/alina/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1716474140 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/alina/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1095.pk" 1716276558 12668 6e586548e46db37d6d28a4b27d140a99 ""
   "C:/Users/alina/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1716122633 24240395 c28b9a409acdef356382a5d9b0f7c21f ""
   "C:/Users/alina/AppData/Local/Programs/MiKTeX/fonts/tfm/jknappen/ec/tcrm1095.tfm" 993062508 1460 8005ce585ff351dff78998923504da5e ""
@@ -116,7 +116,7 @@
   "C:/Users/alina/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1700127522 55487 80a65caedd3722f4c20a14a69e785d8f ""
   "C:/Users/alina/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
   "C:/Users/alina/AppData/Local/Programs/MiKTeX/tex/latex/xurl/xurl.sty" 1641733940 4675 e4b8c405820368c2dfb03526e16d725a ""
-  "c:/Users/alina/Documents/EWR/Berichtshandout/Berichtshandout.tex" 1716294427 14836 296c174da4ccb819e8a58b873113db40 ""
+  "c:/Users/alina/Documents/EWR/Berichtshandout/Berichtshandout.tex" 1716805778 14836 296c174da4ccb819e8a58b873113db40 ""
   "husiegel_bw.pdf" 1716294229 33865 b24f18b60a2ba9c9ae20aba7388ac335 ""
   "plot_basis8_endwert9.png" 1716228857 27677 46c951494b06950927b4aeec5cd2b616 ""
   "plot_basis9_endwert9.png" 1716228857 27286 4b1e29ea492ce0f7189e40172ce619c6 ""
