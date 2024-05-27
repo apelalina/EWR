@@ -37,7 +37,7 @@ def vorwaerts_summation(start, stop, num, basis, data_type) -> list:
     logspace=py_logspace(start, stop, num, basis)
     for k in logspace: 
         partialsumme=data_type(0) # Casting zum gewuenschten Datentyp
-        for i in range(1, k+1):
+        for i in range(1, k+1): #Vorwaertsschleife
             partialsumme += data_type(1)/data_type(i)
         result.append(partialsumme)
     return result
@@ -64,8 +64,8 @@ def rueckwaerts_summation(start, stop, num, basis, data_type) -> list:
     logspace=py_logspace(start, stop, num, basis)
     for k in logspace:
         partialsumme = data_type(0) # Casting zum gewuenschten Datentyp
-        for variable in range(int(k), 0, -1):  # Rueckwaertsschleife
-            partialsumme += data_type(1) / data_type(variable)
+        for i in range(int(k), 0, -1):  # Rueckwaertsschleife
+            partialsumme += data_type(1) / data_type(i)
         result.append(partialsumme)
     return result
 

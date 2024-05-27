@@ -71,8 +71,8 @@ def main():
 
 
         if choice == "2": # Falls die Daten gespeichert werden sollen
-            print("Die ausgegebenen Daten werden im Ordnder \"convergence_data_export\" "+
-                  "im Arbeitsverzeichnis als .csv-Dateien abgespeichert.")
+            print("\nDie ausgegebenen Daten werden im Ordnder \"convergence_data_export\" "+
+                  "im Arbeitsverzeichnis als .csv-Dateien abgespeichert.\n")
 
             os.makedirs("convergence_data_export", exist_ok=True)
 
