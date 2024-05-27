@@ -5,12 +5,13 @@ Experimentierskript zur Konvergenz der Harmonischen Reihe
 pylint 3.1.0
 astroid 3.1.0
 Python 3.12.3 (tags/v3.12.3:f6650f9, Apr  9 2024, 14:05:25) [MSC v.1938 64 bit (AMD64)]
-9.92/10
+9.67/10
 """
 
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 
 # Programm 1: Eingabe sowie das Speichern und Laden von Daten
 from tools_read_save import read_number, save_data, load_data # pylint: disable=import-error
@@ -25,24 +26,22 @@ def main():
     """
     Hauptfunktion des Experimentierskripts.
     """
-    try:
-        print("\nExperimentsteuerung:\n")
-        print("1. Benutzerdefinierte Parameter eingeben und Partialsummen berechnen")
-        print("2. Benutzerdefinierte Parameter eingeben, Partialsummen berechnen und abspeichern")
-        print("3. Standardparameter verwenden und Partialsummen berechnen")
-        print("4. Bereits berechnete Daten aus einer Datei laden")
-        print("5. Programm beenden")
-        choice = input("\nBitte wählen Sie eine Option:\n")
 
-    except ValueError:
-        print("Fehler beim Programmaufruf. Bitte wählen Sie 1, 2, 3 oder 4.")
+    print("\nExperimentsteuerung:\n")
+    print("1. Benutzerdefinierte Parameter eingeben und Partialsummen berechnen")
+    print("2. Benutzerdefinierte Parameter eingeben, Partialsummen berechnen und abspeichern")
+    print("3. Standardparameter verwenden und Partialsummen berechnen")
+    print("4. Bereits berechnete Daten aus einer Datei laden")
+    print("5. Programm beenden")
+    choice = input("\nBitte wählen Sie eine Option:\n")
+
 
     if choice in ("1", "2"):
 
         # Werte einlesen
-        start = read_number("Anfangswert fuer den Logarithmusraum: ", int)
-        stop = read_number("Endwert fuer den Logarithmusraum: ", int)
-        basis = read_number("Basis des Logarithmusraums: ", int)
+        start = read_number("Anfangswert fuer den Logarithmusraum: ", int, lower_limit=0)
+        stop = read_number("Endwert fuer den Logarithmusraum: ", int, lower_limit=0)
+        basis = read_number("Basis des Logarithmusraums: ", int, lower_limit=1)
         num = read_number("Anzahl der zu berechnenden Partialsummen: ", int, lower_limit=2)
 
         # Berechnen der Partialsummen
@@ -70,9 +69,13 @@ def main():
                                                            np.float64)
         print("\nRueckwaertssummation mit np.float64:\n", result_rueckwaerts_float64)
 
+
         if choice == "2": # Falls die Daten gespeichert werden sollen
             print("Die ausgegebenen Daten werden im Ordnder \"convergence_data_export\" "+
                   "im Arbeitsverzeichnis als .csv-Dateien abgespeichert.")
+
+            os.makedirs("convergence_data_export", exist_ok=True)
+
             save_data(result_vorwaerts_float16,
                       "convergence_data_export/result_vorwaerts_float16.csv")
             save_data(result_vorwaerts_float32,
@@ -89,6 +92,7 @@ def main():
         #Plot
         x_werte = py_logspace(start, stop, num, basis)
         #Linien
+
         plt.plot(x_werte, result_vorwaerts_float16,
                  label='Vorwaertssummation mit np.float16', color='black')
         plt.plot(x_werte, result_vorwaerts_float32,
@@ -165,7 +169,7 @@ def main():
         plt.plot(x_werte, result_rueckwaerts_float64,
                  label='Rueckwaertssummation mit np.float64', color='yellow')
         #Achsenbeschriftung
-        plt.xlabel("Index der Partialsummen in linearer Skalierung")
+        plt.xlabel("Index der Partialsummen")
         plt.ylabel("Partialsummen")
         plt.title("Darstellung der Partialsummen")
         #Legende
@@ -222,7 +226,7 @@ def main():
             plt.plot(x_werte, result_rueckwaerts_float64,
                      label='Rueckwaertssummation mit np.float64', color='yellow')
             #Achsenbeschriftung
-            plt.xlabel("Index der Partialsummen in linearer Skalierung")
+            plt.xlabel("Index der Partialsummen")
             plt.ylabel("Partialsummen")
             plt.title("Darstellung der Partialsummen")
             #Legende
@@ -236,6 +240,9 @@ def main():
     if choice == "5":
         print("Programm beendet.")
         sys.exit()
+
+    if choice not in ("1", "2", "3", "4", "5"): 
+        print("Das ist keine der möglichen Optionen, deswegen wird das Programm beendet.")
 
 if __name__ == "__main__":
     main()
