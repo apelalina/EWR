@@ -35,11 +35,12 @@ def vorwaerts_summation(start, stop, num, basis, data_type) -> list:
 
     """
     result = []
+    logspace=py_logspace(start, stop, num, basis)
     partialsumme=data_type(0) # Casting zum gewuenschten Datentyp
     for i in range(1, basis**stop +1):
-        partialsumme += data_type(1 / (i))
+        partialsumme += data_type(1)/data_type(i)
         # damit nicht jedes mal "von vorne" aufsummiert werden muss:
-        if i in py_logspace(start, stop, num, basis):
+        if i in logspace:
             result.append(partialsumme)
     return result
 
@@ -62,10 +63,11 @@ def rueckwaerts_summation(start, stop, num, basis, data_type) -> list:
         list: Eine Liste der berechneten Partialsummen.
     """
     result = []
-    for k in py_logspace(start, stop, num, basis):
+    logspace=py_logspace(start, stop, num, basis)
+    for k in logspace:
         partialsumme = data_type(0) # Casting zum gewuenschten Datentyp
         for variable in range(int(k), 0, -1):  # Rueckwaertsschleife
-            partialsumme += data_type(1 / variable)
+            partialsumme += data_type(1) / data_type(variable)
         result.append(partialsumme)
     return result
 
@@ -100,30 +102,6 @@ def main():
 
             result_rueckwaerts_float64 = rueckwaerts_summation(start, stop, num, basis, np.float64)
             print("\nRueckwaertssummation mit np.float64:", result_rueckwaerts_float64)
-
-            #Plot
-            #Werte
-            x_werte=py_logspace(start, stop, basis, num)
-            y_werte1=result_vorwaerts_float16
-            y_werte2=result_vorwaerts_float32
-            y_werte3=result_vorwaerts_float64
-            y_werte4=result_rueckwaerts_float16
-            y_werte5=result_rueckwaerts_float32
-            y_werte6=result_rueckwaerts_float64
-            #Plot der Linien
-            plt.plot(x_werte, y_werte1, label='Vorwaertssummation mit np.float16', color='black')
-            plt.plot(x_werte, y_werte2, label='Vorwaertssummation mit np.float32', color='blue')
-            plt.plot(x_werte, y_werte3, label='Vorwaertssummation mit np.float64', color='green')
-            plt.plot(x_werte, y_werte4, label='Rueckwaertssummation mit np.float16', color='red')
-            plt.plot(x_werte, y_werte5, label='Rueckwaertssummation mit np.float32', color='purple')
-            plt.plot(x_werte, y_werte6, label='Rueckwaertssummation mit np.float64', color='yellow')
-            #Achsenbeschriftung
-            plt.xlabel("Index der Partialsummen in logarithmischer Skalierung")
-            plt.ylabel("Partialsummen")
-            plt.title("Darstellung der Partialsummen")
-            #Legende
-            plt.legend()
-            plt.show()
 
             break
 
