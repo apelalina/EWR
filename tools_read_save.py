@@ -18,12 +18,12 @@ def read_number(question: str,
 
     Inputs:
         question (str): Aufforderung zur Eingabe
-        data_type (type): Gewuenschter Datentyp
-        lower_limit: Untere Grenze
-        upper_limit: Obere Grenze
+        data_type (type): Gewünschter Datentyp
+        lower_limit: Untere Grenze (im Zieldatentyp)
+        upper_limit: Obere Grenze (im Zieldatentyp)
 
     Returns:
-        Die eingegebene Zahl im gewuenschten Datentyp
+        Die eingegebene Zahl im gewünschten Datentyp
    
     Throws:
         ValueError: wenn eine leere Eingabe gemacht wird.
@@ -54,10 +54,10 @@ def read_number(question: str,
 def save_data(data, filepath: str):
     """
     Speichert eine Liste von Zahlen in eine csv-Datei.
-        data: Eine Liste an Zahlen
+        data (list): Eine Liste an Zahlen
         filepath (string): Pfad der zu speichernden Datei
     Throws:
-        RuntimeError: Wenn das Speichern fehlschlägt.
+        FileNotFoundError: Wenn das Speichern fehlschlägt.
     """
     try:
         np.savetxt(filepath, data, delimiter=',') # delimiter: "," als Trennzeichen
@@ -71,7 +71,7 @@ def load_data(filepath: str):
     Inputs:
         filepath (string): Pfad der zu lesenden Datei
     Throws:
-        RuntimeError: Wenn das Einlesen fehlschlägt.
+        FileNotFoundError: Wenn das Einlesen fehlschlägt.
     """
     try:
         npliste = np.loadtxt(filepath, delimiter=',', dtype=float) # delimiter: "," als Trennzeichen
@@ -98,7 +98,8 @@ def main():
 
     # save_data()
     print("")
-    print("Nun wird eine Beispielliste erstellt und mit save_data() exportiert: [1.1117634, 2.55, 3.3, 144.0]")
+    print("Nun wird die Beispielliste [1.1117634, 2.55, 3.3, 144.0] "+
+          " erstellt und mit save_data() exportiert.")
     liste = [1.1117634, 2.55, 3.3, 144.0] # eine Beispielliste
     try:
         save_data(liste, "test.csv")
