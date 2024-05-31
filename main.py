@@ -74,6 +74,7 @@ def main():
             print("\nDie ausgegebenen Daten werden im Ordnder \"convergence_data_export\" "+
                   "im Arbeitsverzeichnis als .csv-Dateien abgespeichert.\n")
 
+            # Falls das Verzeichnis noch nicht existiert, soll es erstellt werden
             os.makedirs("convergence_data_export", exist_ok=True)
 
             save_data(result_vorwaerts_float16,
@@ -92,23 +93,22 @@ def main():
         #Plot
         x_werte = py_logspace(start, stop, num, basis)
         #Linien
-
         plt.plot(x_werte, result_vorwaerts_float16,
-                 label='Vorwaertssummation mit np.float16', color='black')
-        plt.plot(x_werte, result_vorwaerts_float32,
-                 label='Vorwaertssummation mit np.float32', color='blue')
-        plt.plot(x_werte, result_vorwaerts_float64,
-                 label='Vorwaertssummation mit np.float64', color='green')
+                 label='Vorwärtssummation mit np.float16', color='red')
         plt.plot(x_werte, result_rueckwaerts_float16,
-                 label='Rueckwaertssummation mit np.float16', color='red')
+                 label='Rückwärtssummation mit np.float16', color='darkred')
+        plt.plot(x_werte, result_vorwaerts_float32,
+                 label='Vorwärtssummation mit np.float32', color='limegreen')
         plt.plot(x_werte, result_rueckwaerts_float32,
-                 label='Rueckwaertssummation mit np.float32', color='purple')
+                 label='Rückwärtssummation mit np.float32', color='green')
+        plt.plot(x_werte, result_vorwaerts_float64,
+                 label='Vorwärtssummation mit np.float64', color='royalblue')
         plt.plot(x_werte, result_rueckwaerts_float64,
-                 label='Rueckwaertssummation mit np.float64', color='yellow')
+                 label='Rückwärtssummation mit np.float64', color='darkblue')
         #Achsenbeschriftung
-        plt.xlabel("Index der Partialsummen in linearer Skalierung")
+        plt.xlabel("Index der Partialsummen")
         plt.ylabel("Partialsummen")
-        plt.title("Darstellung der Partialsummen")
+        plt.title("Darstellung der berechneten Partialsummen")
         #Legende
         plt.legend()
         # Plot exportieren
@@ -163,17 +163,17 @@ def main():
         x_werte = py_logspace(start, stop, num, basis)
         #Linien
         plt.plot(x_werte, result_vorwaerts_float16,
-                 label='Vorwaertssummation mit np.float16', color='black')
-        plt.plot(x_werte, result_vorwaerts_float32,
-                 label='Vorwaertssummation mit np.float32', color='blue')
-        plt.plot(x_werte, result_vorwaerts_float64,
-                 label='Vorwaertssummation mit np.float64', color='green')
+                 label='Vorwärtssummation mit np.float16', color='red')
         plt.plot(x_werte, result_rueckwaerts_float16,
-                 label='Rueckwaertssummation mit np.float16', color='red')
+                 label='Rückwärtssummation mit np.float16', color='darkred')
+        plt.plot(x_werte, result_vorwaerts_float32,
+                 label='Vorwärtssummation mit np.float32', color='limegreen')
         plt.plot(x_werte, result_rueckwaerts_float32,
-                 label='Rueckwaertssummation mit np.float32', color='purple')
+                 label='Rückwärtssummation mit np.float32', color='green')
+        plt.plot(x_werte, result_vorwaerts_float64,
+                 label='Vorwärtssummation mit np.float64', color='royalblue')
         plt.plot(x_werte, result_rueckwaerts_float64,
-                 label='Rueckwaertssummation mit np.float64', color='yellow')
+                 label='Rückwärtssummation mit np.float64', color='darkblue')
         #Achsenbeschriftung
         plt.xlabel("Index der Partialsummen")
         plt.ylabel("Partialsummen")
@@ -224,17 +224,17 @@ def main():
             x_werte = py_logspace(start, stop, num, basis)
             #Linien
             plt.plot(x_werte, result_vorwaerts_float16,
-                     label='Vorwaertssummation mit np.float16', color='black')
-            plt.plot(x_werte, result_vorwaerts_float32,
-                     label='Vorwaertssummation mit np.float32', color='blue')
-            plt.plot(x_werte, result_vorwaerts_float64,
-                     label='Vorwaertssummation mit np.float64', color='green')
+                    label='Vorwärtssummation mit np.float16', color='red')
             plt.plot(x_werte, result_rueckwaerts_float16,
-                     label='Rueckwaertssummation mit np.float16', color='red')
+                    label='Rückwärtssummation mit np.float16', color='darkred')
+            plt.plot(x_werte, result_vorwaerts_float32,
+                    label='Vorwärtssummation mit np.float32', color='limegreen')
             plt.plot(x_werte, result_rueckwaerts_float32,
-                     label='Rueckwaertssummation mit np.float32', color='purple')
+                    label='Rückwärtssummation mit np.float32', color='green')
+            plt.plot(x_werte, result_vorwaerts_float64,
+                    label='Vorwärtssummation mit np.float64', color='royalblue')
             plt.plot(x_werte, result_rueckwaerts_float64,
-                     label='Rueckwaertssummation mit np.float64', color='yellow')
+                    label='Rückwärtssummation mit np.float64', color='darkblue')
             #Achsenbeschriftung
             plt.xlabel("Index der Partialsummen")
             plt.ylabel("Partialsummen")
