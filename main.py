@@ -111,6 +111,12 @@ def main():
         plt.title("Darstellung der Partialsummen")
         #Legende
         plt.legend()
+        # Plot exportieren
+        filename = "partialsummen_plot_" + str(start)+ "_" + str(stop) 
+        filename = filename + "_" + str(num) + "_" + str(basis) + ".pdf" # damit Zeile nicht über 100 Zeichen lang ist
+        plt.savefig(filename, format="pdf", bbox_inches="tight")
+        print("Plot als " + filename + " gespeichert.")
+        # Plot anzeigen 
         plt.show()
 
 
@@ -171,9 +177,13 @@ def main():
         #Achsenbeschriftung
         plt.xlabel("Index der Partialsummen")
         plt.ylabel("Partialsummen")
-        plt.title("Darstellung der Partialsummen")
+        plt.title("Darstellung der berechneten Partialsummen")
         #Legende
         plt.legend()
+        # Plot exportieren
+        plt.savefig("base_params_plot.pdf", format="pdf", bbox_inches="tight")
+        print("Plot als base_params_plot.pdf gespeichert.")
+        # Plot anzeigen
         plt.show()
 
     if choice == "4":
@@ -228,9 +238,15 @@ def main():
             #Achsenbeschriftung
             plt.xlabel("Index der Partialsummen")
             plt.ylabel("Partialsummen")
-            plt.title("Darstellung der Partialsummen")
+            plt.title("Darstellung der berechneten Partialsummen")
             #Legende
             plt.legend()
+            # Plot exportieren
+            filename = "partialsummen_plot_" + str(start)+ "_" + str(stop) 
+            filename = filename + "_" + str(num) + "_" + str(basis) + ".pdf" # damit Zeile nicht über 100 Zeichen lang ist
+            plt.savefig(filename, format="pdf", bbox_inches="tight")
+            print("Plot als " + filename + " gespeichert.")
+            # Plot anzeigen 
             plt.show()
 
         else:
