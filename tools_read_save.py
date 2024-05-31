@@ -69,7 +69,7 @@ def load_data(filepath: str):
     """
     Liest eine Liste von Zahlen aus einer csv-Datei mit "," als Trennzeichen ein.
     Inputs:
-        filepath (string): Pfad der zu lesenden Datei
+        filepath (str): Pfad der zu lesenden Datei
     Throws:
         FileNotFoundError: Wenn das Einlesen fehlschlägt.
     """
