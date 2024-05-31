@@ -126,7 +126,7 @@ def main():
         start = 1
         stop = 5
         basis = 10
-        num = 10
+        num = 300
 
         print("\nStandardparameter:")
         print("Anfangswert für den Logarithmusraum: "+ str(start))
