@@ -5,13 +5,13 @@ Experimentierskript zur Konvergenz der Harmonischen Reihe
 pylint 3.1.0
 astroid 3.1.0
 Python 3.12.3 (tags/v3.12.3:f6650f9, Apr  9 2024, 14:05:25) [MSC v.1938 64 bit (AMD64)]
-9.67/10
+9.77/10
 """
 
 import sys
+import os
 import numpy as np
 import matplotlib.pyplot as plt
-import os
 
 # Programm 1: Eingabe sowie das Speichern und Laden von Daten
 from tools_read_save import read_number, save_data, load_data # pylint: disable=import-error
@@ -112,11 +112,11 @@ def main():
         #Legende
         plt.legend()
         # Plot exportieren
-        filename = "partialsummen_plot_" + str(start)+ "_" + str(stop) 
+        filename = "partialsummen_plot_" + str(start)+ "_" + str(stop)
         filename = filename + "_" + str(num) + "_" + str(basis) + ".pdf" # damit Zeile nicht über 100 Zeichen lang ist
         plt.savefig(filename, format="pdf", bbox_inches="tight")
         print("Plot als " + filename + " gespeichert.")
-        # Plot anzeigen 
+        # Plot anzeigen
         plt.show()
 
 
@@ -242,11 +242,11 @@ def main():
             #Legende
             plt.legend()
             # Plot exportieren
-            filename = "partialsummen_plot_" + str(start)+ "_" + str(stop) 
+            filename = "partialsummen_plot_" + str(start)+ "_" + str(stop)
             filename = filename + "_" + str(num) + "_" + str(basis) + ".pdf" # damit Zeile nicht über 100 Zeichen lang ist
             plt.savefig(filename, format="pdf", bbox_inches="tight")
             print("Plot als " + filename + " gespeichert.")
-            # Plot anzeigen 
+            # Plot anzeigen
             plt.show()
 
         else:
@@ -257,7 +257,7 @@ def main():
         print("Programm beendet.")
         sys.exit()
 
-    if choice not in ("1", "2", "3", "4", "5"): 
+    if choice not in ("1", "2", "3", "4", "5"):
         print("Das ist keine der möglichen Optionen, deswegen wird das Programm beendet.")
 
 if __name__ == "__main__":
