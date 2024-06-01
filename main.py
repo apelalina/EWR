@@ -220,6 +220,24 @@ def main():
             basis = read_number("Was war die Basis dieses Logarithmusraums? ", int)
             num = len(result_vorwaerts_float16)
 
+            print("Vorwärtssummation mit np.float16:")
+            print(result_vorwaerts_float16)
+            print("")
+            print("Vorwärtssummation mit np.float32:")
+            print(result_vorwaerts_float32)
+            print("")
+            print("Vorwärtssummation mit np.float64:")
+            print(result_vorwaerts_float64)
+            print("")
+            print("Rückwärtssummation mit np.float16:")
+            print(result_rueckwaerts_float16)
+            print("")
+            print("Rückwärtssummation mit np.float32:")
+            print(result_rueckwaerts_float32)
+            print("")
+            print("Rückwärtssummation mit np.float64:")
+            print(result_rueckwaerts_float64)
+
             #Plot
             x_werte = py_logspace(start, stop, num, basis)
             #Linien
