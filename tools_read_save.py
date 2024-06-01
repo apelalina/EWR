@@ -88,7 +88,7 @@ def main():
 
     anfrage = "Bitte geben Sie eine ganze Zahl x mit 3 <= x <= 7 ein."
     try: # Falls der Aufruf abgebrochen wird, soll das main-Programm trotzdem weiter laufen
-        eingabe_zahl = read_number(anfrage, int, lower_limit=2)
+        eingabe_zahl = read_number(anfrage, int, lower_limit=2, upper_limit=7)
         print("")
         print("Die Funktion gibt zurück: " + str(eingabe_zahl) + ", Datentyp: " +
               str(type(eingabe_zahl)))
