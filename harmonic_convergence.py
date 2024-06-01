@@ -35,7 +35,7 @@ def vorwaerts_summation(start, stop, num, basis, data_type) -> list:
     """
     result = []
     logspace=py_logspace(start, stop, num, basis)
-    for k in logspace: 
+    for k in logspace: # für jede der gewuenschten Partialsummen
         partialsumme=data_type(0) # Casting zum gewuenschten Datentyp
         for i in range(1, k+1): #Vorwaertsschleife
             partialsumme += data_type(1)/data_type(i)
