@@ -1,5 +1,7 @@
 #import time #Zeitmessung
 import random #Zufallszahlen
+import decimal
+from decimal import Decimal, getcontext
 
 def pi_leibniz(tol: float):
     pi = 4
@@ -22,12 +24,11 @@ def pi_montecarlo(num_points):
             inside_circle += 1
     return (inside_circle / num_points) * 4
 
-
 def main():
     toleranz = float(input("Genauigkeit: "))
     pi1 = pi_leibniz(toleranz)
     print(pi1)
-    
+
     num_points=int(input("Anzahl der Punkte: "))
     pi2=pi_montecarlo(num_points)
     print(pi2)
