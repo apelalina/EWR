@@ -1,3 +1,5 @@
+import time
+
 def pi_leibniz(tol: float):
     pi = 4
     sk = 8./15
@@ -10,7 +12,10 @@ def pi_leibniz(tol: float):
 
 def main():
     toleranz = float(input("Genauigkeit: "))
+    start=time.time()
     pi1 = pi_leibniz(toleranz)
+    ende = time.time()
+    print('{:5.10f}s'.format(ende-start))
     print(pi1)
 
 if __name__ == "__main__":
