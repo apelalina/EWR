@@ -92,19 +92,40 @@ def pi_viete(tol: int) -> (Decimal, int, float):
     elapsed_time = (end_time - start_time) * 1000
     return pi_approx, operations, elapsed_time
 
-def pi_chudnovsky(tol: int) -> (Decimal, int, float):
+def pi_gausslegendre(tol: int) -> (Decimal, int, float):
     """
-    Berechnet eine Näherung von Pi mit dem Chudnovsky-Algorithmus.
+    Berechnet eine Näherung von Pi mit dem Gauss-Legendre Algorithmus.
 
     Inputs:
-    tol (int): Index der Partialsumme der verallgemeinerten, hypergeometrischen Reihe.
+    tol (int): Anzahl der Schleifendurchläufe.
 
     Returns:
     Decimal: Eine Näherung von Pi.
     int: Anzahl der durchgeführten Operationen.
     float: Benötigte Zeit in Millisekunden.
     """ 
-#mehr dazu kommt morgen 
+    getcontext().prec = 50  # Setzt die Präzision für Decimal-Berechnungen
+    operations = 0
+    a_n = Decimal(1)
+    b_n = Decimal(1/Decimal(np.sqrt(2)))
+    t_n = Decimal(1/4)
+    p_n = Decimal(1)
+    
+    start_time = time.time()
+    for k in range(1,tol):
+        a_N = Decimal((a_n+b_n)/2)
+        b_n = Decimal(np.sqrt(a_n*b_n))
+        t_n = t_n-p_n*Decimal(np.square(a_n-a_N))
+        a_n = a_N
+        p_n = Decimal(2*p_n)
+        pi_approx = Decimal(Decimal(np.square(a_n+b_n))/Decimal(4*t_n))
+        operations += 13  # 4 Additionen/Subtraktionen, 6 Multiplikationen, 2 Division, 1 Quadratwurzel
+    end_time = time.time()
+    
+    elapsed_time = (end_time-start_time) * 1000
+    return pi_approx, operations, elapsed_time
+        
+    
     
 def main():
     """
@@ -127,6 +148,12 @@ def main():
     print(f"Pi (Viète-Algorithmus): {pi_viete_approx}")
     print(f"Anzahl der Operationen (Viète-Algorithmus): {viete_ops}")
     print(f"Benötigte Zeit (Viète-Algorithmus): {viete_time:.6f} Millisekunden")
+    
+    toleranz = int(input("Bitte die gewünschte Anzahl der Schleifendurchläufe eingeben: "))
+    pi_gauss_legendre_approx, gauss_legendre_ops, gauss_legendre_time = pi_gausslegendre(toleranz)
+    print(f"Pi (Gauss-Legendre-Algorithmus): {pi_gauss_legendre_approx}")
+    print(f"Anzahl der Operationen (Gauss-Legendre-Algorithmus): {gauss_legendre_ops}")
+    print(f"Benötigte Zeit (Gauss-Legendre-Algorithmus): {gauss_legendre_time:.6f} Millisekunden")
 
 if __name__ == "__main__":
     main()
