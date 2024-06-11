@@ -22,7 +22,7 @@ def pi_leibniz(tol: int) -> (Decimal, int, float):
     operations = 0
 
     start_time = time.time()
-    for k in range(tol-1):
+    for k in range(1, tol):
         pi_approx = pi_approx - a_n
         n += 1
         a_n = Decimal(8)/Decimal(16 * n * n - 1)
@@ -50,7 +50,7 @@ def pi_montecarlo(num_points: int) -> (Decimal, int, float):
     operations = 0
 
     start_time = time.time()
-    for i in range(num_points-1):
+    for i in range(1, num_points):
         x = Decimal(random.uniform(-1, 1))
         y = Decimal(random.uniform(-1, 1))
         if x * x + y * y <= 1:
@@ -83,7 +83,7 @@ def pi_viete(tol: int) -> (Decimal, int, float):
     operations = 2  # 1 Quadratwurzel, 1 Division, 1 Multiplikation
 
     start_time = time.time()
-    for k in range(tol-1):
+    for k in range(1,tol):
         a_n = Decimal(np.sqrt(Decimal(2) + a_n))
         pi_approx = pi_approx * Decimal(2) / a_n
         operations += 3  # 1 Quadratwurzel, 1 Addition, 1 Division
@@ -92,6 +92,20 @@ def pi_viete(tol: int) -> (Decimal, int, float):
     elapsed_time = (end_time - start_time) * 1000
     return pi_approx, operations, elapsed_time
 
+def pi_chudnovsky(tol: int) -> (Decimal, int, float):
+    """
+    Berechnet eine Näherung von Pi mit dem Chudnovsky-Algorithmus.
+
+    Inputs:
+    tol (int): Index der Partialsumme der verallgemeinerten, hypergeometrischen Reihe.
+
+    Returns:
+    Decimal: Eine Näherung von Pi.
+    int: Anzahl der durchgeführten Operationen.
+    float: Benötigte Zeit in Millisekunden.
+    """ 
+#mehr dazu kommt morgen 
+    
 def main():
     """
     Hauptfunktion des Programms.
