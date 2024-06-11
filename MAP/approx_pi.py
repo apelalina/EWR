@@ -1,7 +1,7 @@
-import numpy as np
 import time # Zeitmessung
 import random # Zufallszahlen
 from decimal import Decimal, getcontext # Datentyp
+import numpy as np
 
 def pi_leibniz(tol: int) -> (Decimal, int, float):
     """
@@ -56,10 +56,10 @@ def pi_montecarlo(num_points: int) -> (Decimal, int, float):
         if x * x + y * y <= 1:
             inside_circle += 1
         operations += 3  # 2 Multiplikationen, 1 Addition
-   
+
     pi_approx = (Decimal(inside_circle) / Decimal(num_points)) * Decimal(4)
     operations += 2  # 1 Division, 1 Multiplikation
-    
+
     end_time = time.time()
 
     elapsed_time = (end_time - start_time) * 1000
@@ -110,7 +110,7 @@ def pi_gausslegendre(tol: int) -> (Decimal, int, float):
     b_n = Decimal(1/Decimal(np.sqrt(2)))
     t_n = Decimal(1/4)
     p_n = Decimal(1)
-    
+
     start_time = time.time()
     for k in range(1,tol):
         a_N = Decimal((a_n+b_n)/2)
@@ -121,12 +121,11 @@ def pi_gausslegendre(tol: int) -> (Decimal, int, float):
         pi_approx = Decimal(Decimal(np.square(a_n+b_n))/Decimal(4*t_n))
         operations += 13  # 4 Additionen/Subtraktionen, 6 Multiplikationen, 2 Division, 1 Quadratwurzel
     end_time = time.time()
-    
+
     elapsed_time = (end_time-start_time) * 1000
     return pi_approx, operations, elapsed_time
-        
-    
-    
+
+
 def main():
     """
     Hauptfunktion des Programms.
@@ -142,13 +141,13 @@ def main():
     print(f"Pi (Monte-Carlo-Methode): {pi_montecarlo_approx}")
     print(f"Anzahl der Operationen (Monte-Carlo-Methode): {montecarlo_ops}")
     print(f"Benötigte Zeit (Monte-Carlo-Methode): {montecarlo_time:.6f} Millisekunden")
-    
+
     toleranz = int(input("Bitte den gewünschten Index des Partialproduktes der Viete-Methode eingeben: "))
     pi_viete_approx, viete_ops, viete_time = pi_viete(toleranz)
     print(f"Pi (Viète-Algorithmus): {pi_viete_approx}")
     print(f"Anzahl der Operationen (Viète-Algorithmus): {viete_ops}")
     print(f"Benötigte Zeit (Viète-Algorithmus): {viete_time:.6f} Millisekunden")
-    
+
     toleranz = int(input("Bitte die gewünschte Anzahl der Schleifendurchläufe eingeben: "))
     pi_gauss_legendre_approx, gauss_legendre_ops, gauss_legendre_time = pi_gausslegendre(toleranz)
     print(f"Pi (Gauss-Legendre-Algorithmus): {pi_gauss_legendre_approx}")
