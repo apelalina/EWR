@@ -15,14 +15,14 @@ def pi_leibniz(tol: int) -> (Decimal, int, float):
     int: Anzahl der durchgeführten Operationen.
     float: Benötigte Zeit in Millisekunden.
     """
+    start_time = time.time()
     getcontext().prec = 50  # Setzt die Präzision für Decimal-Berechnungen
     pi_approx = Decimal('4')
     a_n = Decimal('8') / Decimal('15')
     n = Decimal('1')
     operations = Decimal('1')
 
-    start_time = time.time()
-    for k in range(1, tol):
+    for k in range(tol):
         pi_approx = pi_approx - a_n
         n += Decimal('1')
         a_n = Decimal('8') / (Decimal('16')* Decimal(n) * Decimal(n) - Decimal('1'))
@@ -44,16 +44,17 @@ def pi_viete(tol: int) -> (Decimal, int, float):
     int: Anzahl der durchgeführten Operationen.
     float: Benötigte Zeit in Millisekunden.
     """
-    getcontext().prec = 50  # Setzt die Präzision für Decimal-Berechnungen
-    a_n = Decimal(np.sqrt(2))
-    pi_approx = Decimal(2) * Decimal(2 / a_n)
-    operations = 2  # 1 Quadratwurzel, 1 Division, 1 Multiplikation
-
     start_time = time.time()
+    getcontext().prec = 50  # Setzt die Präzision für Decimal-Berechnungen
+    a_n = Decimal('2').sqrt()
+    pi_approx = Decimal('2') * Decimal('2')/ a_n
+    operations = Decimal('3')
+
     for k in range(1,tol):
-        a_n = Decimal((Decimal(2).sqrt() + a_n))
-        pi_approx = pi_approx * Decimal(2) / a_n
-        operations += 3  # 1 Quadratwurzel, 1 Addition, 1 Division
+        a=Decimal('2') + a_n
+        a_n = Decimal(a).sqrt()
+        pi_approx = pi_approx * (Decimal(2) / a_n)
+        operations += Decimal('4') 
     end_time = time.time()
 
     elapsed_time = (end_time - start_time) * 1000
@@ -91,12 +92,6 @@ def main():
     print(f"Pi (Leibniz-Reihe): {pi_leibniz_approx}")
     print(f"Anzahl der Operationen (Leibniz-Reihe): {leibniz_ops}")
     print(f"Benötigte Zeit (Leibniz-Reihe): {leibniz_time:.6f} Millisekunden")
-
-    num_points = int(input("Bitte die Anzahl der Punkte für die Monte-Carlo-Methode eingeben: "))
-    pi_montecarlo_approx, montecarlo_ops, montecarlo_time = pi_montecarlo(num_points)
-    print(f"Pi (Monte-Carlo-Methode): {pi_montecarlo_approx}")
-    print(f"Anzahl der Operationen (Monte-Carlo-Methode): {montecarlo_ops}")
-    print(f"Benötigte Zeit (Monte-Carlo-Methode): {montecarlo_time:.6f} Millisekunden")
 
     toleranz = int(input("Bitte den gewünschten Index des Partialproduktes der Viete-Methode eingeben: "))
     pi_viete_approx, viete_ops, viete_time = pi_viete(toleranz)
