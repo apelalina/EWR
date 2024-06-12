@@ -12,7 +12,6 @@ def error_pi(calculated_pi: Decimal) -> (Decimal):
     else:
         return fehler
 
-
 def pi_leibniz(tol: int) -> (Decimal, int, float):
     """
     Berechnet eine Näherung von Pi mit der Leibniz-Reihe.
@@ -60,7 +59,7 @@ def pi_viete(tol: int) -> (Decimal, int, float):
     pi_approx = Decimal('2') * Decimal('2')/ a_n
     operations = Decimal('3')
 
-    for k in range(1,tol):
+    for k in range(1,tol+1):
         a=Decimal('2') + a_n
         a_n = Decimal(a).sqrt()
         pi_approx = pi_approx * (Decimal(2) / a_n)
@@ -83,7 +82,27 @@ def pi_chudnovsky(tol: int) -> (Decimal, int, float):
     float: Benötigte Zeit in Millisekunden.
     """ 
     getcontext().prec = 50 # Setzt die Präzision für Decimal-Berechnungen
-    operations = 0
+    partialsumme = Decimal('0')
+    operations = Decimal('0')
+    start_time=time.time()
+
+    for k in range(tol+1):
+        a = Decimal('-1')**Decimal(k)
+        b = Decimal(Decimal('6')*Decimal(k)).factorial()
+        c = Decimal('545140134')*Decimal(k)+Decimal('13591409')
+        d = Decimal(Decimal('3') * Decimal(k)).factorial()
+        e = Decimal(k).factorial()**Decimal('3')
+        f = Decimal ('640320')**(Decimal(3)*Decimal(k)+Decimal(3/2))
+        partialsumme = partialsumme + (a*b*c)/(d*e*f)
+        operations += 17
+    
+    pi_approx = Decimal('1')/Decimal('12')*partialsumme
+    operations += 3
+    
+    end_time = time.time()
+    elapsed_time = (end_time - start_time) * 1000
+    return pi_approx, operations, elapsed_time
+    
 
 def main():
     """
@@ -102,6 +121,13 @@ def main():
     print(f"Anzahl der Operationen (Viète-Algorithmus): {viete_ops}")
     print(f"Benötigte Zeit (Viète-Algorithmus): {viete_time:.6f} Millisekunden")
     print(f"Fehler (Viète-Algorithmus): {error_pi(pi_viete_approx):.100f} (100 Nachkommastellen)")
+    
+    toleranz = int(input("Bitte den gewünschten Index der Partialsumme der hypergeometrischen Reihe eingeben: "))
+    pi_chudnovsky_approx, chudnovsky_ops, chudnovsky_time = pi_chudnovsky(toleranz)
+    print(f"Pi (Chudnovsky-Algorithmus:): {pi_chudnovsky_approx}")
+    print(f"Anzahl der Operationen (Chudnovsky-Algorithmus): {chudnovsky_ops}")
+    print(f"Benötigte Zeit (Chudnovsky-Algorithmus): {chudnovsky_time:.6f} Millisekunden")
+    print(f"Fehler (Chudnovsky-Algorithmus): {error_pi(pi_chudnovsky_approx):.100f} (100 Nachkommastellen)")
 
 if __name__ == "__main__":
     main()
