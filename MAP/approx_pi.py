@@ -1,12 +1,35 @@
 import time # Zeitmessung
 import random # Zufallszahlen
 from decimal import Decimal, getcontext # Datentyp
-import numpy as np
+
+def decimal_factorial(n):
+   """
+   Berechnet die Fakultät einer gegebenen Zahl n unter Verwendung des Decimal-Datentyps.
+    
+   Inputs:
+   n (int): Die Zahl, deren Fakultät berechnet werden soll. Muss eine nicht-negative ganze Zahl sein.
+    
+   Returns:
+   Decimal: Die Fakultät der Zahl n als Decimal-Objekt.
+   """  
+   getcontext().prec = 1010
+    
+   result = Decimal(1)
+
+   #Berechnung der Fakultät mit Decimal
+   for i in range(1, n + 1):
+       result *= Decimal(i)
+
+   return result
 
 def error_pi(calculated_pi: Decimal) -> (Decimal):
-    getcontext().prec = 1010
+    
+    getcontext().prec = 1000
+    
     pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
+   
     fehler = Decimal(pi) - calculated_pi
+    
     if fehler < Decimal('0'):
         return Decimal('-1') * fehler
     else:
@@ -88,15 +111,15 @@ def pi_chudnovsky(tol: int) -> (Decimal, int, float):
 
     for k in range(tol+1):
         a = Decimal('-1')**Decimal(k)
-        b = Decimal(Decimal('6')*Decimal(k)).factorial()
+        b = decimal_factorial(6*k)
         c = Decimal('545140134')*Decimal(k)+Decimal('13591409')
-        d = Decimal(Decimal('3') * Decimal(k)).factorial()
-        e = Decimal(k).factorial()**Decimal('3')
+        d = decimal_factorial(3*k)
+        e = decimal_factorial(k)**Decimal('3')
         f = Decimal ('640320')**(Decimal(3)*Decimal(k)+Decimal(3/2))
         partialsumme = partialsumme + (a*b*c)/(d*e*f)
-        operations += 17
+        operations += 23
     
-    pi_approx = Decimal('1')/Decimal('12')*partialsumme
+    pi_approx = Decimal('1')/(Decimal('12')*partialsumme)
     operations += 3
     
     end_time = time.time()
