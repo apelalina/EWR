@@ -50,7 +50,7 @@ def main():
 
         print("\nDie Approximation von Pi mit der Leibniz-Reihe ergab folgende Ergebnisse:")    
         print(data)
-        plot_pi(data)
+        plot_pi(data, y = "Fehler")
 
 
 

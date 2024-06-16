@@ -3,8 +3,11 @@ import random # Zufallszahlen
 from decimal import Decimal, getcontext # Datentyp
 import matplotlib.pyplot as plt 
 
-def plot_pi(data):
-    plt.plot(data["n"], data["Fehler"])
+def plot_pi(data, y = "Fehler"):
+
+    if y == "Fehler":
+        plt.loglog(data["n"], data["Fehler"])
+    
     plt.show()
 
 def decimal_factorial(n):
