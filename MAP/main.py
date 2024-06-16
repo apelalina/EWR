@@ -22,9 +22,9 @@ def main():
     if choice == "1":
         print("\nApproximation von Pi mittels der Leibniz-Reihe\n")
         print("Die Leibniz-Reihe ist eine Folge von Partialsummen, die im Unendlichen gegen Pi konvergiert. Je größer der Index der berechneten Partialsumme, desto genauer die Schätzung von Pi.")
-        print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zweierpotenz (2^k) erwartet. Das Programm approximiert Pi für 200 Eingabewerte zwischen 1 und 2^k\n")
+        print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 20 Eingabewerte zwischen 1 und 10^k\n")
 
-        stop = read_number("Bitte den höchsten Index der Partialsumme der Leibniz-Reihe eingeben: 2^", data_type = int, lower_limit = 0)
+        stop = read_number("Bitte den höchsten Index der Partialsumme der Leibniz-Reihe eingeben: 10^", data_type = int, lower_limit = 0)
 
         indizes = []
         pi = []
@@ -32,7 +32,7 @@ def main():
         operations = []
         laufzeiten = []
 
-        for n in py_logspace(start = 0, stop = stop, num = 200, basis = 2):
+        for n in py_logspace(start = 0, stop = stop, num = 20, basis = 10):
             pi_leibniz_approx, leibniz_ops, leibniz_time = pi_leibniz(n)
             indizes.append(n)
             pi.append(pi_leibniz_approx)
@@ -50,7 +50,7 @@ def main():
 
         print("\nDie Approximation von Pi mit der Leibniz-Reihe ergab folgende Ergebnisse:")    
         print(data)
-        plot_pi(data, y = "Fehler")
+        plot_pi(data, y = "Pi")
 
 
 
