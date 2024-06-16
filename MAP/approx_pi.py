@@ -1,6 +1,11 @@
 import time # Zeitmessung
 import random # Zufallszahlen
 from decimal import Decimal, getcontext # Datentyp
+import matplotlib.pyplot as plt 
+
+def plot_pi(data):
+    plt.plot(data["n"], data["Fehler"])
+    plt.show()
 
 def decimal_factorial(n):
    """
@@ -139,7 +144,6 @@ def main():
     fehler = error_pi(pi_leibniz_approx)
     print(f"Fehler (Leibniz-Reihe): {fehler:.100f} (100 Nachkommastellen)")
     print(f"Natürlicher Logarithmus des Fehlers (Leibniz-Reihe): {fehler.ln():.50f} (50 Nachkommastellen)")
-
 
     toleranz = int(input("Bitte den gewünschten Index des Partialproduktes der Viete-Methode eingeben: "))
     pi_viete_approx, viete_ops, viete_time = pi_viete(toleranz)
