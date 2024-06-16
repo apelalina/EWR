@@ -14,7 +14,7 @@ def decimal_factorial(n):
    """  
    getcontext().prec = 1010
     
-   result = Decimal(1)
+   result = Decimal('1')
 
    #Berechnung der Fakultät mit Decimal
    for i in range(1, n + 1):
@@ -31,9 +31,9 @@ def error_pi(calculated_pi: Decimal) -> (Decimal):
     fehler = Decimal(pi) - calculated_pi
     
     if fehler < Decimal('0'):
-        return Decimal('-1') * fehler
-    else:
-        return fehler
+        fehler = Decimal('-1') * fehler
+    
+    return fehler
 
 def pi_leibniz(tol: int) -> (Decimal, int, float):
     """
@@ -136,21 +136,28 @@ def main():
     print(f"Pi (Leibniz-Reihe): {pi_leibniz_approx}")
     print(f"Anzahl der Operationen (Leibniz-Reihe): {leibniz_ops}")
     print(f"Benötigte Zeit (Leibniz-Reihe): {leibniz_time:.6f} Millisekunden")
-    print(f"Fehler (Leibniz-Reihe): {error_pi(pi_leibniz_approx):.100f} (100 Nachkommastellen)")
+    fehler = error_pi(pi_leibniz_approx)
+    print(f"Fehler (Leibniz-Reihe): {fehler:.100f} (100 Nachkommastellen)")
+    print(f"Natürlicher Logarithmus des Fehlers (Leibniz-Reihe): {fehler.ln():.50f} (50 Nachkommastellen)")
+
 
     toleranz = int(input("Bitte den gewünschten Index des Partialproduktes der Viete-Methode eingeben: "))
     pi_viete_approx, viete_ops, viete_time = pi_viete(toleranz)
     print(f"Pi (Viète-Algorithmus): {pi_viete_approx}")
     print(f"Anzahl der Operationen (Viète-Algorithmus): {viete_ops}")
     print(f"Benötigte Zeit (Viète-Algorithmus): {viete_time:.6f} Millisekunden")
-    print(f"Fehler (Viète-Algorithmus): {error_pi(pi_viete_approx):.100f} (100 Nachkommastellen)")
+    fehler = error_pi(pi_viete_approx)
+    print(f"Fehler (Viète-Algorithmus): {fehler:.100f} (100 Nachkommastellen)")
+    print(f"Natürlicher Logarithmus des Fehlers (Viète-Algorithmus): {fehler.ln():.50f} (50 Nachkommastellen)")
     
     toleranz = int(input("Bitte den gewünschten Index der Partialsumme der hypergeometrischen Reihe eingeben: "))
     pi_chudnovsky_approx, chudnovsky_ops, chudnovsky_time = pi_chudnovsky(toleranz)
     print(f"Pi (Chudnovsky-Algorithmus:): {pi_chudnovsky_approx}")
     print(f"Anzahl der Operationen (Chudnovsky-Algorithmus): {chudnovsky_ops}")
     print(f"Benötigte Zeit (Chudnovsky-Algorithmus): {chudnovsky_time:.6f} Millisekunden")
-    print(f"Fehler (Chudnovsky-Algorithmus): {error_pi(pi_chudnovsky_approx):.100f} (100 Nachkommastellen)")
+    fehler = error_pi(pi_chudnovsky_approx)
+    print(f"Fehler (Chudnovsky-Algorithmus): {fehler:.100f} (100 Nachkommastellen)")
+    print(f"Natürlicher Logarithmus des Fehlers (Chudnovsky-Algorithmus): {fehler.ln():.50f} (50 Nachkommastellen)")
 
 if __name__ == "__main__":
     main()
