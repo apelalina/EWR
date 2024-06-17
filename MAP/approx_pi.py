@@ -41,7 +41,7 @@ def decimal_factorial(n):
 
    #Berechnung der Fakultät mit Decimal
    for i in range(1, n + 1):
-       result *= Decimal(i)
+       result *= Decimal(i)*Decimal('1') # * Decimal('1'), sonst wird Decimal(i) nicht korrekt dargestellt
 
    return result
 
@@ -71,7 +71,7 @@ def pi_leibniz(tol: int) -> (Decimal, int, float):
     float: Benötigte Zeit in Millisekunden.
     """
     start_time = time.time()
-    getcontext().prec = 50  # Setzt die Präzision für Decimal-Berechnungen
+    getcontext().prec = 1000  # Setzt die Präzision für Decimal-Berechnungen
     pi_approx = Decimal('4')
     a_n = Decimal('8') / Decimal('15')
     n = Decimal('1')
@@ -80,11 +80,11 @@ def pi_leibniz(tol: int) -> (Decimal, int, float):
     for k in range(tol):
         pi_approx = pi_approx - a_n
         n += Decimal('1')
-        a_n = Decimal('8') / (Decimal('16')* Decimal(n) * Decimal(n) - Decimal('1'))
+        a_n = Decimal('8') / (Decimal('16')* (Decimal(n)*Decimal('1')) * (Decimal(n)*Decimal('1')) - Decimal('1'))
         operations += Decimal('6')
     end_time = time.time()
 
-    elapsed_time = (end_time - start_time) * 1000
+    elapsed_time = (end_time - start_time) * Decimal('1000')
     return pi_approx, operations, elapsed_time
 
 def pi_viete(tol: int) -> (Decimal, int, float):
@@ -100,7 +100,7 @@ def pi_viete(tol: int) -> (Decimal, int, float):
     float: Benötigte Zeit in Millisekunden.
     """
     start_time = time.time()
-    getcontext().prec = 50  # Setzt die Präzision für Decimal-Berechnungen
+    getcontext().prec = 1000  # Setzt die Präzision für Decimal-Berechnungen
     a_n = Decimal('2').sqrt()
     pi_approx = Decimal('2') * Decimal('2')/ a_n
     operations = Decimal('3')
