@@ -13,7 +13,7 @@ def plot_pi(data, y = "Fehler"):
         plt.plot(data["n"], data["Fehler"], color = 'darkblue',   marker = '.', linestyle = '') # Datenpunkte
         plt.xlabel("Index der Partialsumme")
         plt.ylabel("Differenz zu $\pi$")
-    
+
     if y == "Pi":
         set_precision(1010)
         pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
@@ -25,7 +25,7 @@ def plot_pi(data, y = "Fehler"):
         plt.ylabel("Wert der Partialsumme")
         plt.axhline(y=pi, color="red", label = "$\pi$")
         plt.legend()
-    
+
     plt.show()
 
 def error_pi(calculated_pi: Decimal) -> (Decimal):
@@ -38,7 +38,7 @@ def error_pi(calculated_pi: Decimal) -> (Decimal):
     
     if fehler < Decimal('0'):
         fehler = Decimal('-1')  * fehler
-    
+
     return fehler
 
 def decimal_factorial(n) -> Decimal: 
@@ -50,8 +50,8 @@ def decimal_factorial(n) -> Decimal:
     
    Returns:
    Decimal: Die Fakultät der Zahl n als Decimal-Objekt.
-   """  
-   
+   """
+
    result = Decimal('1')
 
    #Berechnung der Fakultät mit Decimal
@@ -83,7 +83,7 @@ def pi_leibniz(tol: int, precision = 50) -> Decimal:
         pi_approx = pi_approx - a_n
         n += Decimal('1')
         a_n = Decimal('8') / (Decimal('16') * Decimal('1') * (Decimal(n) * Decimal('1')) * (Decimal(n) * Decimal('1')) - Decimal('1'))
-        operations += Decimal('8')
+        operations += Decimal('9')
     end_time = time.time()
 
     elapsed_time = (Decimal(end_time) * Decimal('1') - Decimal(start_time) * Decimal('1')) * Decimal('1000') * Decimal('1')
