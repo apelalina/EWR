@@ -261,7 +261,7 @@ def main():
         plt.ylabel("Anzahl der Operationen")
         plt.legend()
         plt.grid()
-        plt.savefig('Laufzeitplot.pdf')
+        plt.savefig('Operationenplot.pdf')
         plt.show()
 
     if choice == "0":
