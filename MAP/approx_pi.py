@@ -63,6 +63,7 @@ def pi_leibniz(index: int, precision = 50) -> Decimal:
 
     Inputs:
     index (int): Index der Partialsumme der Leibniz-Reihe.
+    precision (int): Mantissenlänge des Datentyps Decimal. (default: 50)
 
     Returns:
     Decimal: Eine Näherung von Pi.
@@ -83,7 +84,7 @@ def pi_leibniz(index: int, precision = 50) -> Decimal:
         operations += Decimal('9')
     end_time = time.time()
 
-    elapsed_time = (Decimal(end_time) * Decimal('1') - Decimal(start_time) * Decimal('1')) * Decimal('1000') * Decimal('1')
+    elapsed_time = ((Decimal(end_time) * Decimal('1')) - (Decimal(start_time) * Decimal('1'))) * (Decimal('1000') * Decimal('1'))
     return pi_approx, operations, elapsed_time
 
 def pi_montecarlo(num_points, precision = 50) -> Decimal:
@@ -92,26 +93,27 @@ def pi_montecarlo(num_points, precision = 50) -> Decimal:
     
     Inputs:
     index (int): Anzahl der zufällig generierten Punkte.
+    precision (int): Mantissenlänge des Datentyps Decimal. (default: 50)
 
     Returns:
     Decimal: Eine Näherung von Pi.
     Decimal: Anzahl der durchgeführten Operationen.
     Decimal: Benötigte Zeit in Millisekunden.
     """    
+    start_time = time.time()   
     getcontext().prec = precision
     inside_circle = Decimal('0') 
-    start_time = time.time()
     operations = Decimal('0')
     for p in range(num_points):
         x = random.uniform(-1,1)
         y = random.uniform(-1,1)
-        if x*x + y * y <= 1:
+        if x * x + y * y <= 1:
             inside_circle += Decimal('1')
             operations += Decimal('5')
-    pi_approx = (inside_circle * Decimal('1')) / (Decimal(num_points) * Decimal('1')) * Decimal('4')
+    pi_approx = ((inside_circle * Decimal('1')) / (Decimal(num_points) * Decimal('1'))) * Decimal('4')
     operations += Decimal('4')
     end_time = time.time()
-    elapsed_time = (Decimal(end_time) * Decimal('1') - Decimal(start_time) * Decimal('1')) * Decimal('1000') * Decimal('1')
+    elapsed_time = ((Decimal(end_time) * Decimal('1')) - (Decimal(start_time) * Decimal('1'))) * (Decimal('1000') * Decimal('1'))
     return pi_approx, operations, elapsed_time
 
 
@@ -121,6 +123,7 @@ def pi_viete(index: int, precision = 50) -> Decimal:
 
     Inputs:
     index (int): Index des Partialproduktes.
+    precision (int): Mantissenlänge des Datentyps Decimal. (default: 50)
 
     Returns:
     Decimal: Eine Näherung von Pi.
@@ -140,7 +143,7 @@ def pi_viete(index: int, precision = 50) -> Decimal:
         operations += Decimal('4')
     end_time = time.time()
 
-    elapsed_time = (Decimal(end_time) * Decimal('1') - Decimal(start_time) * Decimal('1')) * Decimal('1000') * Decimal('1')
+    elapsed_time = ((Decimal(end_time) * Decimal('1')) - (Decimal(start_time) * Decimal('1'))) * (Decimal('1000') * Decimal('1'))
     return pi_approx, operations, elapsed_time
 
 def pi_chudnovsky(index: int, precision = 50) -> Decimal:
@@ -149,6 +152,7 @@ def pi_chudnovsky(index: int, precision = 50) -> Decimal:
 
     Inputs:
     index (int): Index der Partialsumme der verallgemeinerten, hypergeometrischen Reihe.
+    precision (int): Mantissenlänge des Datentyps Decimal. (default: 50)
 
     Returns:
     Decimal: Eine Näherung von Pi.
@@ -161,18 +165,17 @@ def pi_chudnovsky(index: int, precision = 50) -> Decimal:
     start_time=time.time()
 
     for k in range(index+1):
-
-        a = Decimal('-1') ** Decimal(k) * Decimal('1')
-        b = decimal_factorial(6*k) * Decimal('1')
+        a_k = Decimal('-1') ** (Decimal(k) * Decimal('1'))
+        b_k = decimal_factorial(6*k) * Decimal('1')
         operations += Decimal(6*k)
-        c = Decimal('545140134') * Decimal('1') * Decimal(k) * Decimal('1') + Decimal('13591409') 
-        d = decimal_factorial(3*k) * Decimal('1')
+        c_k = (Decimal('545140134') * Decimal('1')) * (Decimal(k) * Decimal('1')) + Decimal('13591409') 
+        d_k = decimal_factorial(3*k) * Decimal('1')
         operations += Decimal(3*k)
-        e = decimal_factorial(k) ** Decimal('3')
-        operations *= Decimal(k)
-        f = (Decimal('640320') * Decimal('1'))**(Decimal(3)*(Decimal(k)*Decimal('1'))+(Decimal(3/2)*Decimal('1')))
-        partialsumme = partialsumme + (a * b * c) / (d * e * f)
-        operations += Decimal('24') * Decimal('1')
+        e_k = (decimal_factorial(k) + Decimal('1')) ** Decimal('3')
+        operations += Decimal(k)
+        f_k = (Decimal('640320') * Decimal('1'))**(Decimal(3)*(Decimal(k)*Decimal('1'))+(Decimal(3/2)*Decimal('1')))
+        partialsumme = partialsumme + (a_k * b_k * c_k) / (d_k * e_k * f_k)
+        operations += Decimal('22') * Decimal('1')
     
     pi_approx = Decimal('1') / (Decimal('12') * Decimal('1') * partialsumme)
     operations += Decimal('3')
