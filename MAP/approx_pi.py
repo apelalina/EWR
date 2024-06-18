@@ -167,12 +167,15 @@ def pi_chudnovsky(tol: int, precision = 50) -> Decimal:
 
         a = Decimal('-1') ** Decimal(k) * Decimal('1')
         b = decimal_factorial(6*k) * Decimal('1')
+        operations += Decimal(6*k)
         c = Decimal('545140134') * Decimal('1') * Decimal(k) * Decimal('1') + Decimal('13591409') 
         d = decimal_factorial(3*k) * Decimal('1')
+        operations += Decimal(3*k)
         e = decimal_factorial(k) ** Decimal('3')
+        operations *= Decimal(k)
         f = (Decimal('640320') * Decimal('1'))**(Decimal(3)*(Decimal(k)*Decimal('1'))+(Decimal(3/2)*Decimal('1')))
         partialsumme = partialsumme + (a * b * c) / (d * e * f)
-        operations += Decimal('23') * Decimal('1')
+        operations += Decimal('24') * Decimal('1')
     
     pi_approx = Decimal('1') / (Decimal('12') * Decimal('1') * partialsumme)
     operations += Decimal('3')
