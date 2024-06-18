@@ -11,7 +11,7 @@ from approx_pi import pi_leibniz, error_pi, plot_pi, pi_viete, pi_chudnovsky, pi
 from py_logspace import py_logspace
 from tools_read_save import read_number # pylint: disable=import-error
 
-def experiment_montecarlo(stop: int):
+def experiment_montecarlo(stop: int, precision = 50):
     indizes = []
     pi = []
     fehler = []
@@ -19,7 +19,7 @@ def experiment_montecarlo(stop: int):
     laufzeiten = []
 
     for n in py_logspace(start = 0, stop = stop, num = 50, basis = 2):
-        pi_montecarlo_approx, montecarlo_ops, montecarlo_time = pi_montecarlo(n)
+        pi_montecarlo_approx, montecarlo_ops, montecarlo_time = pi_montecarlo(n, precision)
         indizes.append(n)
         pi.append(pi_montecarlo_approx)
         fehler.append(error_pi(pi_montecarlo_approx))
@@ -36,7 +36,7 @@ def experiment_montecarlo(stop: int):
 
     return data
 
-def experiment_leibniz(stop: int):
+def experiment_leibniz(stop: int, precision = 50):
 
     indizes = []
     pi = []
@@ -45,7 +45,7 @@ def experiment_leibniz(stop: int):
     laufzeiten = []
 
     for n in py_logspace(start = 0, stop = stop, num = 20, basis = 10):
-        pi_leibniz_approx, leibniz_ops, leibniz_time = pi_leibniz(n)
+        pi_leibniz_approx, leibniz_ops, leibniz_time = pi_leibniz(n, precision)
         indizes.append(n)
         pi.append(pi_leibniz_approx)
         fehler.append(error_pi(pi_leibniz_approx))
@@ -62,7 +62,7 @@ def experiment_leibniz(stop: int):
 
     return data
 
-def experiment_viete(stop: int):
+def experiment_viete(stop: int, precision = 50):
 
     indizes = []
     pi = []
@@ -71,7 +71,7 @@ def experiment_viete(stop: int):
     laufzeiten = []
 
     for n in py_logspace(start = 0, stop = stop, num = 20, basis = 10):
-        pi_viete_approx, viete_ops, viete_time = pi_viete(n)
+        pi_viete_approx, viete_ops, viete_time = pi_viete(n, precision)
         indizes.append(n)
         pi.append(pi_viete_approx)
         fehler.append(error_pi(pi_viete_approx))
@@ -88,7 +88,7 @@ def experiment_viete(stop: int):
 
     return data
 
-def experiment_chudnovsky(stop: int):
+def experiment_chudnovsky(stop: int, precision = 50):
 
     indizes = []
     pi = []
@@ -97,7 +97,7 @@ def experiment_chudnovsky(stop: int):
     laufzeiten = []
 
     for n in py_logspace(start = 0, stop = stop, num = 20, basis = 10):
-        pi_chudnovsky_approx, chudnovsky_ops, chudnovsky_time = pi_chudnovsky(n)
+        pi_chudnovsky_approx, chudnovsky_ops, chudnovsky_time = pi_chudnovsky(n, precision)
         indizes.append(n)
         pi.append(pi_chudnovsky_approx)
         fehler.append(error_pi(pi_chudnovsky_approx))
@@ -186,13 +186,15 @@ def main():
         stop_viete = read_number("Bitte den höchsten Index des Partialprodukts für Vietas Produktdarstellung eingeben: 10^", data_type = int, lower_limit = 0)
         stop_chudnovsky = read_number("Bitte den höchsten Index der Partialsumme für den Chudnovsky-Algorithmus eingeben: 10^", data_type = int, lower_limit = 0)
 
-        data_montecarlo = experiment_montecarlo(stop_montecarlo)
+        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 1000)
+
+        data_montecarlo = experiment_montecarlo(stop_montecarlo, precision)
         print(data_montecarlo)
-        data_leibniz = experiment_leibniz(stop_leibniz)
+        data_leibniz = experiment_leibniz(stop_leibniz, precision)
         print(data_leibniz)
-        data_viete = experiment_viete(stop_viete)
+        data_viete = experiment_viete(stop_viete, precision)
         print(data_viete)
-        data_chudnovsky = experiment_chudnovsky(stop_chudnovsky)
+        data_chudnovsky = experiment_chudnovsky(stop_chudnovsky, precision)
         print(data_chudnovsky)
 
         # Fehlerplot
