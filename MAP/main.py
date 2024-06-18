@@ -226,7 +226,7 @@ def main():
         plt.plot(data_viete["n"], data_viete["Pi"], color = 'darkred',   marker = '.', linestyle = '') # Datenpunkte
         plt.semilogx(data_chudnovsky["n"], data_chudnovsky["Pi"], color = 'orange', label = "Chudnovsky")
         plt.plot(data_chudnovsky["n"], data_chudnovsky["Pi"], color = 'darkorange',   marker = '.', linestyle = '') # Datenpunkte
-        plt.axhline(y=pi, color="dimgray", label = "$\pi$")
+        plt.axhline(y=pi, color="purple", label = "$\pi$")
         plt.xlabel("Eingabeparameter n")
         plt.ylabel("Schätzung von $\pi$")
         plt.legend()
