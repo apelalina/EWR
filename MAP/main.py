@@ -11,22 +11,34 @@ from approx_pi import pi_leibniz, error_pi, plot_pi, pi_viete, pi_chudnovsky, pi
 from py_logspace import py_logspace
 from tools_read_save import read_number # pylint: disable=import-error
 
-def experiment_montecarlo(stop: int, precision = 50):
+def experiment_pi(algorithm: str, stop: int, precision = 50):
+
+    if algorithm not in ["montecarlo", "leibniz", "viete", "chudnovsky"]:
+        raise ValueError("Bitte geben Sie eine der folgenden Optionen als Algorithmus an: montecarlo, leibniz, viete, chudnovsky")
+
     indizes = []
     pi = []
     fehler = []
     operations = []
     laufzeiten = []
 
-    for n in py_logspace(start = 0, stop = stop, num = 50, basis = 2):
-        pi_montecarlo_approx, montecarlo_ops, montecarlo_time = pi_montecarlo(n, precision)
+    for n in py_logspace(start = 0, stop = stop, num = 30, basis = 10):
+        if algorithm == "montecarlo":
+            pi_approx, ops, time = pi_montecarlo(n, precision)
+        elif algorithm == "leibniz":
+            pi_approx, ops, time = pi_leibniz(n, precision)
+        elif algorithm == "viete":
+            pi_approx, ops, time = pi_viete(n, precision)
+        elif algorithm == "chudnovsky":
+            pi_approx, ops, time = pi_chudnovsky(n, precision)
+        
         indizes.append(n)
-        pi.append(pi_montecarlo_approx)
-        fehler.append(error_pi(pi_montecarlo_approx))
-        operations.append(montecarlo_ops)
-        laufzeiten.append(montecarlo_time)
+        pi.append(pi_approx)
+        fehler.append(error_pi(pi_approx))
+        operations.append(ops)
+        laufzeiten.append(time)
 
-        data = pd.DataFrame({
+    data = pd.DataFrame({
             "n": indizes,
             "Pi": pi,
             "Fehler": fehler,
@@ -36,83 +48,28 @@ def experiment_montecarlo(stop: int, precision = 50):
 
     return data
 
-def experiment_leibniz(stop: int, precision = 50):
+def plot_pi(data, y = "Fehler", montecarlo = False):
 
-    indizes = []
-    pi = []
-    fehler = []
-    operations = []
-    laufzeiten = []
+    if y == "Fehler":
+        plt.loglog(data["n"], data["Fehler"])
+        if montecarlo:
+            plt.plot(data["n"], data["Fehler"], color = 'darkblue',   marker = '.', linestyle = 'None') # Datenpunkte ohne Linien
+        else:
+            plt.plot(data["n"], data["Fehler"], color = 'darkblue',   marker = '.', linestyle = '') # Datenpunkte mit Linien
+        plt.xlabel("Index der Partialsumme")
+        plt.ylabel("Differenz zu $\pi$")
 
-    for n in py_logspace(start = 0, stop = stop, num = 20, basis = 10):
-        pi_leibniz_approx, leibniz_ops, leibniz_time = pi_leibniz(n, precision)
-        indizes.append(n)
-        pi.append(pi_leibniz_approx)
-        fehler.append(error_pi(pi_leibniz_approx))
-        operations.append(leibniz_ops)
-        laufzeiten.append(leibniz_time)
+    if y == "Pi":
+        getcontext().prec = 1010
+        pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
+        pi = Decimal(pi) * Decimal('1')
+        plt.semilogx(data["n"], data["Pi"], color = 'blue', label = "Monte-Carlo")
+        plt.plot(data["n"], data["Pi"], color = 'darkblue',   marker = '.', linestyle = '')
+        plt.xlabel("Index der Partialsumme")
+        plt.ylabel("Wert der Partialsumme")
+        plt.axhline(y=pi, color="red", label = "$\pi$")
+        plt.legend()
 
-    data = pd.DataFrame({
-        "n": indizes,
-        "Pi": pi,
-        "Fehler": fehler,
-        "Operationen": operations,
-        "Laufzeit": laufzeiten
-    })
-
-    return data
-
-def experiment_viete(stop: int, precision = 50):
-
-    indizes = []
-    pi = []
-    fehler = []
-    operations = []
-    laufzeiten = []
-
-    for n in py_logspace(start = 0, stop = stop, num = 20, basis = 10):
-        pi_viete_approx, viete_ops, viete_time = pi_viete(n, precision)
-        indizes.append(n)
-        pi.append(pi_viete_approx)
-        fehler.append(error_pi(pi_viete_approx))
-        operations.append(viete_ops)
-        laufzeiten.append(viete_time)
-
-    data = pd.DataFrame({
-        "n": indizes,
-        "Pi": pi,
-        "Fehler": fehler,
-        "Operationen": operations,
-        "Laufzeit": laufzeiten
-    })
-
-    return data
-
-def experiment_chudnovsky(stop: int, precision = 50):
-
-    indizes = []
-    pi = []
-    fehler = []
-    operations = []
-    laufzeiten = []
-
-    for n in py_logspace(start = 0, stop = stop, num = 20, basis = 10):
-        pi_chudnovsky_approx, chudnovsky_ops, chudnovsky_time = pi_chudnovsky(n, precision)
-        indizes.append(n)
-        pi.append(pi_chudnovsky_approx)
-        fehler.append(error_pi(pi_chudnovsky_approx))
-        operations.append(chudnovsky_ops)
-        laufzeiten.append(chudnovsky_time)
-
-    data = pd.DataFrame({
-        "n": indizes,
-        "Pi": pi,
-        "Fehler": fehler,
-        "Operationen": operations,
-        "Laufzeit": laufzeiten
-    })
-
-    return data
 
 def main():
     print("\nIn diesem Experiment wird die Approximation der Kreiszahl Pi mittels verschiedener Methoden untersucht. Bitte wählen Sie eine Approximationsmethode:\n")
@@ -127,15 +84,44 @@ def main():
     if choice == "1":
         print("\nApproximation von Pi mit der Monte-Carlo-Methode\n")
         print("Dabei wird Pi mithilfe eines Zufallsexperiments geschätzt. Je öfter das Zufallsexperiment wiederholt wird, desto genauer ist die Schätzung von Pi.")
-        print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zweierpotenz (2^k) erwartet. Das Programm approximiert Pi für 50 Eingabewerte zwischen 1 und 2^k\n")
+        print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 30 Eingabewerte zwischen 1 und 10^k\n")
 
-        stop = read_number("Bitte die Anzahl der Zufallsexperimente für die Monte-Carlo-Methode eingeben: 2^", data_type = int, lower_limit = 0)
+        stop = read_number("Bitte die Anzahl der Zufallsexperimente für die Monte-Carlo-Methode eingeben: 10^", data_type = int, lower_limit = 0)
+        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 1000)
 
-        print("\nDie Approximation von Pi mit der Monte-Carlo-Methode ergab folgende Ergebnisse:") 
-        data = experiment_montecarlo(stop)
-        print(data)
+        data1 = experiment_pi("montecarlo", stop, precision)
+        data2 = experiment_pi("montecarlo", stop, precision)
+        data3 = experiment_pi("montecarlo", stop, precision)
+        data4 = experiment_pi("montecarlo", stop, precision)
+        data5 = experiment_pi("montecarlo", stop, precision)
+        data6 = experiment_pi("montecarlo", stop, precision)
+        data7 = experiment_pi("montecarlo", stop, precision)
+        data8 = experiment_pi("montecarlo", stop, precision)
+        data9 = experiment_pi("montecarlo", stop, precision)
+        data10 = experiment_pi("montecarlo", stop, precision)
 
-        plot_pi(data, "Pi")
+        data = pd.concat([data1, data2, data3, data4, data5, data6, data7, data8, data9, data10])
+
+        data.to_csv("pi_montecarlo_" + str(stop) + ".csv")
+        print("\n Da es sich bei der Monte-Carlo-Methode um ein stochastisches Verfahren handelt, wurde das von Ihnen spezifizierte Experiment 10 Mal wiederholt.")
+        print("Die Ergebnisse wurden in " + "pi_montecarlo_" + str(stop) + ".csv im Arbeitsverzeichnis gespeichert.\n")
+        
+        # Plot: Konvergenz gegen Pi (scatter() statt semilogx())
+        pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
+        pi = Decimal(pi) * Decimal('1')
+        plt.scatter(data["n"], data["Pi"], s = 4, color = "darkblue", label = "Schätzung von $\pi$ nach Monte-Carlo")
+        plt.axhline(y=pi, color="red", label = "$\pi$")
+        plt.legend(loc='lower right')
+        plt.savefig('Konvergenzplot_MonteCarlo.pdf')
+        plt.show()
+
+        # Fehlerplot (speziell für Montecarlo)
+        plt.scatter(data["n"], data["Fehler"], s = 4, color = "darkblue", label = "Schätzung von $\pi$ nach Monte-Carlo")
+        plt.axhline(y=pi, color="red", label = "$\pi$")
+        plt.legend(loc='lower right')
+        plt.savefig('Konvergenzplot_MonteCarlo.pdf')
+        plt.show()
+
 
 
     if choice == "2":
@@ -147,9 +133,9 @@ def main():
         
         print("\nDie Approximation von Pi mit der Leibniz-Reihe ergab folgende Ergebnisse:") 
         data = experiment_leibniz(stop)
-        print(data)
 
         plot_pi(data, "Pi")
+        plt.show()
 
 
     if choice == "3":
