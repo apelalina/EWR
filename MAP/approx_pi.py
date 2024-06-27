@@ -35,7 +35,7 @@ def decimal_factorial(n) -> Decimal:
 
    return result
 
-def pi_leibniz(index: int, precision = 50) -> Decimal:
+def pi_leibniz(index: int, precision = 100) -> Decimal:
     """
     Berechnet eine Näherung von Pi mit der Leibniz-Reihe.
 
@@ -65,7 +65,7 @@ def pi_leibniz(index: int, precision = 50) -> Decimal:
     elapsed_time = ((Decimal(end_time) * Decimal('1')) - (Decimal(start_time) * Decimal('1'))) * (Decimal('1000') * Decimal('1'))
     return pi_approx, operations, elapsed_time
 
-def pi_montecarlo(num_points, precision = 50) -> Decimal:
+def pi_montecarlo(num_points, precision = 100) -> Decimal:
     """
     Berechnet eine Näherung von Pi mit dem Monte-Carlo-Algorithmus.
     
@@ -95,7 +95,7 @@ def pi_montecarlo(num_points, precision = 50) -> Decimal:
     return pi_approx, operations, elapsed_time
 
 
-def pi_viete(index: int, precision = 50) -> Decimal:
+def pi_viete(index: int, precision = 100) -> Decimal:
     """
     Berechnet eine Näherung von Pi mit dem Viète-Algorithmus.
 
@@ -124,7 +124,7 @@ def pi_viete(index: int, precision = 50) -> Decimal:
     elapsed_time = ((Decimal(end_time) * Decimal('1')) - (Decimal(start_time) * Decimal('1'))) * (Decimal('1000') * Decimal('1'))
     return pi_approx, operations, elapsed_time
 
-def pi_chudnovsky(index: int, precision = 50) -> Decimal:
+def pi_chudnovsky(index: int, precision = 100) -> Decimal:
     """
     Berechnet eine Näherung von Pi mit dem Chudnovsky-Algorithmus.
 
