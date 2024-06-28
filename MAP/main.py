@@ -51,14 +51,10 @@ def experiment_pi(algorithm: str, stop: int, precision = 100):
 def plot_pi(data, y = "Pi", linecolor = "blue", pointcolor = "darkblue", label = ""):
 
     if y == "Pi":
-        getcontext().prec = 1010
-        pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
-        pi = Decimal(pi) * Decimal('1')
         plt.semilogx(data["n"], data["Pi"], color = linecolor)
         plt.plot(data["n"], data["Pi"], color = pointcolor,   marker = '.', linestyle = '', label = label)
         plt.xlabel("Eingabeparameter n")
         plt.ylabel("Schäzung von $\pi$")
-        plt.axhline(y=pi, color="red", label = "$\pi$")
         plt.grid()
         plt.legend()
 
@@ -105,6 +101,7 @@ def plot_pi(data, y = "Pi", linecolor = "blue", pointcolor = "darkblue", label =
         plt.ylabel("Differenz zu $\pi$")
         plt.grid()
         plt.legend()
+    
 
 def main():
     print("\nIn diesem Experiment wird die Approximation der Kreiszahl Pi mittels verschiedener Methoden untersucht. Bitte wählen Sie eine Approximationsmethode:\n")
@@ -168,7 +165,7 @@ def main():
 
         print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
 
-    if choice == "2":
+    elif choice == "2":
         print("\nApproximation von Pi mittels der Leibniz-Reihe\n")
         print("Die Leibniz-Reihe ist eine Folge von Partialsummen, die im Unendlichen gegen Pi/4 konvergiert. Je größer der Index der berechneten Partialsumme, desto genauer die Schätzung von Pi.")
         print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 30 Eingabewerte zwischen 1 und 10^k\n")
@@ -184,8 +181,8 @@ def main():
         plot_pi(data, "Pi", label = "Pi nach Leibniz-Approximation")
         getcontext().prec = 1010
         pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
-        pi = Decimal(pi) * Decimal('1')
-        plt.axhline(y=pi, color="red", label = "$\pi$")
+        pi = Decimal(pi)
+        plt.axhline(y=pi, color="purple", label = "$\pi$")
         plt.savefig('Leibniz_Konvergenzplot.pdf')
         plt.show()
 
@@ -207,7 +204,7 @@ def main():
 
         print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
 
-    if choice == "3":
+    elif choice == "3":
         print("\nApproximation von Pi mittels Vietes Produktdarstellung\n")
         print("Vietes Produktdarstellung der Kreiszahl Pi nutzt ein unendliches Produkt, was gegen Pi/2 konvergiert. Je größer der Index des berechneten Partialprodukts, desto genauer die Schätzung von Pi.")
         print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 30 Eingabewerte zwischen 1 und 10^k\n")
@@ -223,8 +220,8 @@ def main():
         plot_pi(data, "Pi", label = "Pi nach Viete-Approximation")
         getcontext().prec = 1010
         pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
-        pi = Decimal(pi) * Decimal('1')
-        plt.axhline(y=pi, color="red", label = "$\pi$")
+        pi = Decimal(pi)
+        plt.axhline(y=pi, color="purple", label = "$\pi$")
         plt.savefig('Viete_Fehlerplot.pdf')
         plt.show()
 
@@ -246,7 +243,7 @@ def main():
 
         print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
 
-    if choice == "4":
+    elif choice == "4":
         print("\nApproximation von Pi mittels Chudnovsky-Algorithmus\n")
         print("Der Chudnovsky-Algorithmus basiert auf der Konvergenz einer verallgemeinerten hypergeometrischen Reihe gegen 1/Pi. Je größer der Index der berechneten Partialsumme, desto genauer die Schätzung von Pi.")
         print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 30 Eingabewerte zwischen 1 und 10^k\n")
@@ -262,8 +259,8 @@ def main():
         plot_pi(data, "Pi", label = "Pi nach Chudnovsky")
         getcontext().prec = 1010
         pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
-        pi = Decimal(pi) * Decimal('1')
-        plt.axhline(y=pi, color="red", label = "$\pi$")
+        pi = Decimal(pi)
+        plt.axhline(y=pi, color="purple", label = "$\pi$")
         plt.savefig('Chudnovsky_Konvergenzplot.pdf')
         plt.show()
 
@@ -285,8 +282,7 @@ def main():
 
         print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
 
-
-    if choice == "5":
+    elif choice == "5":
         stop_montecarlo = read_number("Bitte die Anzahl der Zufallsexperimente für die Monte-Carlo-Methode eingeben: 10^", data_type = int, lower_limit = 0)
         stop_leibniz = read_number("Bitte den höchsten Index der Partialsumme der Leibniz-Reihe eingeben: 10^", data_type = int, lower_limit = 0)
         stop_viete = read_number("Bitte den höchsten Index des Partialprodukts für Vietas Produktdarstellung eingeben: 10^", data_type = int, lower_limit = 0)
@@ -309,10 +305,10 @@ def main():
         data_leibniz["Algorithmus"] = "leibniz"
         data_viete["Algorithmus"] = "viete"
         data_chudnovsky["Algorithmus"] = "chudnovsky"
-        data = pd.concat(data_montecarlo, data_leibniz, data_viete, data_chudnovsky)
+        data = pd.concat([data_montecarlo, data_leibniz, data_viete, data_chudnovsky])
 
         # Daten abspeichern
-        data.to_csv("Algorithmenvergleich" + str(precision) + ".csv")
+        data.to_csv("Algorithmenvergleich_" + str(precision) + ".csv")
         print("Die Ergebnisse wurden in " + "Algorithmenvergleich" + str(precision) + ".csv im Arbeitsverzeichnis gespeichert.\n")
 
         # Konvergenzplot
@@ -323,82 +319,13 @@ def main():
         getcontext().prec = 1010
         pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
         pi = Decimal(pi)
-        plt.axhline(y=pi, color="purple", label = "$\pi$")
+        plt.axhline(y=pi, color="slategrey", label = "$\pi$")
+        plt.grid()
+        plt.legend()
         plt.savefig('Vergleich_Konvergenzplot.pdf')
         plt.show()
 
-
-
-        # Fehlerplot
-        plt.loglog(data_montecarlo["n"], data_montecarlo["Fehler"], color = 'blue', label = "Monte-Carlo")
-        plt.plot(data_montecarlo["n"], data_montecarlo["Fehler"], color = 'darkblue',   marker = '.', linestyle = '') # Datenpunkte
-        plt.loglog(data_leibniz["n"], data_leibniz["Fehler"], color = 'green', label = "Leibniz")
-        plt.plot(data_leibniz["n"], data_leibniz["Fehler"], color = 'darkgreen',   marker = '.', linestyle = '') # Datenpunkte
-        plt.loglog(data_viete["n"], data_viete["Fehler"], color = 'red', label = "Viete")
-        plt.plot(data_viete["n"], data_viete["Fehler"], color = 'darkred',   marker = '.', linestyle = '') # Datenpunkte
-        plt.loglog(data_chudnovsky["n"], data_chudnovsky["Fehler"], color = 'orange', label = "Chudnovsky")
-        plt.plot(data_chudnovsky["n"], data_chudnovsky["Fehler"], color = 'darkorange',   marker = '.', linestyle = '') # Datenpunkte
-        plt.xlabel("Eingabeparameter n")
-        plt.ylabel("Differenz zu $\pi$")
-        plt.legend()
-        plt.grid()
-        plt.savefig('Fehlerplot.pdf')
-        plt.show()
-
-
-        # Konvergenz-Plot
-        getcontext().prec = 1010
-        pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
-        pi = Decimal(pi)
-        plt.semilogx(data_montecarlo["n"], data_montecarlo["Pi"], color = 'blue', label = "Monte-Carlo")
-        plt.plot(data_montecarlo["n"], data_montecarlo["Pi"], color = 'darkblue',   marker = '.', linestyle = '') # Datenpunkte
-        plt.semilogx(data_leibniz["n"], data_leibniz["Pi"], color = 'green', label = "Leibniz")
-        plt.plot(data_leibniz["n"], data_leibniz["Pi"], color = 'darkgreen',   marker = '.', linestyle = '') # Datenpunkte
-        plt.semilogx(data_viete["n"], data_viete["Pi"], color = 'red', label = "Viete")
-        plt.plot(data_viete["n"], data_viete["Pi"], color = 'darkred',   marker = '.', linestyle = '') # Datenpunkte
-        plt.semilogx(data_chudnovsky["n"], data_chudnovsky["Pi"], color = 'orange', label = "Chudnovsky")
-        plt.plot(data_chudnovsky["n"], data_chudnovsky["Pi"], color = 'darkorange',   marker = '.', linestyle = '') # Datenpunkte
-        plt.axhline(y=pi, color="purple", label = "$\pi$")
-        plt.xlabel("Eingabeparameter n")
-        plt.ylabel("Schätzung von $\pi$")
-        plt.legend()
-        plt.grid()
-        plt.savefig('Konvergenzplot.pdf')
-        plt.show()
-
-        # Laufzeit
-        plt.loglog(data_montecarlo["n"], data_montecarlo["Laufzeit"], color = 'blue', label = "Monte-Carlo")
-        plt.plot(data_montecarlo["n"], data_montecarlo["Laufzeit"], color = 'darkblue',   marker = '.', linestyle = '') # Datenpunkte
-        plt.loglog(data_leibniz["n"], data_leibniz["Laufzeit"], color = 'green', label = "Leibniz")
-        plt.plot(data_leibniz["n"], data_leibniz["Laufzeit"], color = 'darkgreen',   marker = '.', linestyle = '') # Datenpunkte
-        plt.loglog(data_viete["n"], data_viete["Laufzeit"], color = 'red', label = "Viete")
-        plt.plot(data_viete["n"], data_viete["Laufzeit"], color = 'darkred',   marker = '.', linestyle = '') # Datenpunkte
-        plt.loglog(data_chudnovsky["n"], data_chudnovsky["Laufzeit"], color = 'orange', label = "Chudnovsky")
-        plt.plot(data_chudnovsky["n"], data_chudnovsky["Laufzeit"], color = 'darkorange',   marker = '.', linestyle = '') # Datenpunkte
-        plt.xlabel("Eingabeparameter n")
-        plt.ylabel("Laufzeit in ms")
-        plt.legend()
-        plt.grid()
-        plt.savefig('Laufzeitplot.pdf')
-        plt.show()
-
-        # Anzahl Operationen
-        plt.loglog(data_montecarlo["n"], data_montecarlo["Operationen"], color = 'blue', label = "Monte-Carlo")
-        plt.plot(data_montecarlo["n"], data_montecarlo["Operationen"], color = 'darkblue',   marker = '.', linestyle = '') # Datenpunkte
-        plt.loglog(data_leibniz["n"], data_leibniz["Operationen"], color = 'green', label = "Leibniz")
-        plt.plot(data_leibniz["n"], data_leibniz["Operationen"], color = 'darkgreen',   marker = '.', linestyle = '') # Datenpunkte
-        plt.loglog(data_viete["n"], data_viete["Operationen"], color = 'red', label = "Viete")
-        plt.plot(data_viete["n"], data_viete["Operationen"], color = 'darkred',   marker = '.', linestyle = '') # Datenpunkte
-        plt.loglog(data_chudnovsky["n"], data_chudnovsky["Operationen"], color = 'orange', label = "Chudnovsky")
-        plt.plot(data_chudnovsky["n"], data_chudnovsky["Operationen"], color = 'darkorange',   marker = '.', linestyle = '') # Datenpunkte
-        plt.xlabel("Eingabeparameter n")
-        plt.ylabel("Anzahl der Operationen")
-        plt.legend()
-        plt.grid()
-        plt.savefig('Operationenplot.pdf')
-        plt.show()
-
-    if choice == "0":
+    elif choice == "0":
         print("Programm beendet.")
         sys.exit()
 
