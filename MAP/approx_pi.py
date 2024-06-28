@@ -155,6 +155,7 @@ def pi_chudnovsky(index: int, precision = 100) -> Decimal:
         partialsumme = partialsumme + (a_k * b_k * c_k) / (d_k * e_k * f_k)
         operations += Decimal('22') * Decimal('1')
     
+    pi_approx = Decimal('1')/(Decimal('12')*Decimal('1'))*partialsumme
     operations += Decimal('3')
     
     end_time = time.time()
