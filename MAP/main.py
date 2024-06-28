@@ -7,11 +7,11 @@ import pandas as pd
 import numpy as np
 from decimal import Decimal, getcontext # Datentyp
 import matplotlib.pyplot as plt 
-from approx_pi import pi_leibniz, error_pi, plot_pi, pi_viete, pi_chudnovsky, pi_montecarlo
+from approx_pi import pi_leibniz, error_pi, pi_viete, pi_chudnovsky, pi_montecarlo
 from py_logspace import py_logspace
 from tools_read_save import read_number # pylint: disable=import-error
 
-def experiment_pi(algorithm: str, stop: int, precision = 50):
+def experiment_pi(algorithm: str, stop: int, precision = 100):
 
     if algorithm not in ["montecarlo", "leibniz", "viete", "chudnovsky"]:
         raise ValueError("Bitte geben Sie eine der folgenden Optionen als Algorithmus an: montecarlo, leibniz, viete, chudnovsky")
@@ -48,26 +48,62 @@ def experiment_pi(algorithm: str, stop: int, precision = 50):
 
     return data
 
-def plot_pi(data, y = "Fehler", montecarlo = False):
-
-    if y == "Fehler":
-        plt.loglog(data["n"], data["Fehler"])
-        if montecarlo:
-            plt.plot(data["n"], data["Fehler"], color = 'darkblue',   marker = '.', linestyle = 'None') # Datenpunkte ohne Linien
-        else:
-            plt.plot(data["n"], data["Fehler"], color = 'darkblue',   marker = '.', linestyle = '') # Datenpunkte mit Linien
-        plt.xlabel("Index der Partialsumme")
-        plt.ylabel("Differenz zu $\pi$")
+def plot_pi(data, y = "Pi", linecolor = "blue", pointcolor = "darkblue", label = ""):
 
     if y == "Pi":
         getcontext().prec = 1010
         pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
         pi = Decimal(pi) * Decimal('1')
-        plt.semilogx(data["n"], data["Pi"], color = 'blue', label = "Monte-Carlo")
-        plt.plot(data["n"], data["Pi"], color = 'darkblue',   marker = '.', linestyle = '')
-        plt.xlabel("Index der Partialsumme")
-        plt.ylabel("Wert der Partialsumme")
+        plt.semilogx(data["n"], data["Pi"], color = linecolor, label = label)
+        plt.plot(data["n"], data["Pi"], color = pointcolor,   marker = '.', linestyle = '')
+        plt.xlabel("Eingabeparameter n")
+        plt.ylabel("Schäzung von $\pi$")
         plt.axhline(y=pi, color="red", label = "$\pi$")
+        plt.grid()
+        plt.legend()
+
+    if y == "Fehler":
+        plt.loglog(data["n"], data["Fehler"], color = linecolor, label = label)
+        plt.plot(data["n"], data["Fehler"], color = linecolor,   marker = '.', linestyle = '') # Datenpunkte mit Linien
+        plt.xlabel("Index der Partialsumme")
+        plt.ylabel("Fehler (Differenz zu $\pi$)")
+        plt.grid()
+        plt.legend()
+
+    if y == "Laufzeit":
+        plt.loglog(data["n"], data["Laufzeit"])
+        plt.plot(data["n"], data["Laufzeit"], color = 'darkblue',   marker = '.', linestyle = '') # Datenpunkte mit Linien
+        plt.xlabel("Eingabeparameter n")
+        plt.ylabel("Laufzeit in ms")
+        plt.grid()
+        plt.legend()
+
+    if y == "Operationen":
+        plt.loglog(data["n"], data["Operationen"])
+        plt.plot(data["n"], data["Operationen"], color = 'darkblue',   marker = '.', linestyle = '') # Datenpunkte mit Linien
+        plt.xlabel("Eingabeparameter n")
+        plt.ylabel("Anzahl der benötigten Operationen")
+        plt.grid()
+        plt.legend()
+    
+    if y == "Montecarlo":
+        getcontext().prec = 1010
+        pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
+        pi = Decimal(pi) * Decimal('1')
+        plt.scatter(data["n"], data["Pi"], s = 4, color = "darkblue", label = "Schätzung von $\pi$ nach Monte-Carlo")
+        plt.axhline(y=pi, color="red", label = "$\pi$")
+        plt.xlabel("Eingabeparameter n (Anzahl generierter Punkte)")
+        plt.ylabel("Schäzung von $\pi$")
+        plt.grid()
+        plt.legend(loc='lower right')
+    
+    if y == "Laufzeit_Fehler":
+        data_sorted = data.sort_values('Laufzeit')
+        plt.loglog(data_sorted["Laufzeit"], data_sorted["Fehler"])
+        plt.plot(data_sorted["Laufzeit"], data_sorted["Fehler"], color = 'darkblue',   marker = '.', linestyle = 'none')
+        plt.xlabel("Laufzeit in ms")
+        plt.ylabel("Differenz zu $\pi$")
+        plt.grid()
         plt.legend()
 
 
@@ -102,25 +138,35 @@ def main():
 
         data = pd.concat([data1, data2, data3, data4, data5, data6, data7, data8, data9, data10])
 
-        data.to_csv("pi_montecarlo_" + str(stop) + ".csv")
-        print("\n Da es sich bei der Monte-Carlo-Methode um ein stochastisches Verfahren handelt, wurde das von Ihnen spezifizierte Experiment 10 Mal wiederholt.")
+        data1.to_csv("pi_montecarlo_" + str(stop) + ".csv")
         print("Die Ergebnisse wurden in " + "pi_montecarlo_" + str(stop) + ".csv im Arbeitsverzeichnis gespeichert.\n")
+
+        print("\nDa es sich bei der Monte-Carlo-Methode um ein stochastisches Verfahren handelt, wurde das von Ihnen spezifizierte Experiment 10 Mal wiederholt.")
         
-        # Plot: Konvergenz gegen Pi (scatter() statt semilogx())
-        pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
-        pi = Decimal(pi) * Decimal('1')
-        plt.scatter(data["n"], data["Pi"], s = 4, color = "darkblue", label = "Schätzung von $\pi$ nach Monte-Carlo")
-        plt.axhline(y=pi, color="red", label = "$\pi$")
-        plt.legend(loc='lower right')
+        plot_pi(data, "Montecarlo")
         plt.savefig('Konvergenzplot_MonteCarlo.pdf')
         plt.show()
 
-        # Fehlerplot (speziell für Montecarlo)
-        plt.scatter(data["n"], data["Fehler"], s = 4, color = "darkblue", label = "Schätzung von $\pi$ nach Monte-Carlo")
-        plt.axhline(y=pi, color="red", label = "$\pi$")
-        plt.legend(loc='lower right')
-        plt.savefig('Konvergenzplot_MonteCarlo.pdf')
+        print("In der Abbildung ist jedoch erkennbar, dass die verschiedenen Durchgänge für große n immer ähnlichere Ergebnisse liefern. Deshalb wird nachfolgend zur Übersichtlichkeit nur noch eine einzige Datenreihe dargestellt.\n")
+
+        plot_pi(data1, "Fehler")
+        plt.savefig('Fehlerplot_MonteCarlo.pdf')
         plt.show()
+
+        plot_pi(data1, "Laufzeit")
+        plt.savefig('Laufzeitplot_MonteCarlo.pdf')
+        plt.show()
+
+        plot_pi(data1, "Operationen")
+        plt.savefig('MonteCarlo_Operationenplot.pdf')
+        plt.show()
+
+        plot_pi(data1, "Laufzeit_Fehler")
+        plt.savefig('MonteCarlo_Laufzeitfehlerplot.pdf')
+        plt.show()
+
+        print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
+
 
 
 
