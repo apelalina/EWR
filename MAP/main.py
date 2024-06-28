@@ -106,7 +106,6 @@ def plot_pi(data, y = "Pi", linecolor = "blue", pointcolor = "darkblue", label =
         plt.grid()
         plt.legend()
 
-
 def main():
     print("\nIn diesem Experiment wird die Approximation der Kreiszahl Pi mittels verschiedener Methoden untersucht. Bitte wählen Sie eine Approximationsmethode:\n")
     print("1. Monte-Carlo-Methode")
@@ -151,7 +150,7 @@ def main():
 
         print("In der Abbildung ist jedoch erkennbar, dass die verschiedenen Durchgänge für große n immer ähnlichere Ergebnisse liefern. Deshalb wird nachfolgend zur Übersichtlichkeit nur noch eine einzige Datenreihe dargestellt.\n")
 
-        plot_pi(data1, "Fehler", label = "Fehler der Monte-Carlo-Schätzung")
+        plot_pi(data1, "Fehler", label = "Monte-Carlo-Schätzung")
         plt.savefig('Montecarlo_Fehlerplot.pdf')
         plt.show()
 
@@ -187,10 +186,10 @@ def main():
         pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
         pi = Decimal(pi) * Decimal('1')
         plt.axhline(y=pi, color="red", label = "$\pi$")
-        plt.savefig('Leibniz_Fehlerplot.pdf')
+        plt.savefig('Leibniz_Konvergenzplot.pdf')
         plt.show()
 
-        plot_pi(data, "Fehler", label = "Fehler der Leibniz-Approximation")
+        plot_pi(data, "Fehler", label = "Leibniz-Approximation")
         plt.savefig('Leibniz_Fehlerplot.pdf')
         plt.show()
 
@@ -209,31 +208,82 @@ def main():
         print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
 
     if choice == "3":
-        print("\nApproximation von Pi mittels Vietas Produktdarstellung\n")
-        print("Vietas Produktdarstellung der Kreiszahl Pi nutzt ein unendliches Produkt, was gegen Pi/2 konvergiert. Je größer der Index des berechneten Partialprodukts, desto genauer die Schätzung von Pi.")
+        print("\nApproximation von Pi mittels Vietes Produktdarstellung\n")
+        print("Vietes Produktdarstellung der Kreiszahl Pi nutzt ein unendliches Produkt, was gegen Pi/2 konvergiert. Je größer der Index des berechneten Partialprodukts, desto genauer die Schätzung von Pi.")
         print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 30 Eingabewerte zwischen 1 und 10^k\n")
 
-        stop = read_number("Bitte den höchsten Index des Partialprodukts für Vietas Produktdarstellung eingeben: 10^", data_type = int, lower_limit = 0)
-        
-        print("\nDie Approximation von Pi mittels Vietas Produktdarstellung ergab folgende Ergebnisse:")    
-        data = experiment_viete(stop)
-        print(data)
+        stop = read_number("Bitte den höchsten Index des Partialprodukts für Vietes Produktdarstellung eingeben: 10^", data_type = int, lower_limit = 0)
+        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 1000)
 
-        plot_pi(data, "Pi")
+        data = experiment_pi("viete", stop, precision)
 
+        data.to_csv("pi_viete_" + str(stop) + ".csv")
+        print("Die Ergebnisse wurden in " + "pi_viete_" + str(stop) + ".csv im Arbeitsverzeichnis gespeichert.\n")
+
+        plot_pi(data, "Pi", label = "Pi nach Viete-Approximation")
+        getcontext().prec = 1010
+        pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
+        pi = Decimal(pi) * Decimal('1')
+        plt.axhline(y=pi, color="red", label = "$\pi$")
+        plt.savefig('Viete_Fehlerplot.pdf')
+        plt.show()
+
+        plot_pi(data, "Fehler", label = "Viete-Approximation")
+        plt.savefig('Viete_Fehlerplot.pdf')
+        plt.show()
+
+        plot_pi(data, "Laufzeit", label="Viete-Approximation")
+        plt.savefig('Viete_Laufzeitplot.pdf')
+        plt.show()
+
+        plot_pi(data, "Operationen", label="Viete-Approximation")
+        plt.savefig('Viete_Operationenplot.pdf')
+        plt.show()
+
+        plot_pi(data, "Laufzeit_Fehler", label="Viete-Approximation")
+        plt.savefig('Viete_Laufzeit_Fehlerplot.pdf')
+        plt.show()
+
+        print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
 
     if choice == "4":
         print("\nApproximation von Pi mittels Chudnovsky-Algorithmus\n")
-        print("Der Chudnovsky-Algorithmus basiert auf der Konvergenz einer verallgemeinerten hypergeometrischen Reihe gegen Pi/4. Je größer der Index der berechneten Partialsumme, desto genauer die Schätzung von Pi.")
-        print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 20 Eingabewerte zwischen 1 und 10^k\n")
+        print("Der Chudnovsky-Algorithmus basiert auf der Konvergenz einer verallgemeinerten hypergeometrischen Reihe gegen 1/Pi. Je größer der Index der berechneten Partialsumme, desto genauer die Schätzung von Pi.")
+        print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 30 Eingabewerte zwischen 1 und 10^k\n")
 
         stop = read_number("Bitte den höchsten Index der Partialsumme für den Chudnovsky-Algorithmus eingeben: 10^", data_type = int, lower_limit = 0)
+        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 1000)
 
-        print("\nDie Approximation von Pi mittels Vietas Produktdarstellung ergab folgende Ergebnisse:")    
-        data = experiment_chudnovsky(stop)
-        print(data)
+        data = experiment_pi("chudnovsky", stop, precision)
 
-        plot_pi(data, "Pi")
+        data.to_csv("pi_chudnovsky_" + str(stop) + ".csv")
+        print("Die Ergebnisse wurden in " + "pi_chudnovsky_" + str(stop) + ".csv im Arbeitsverzeichnis gespeichert.\n")
+
+        plot_pi(data, "Pi", label = "Pi nach Chudnovsky")
+        getcontext().prec = 1010
+        pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
+        pi = Decimal(pi) * Decimal('1')
+        plt.axhline(y=pi, color="red", label = "$\pi$")
+        plt.savefig('Chudnovsky_Konvergenzplot.pdf')
+        plt.show()
+
+        plot_pi(data, "Fehler", label = "Chudnovsky-Algorithmus")
+        plt.savefig('Chudnovsky_Fehlerplot.pdf')
+        plt.show()
+
+        plot_pi(data, "Laufzeit", label="Chudnovsky-Algorithmus")
+        plt.savefig('Chudnovsky_Laufzeitplot.pdf')
+        plt.show()
+
+        plot_pi(data, "Operationen", label="Chudnovsky-Algorithmus")
+        plt.savefig('Chudnovsky_Operationenplot.pdf')
+        plt.show()
+
+        plot_pi(data, "Laufzeit_Fehler", label="Chudnovsky-Algorithmus")
+        plt.savefig('Chudnovsky_Laufzeit_Fehlerplot.pdf')
+        plt.show()
+
+        print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
 
 
     if choice == "5":
