@@ -54,7 +54,7 @@ def plot_pi(data, y = "Pi", linecolor = "blue", pointcolor = "darkblue", label =
         getcontext().prec = 1010
         pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
         pi = Decimal(pi) * Decimal('1')
-        plt.semilogx(data["n"], data["Pi"], color = linecolor, label = label)
+        plt.semilogx(data["n"], data["Pi"], color = linecolor)
         plt.plot(data["n"], data["Pi"], color = pointcolor,   marker = '.', linestyle = '', label = label)
         plt.xlabel("Eingabeparameter n")
         plt.ylabel("Schäzung von $\pi$")
@@ -65,7 +65,7 @@ def plot_pi(data, y = "Pi", linecolor = "blue", pointcolor = "darkblue", label =
     if y == "Fehler":
         plt.loglog(data["n"], data["Fehler"], color = linecolor)
         plt.plot(data["n"], data["Fehler"], color = pointcolor,   marker = '.', linestyle = '', label = label)
-        plt.xlabel("Index der Partialsumme")
+        plt.xlabel("Eingabeparameter n")
         plt.ylabel("Fehler (Differenz zu $\pi$)")
         plt.grid()
         plt.legend()
@@ -114,6 +114,8 @@ def main():
     print("3. Vietas Produktdarstellung")
     print("4. Chudnovsky-Algorithmus")
     print("5. Alle Algorithmen vergleichen")
+    print("6. Mantissenlängen vergleichen")
+    print("7. Demonstration eines Minimalbeispiels")
     print("0. Programm beenden")
     choice = input("\nBitte wählen Sie eine Option:\n")
 
@@ -167,27 +169,49 @@ def main():
 
         print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
 
-
-
-
     if choice == "2":
         print("\nApproximation von Pi mittels der Leibniz-Reihe\n")
-        print("Die Leibniz-Reihe ist eine Folge von Partialsummen, die im Unendlichen gegen Pi konvergiert. Je größer der Index der berechneten Partialsumme, desto genauer die Schätzung von Pi.")
-        print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 20 Eingabewerte zwischen 1 und 10^k\n")
+        print("Die Leibniz-Reihe ist eine Folge von Partialsummen, die im Unendlichen gegen Pi/4 konvergiert. Je größer der Index der berechneten Partialsumme, desto genauer die Schätzung von Pi.")
+        print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 30 Eingabewerte zwischen 1 und 10^k\n")
 
         stop = read_number("Bitte den höchsten Index der Partialsumme der Leibniz-Reihe eingeben: 10^", data_type = int, lower_limit = 0)
-        
-        print("\nDie Approximation von Pi mit der Leibniz-Reihe ergab folgende Ergebnisse:") 
-        data = experiment_leibniz(stop)
+        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 1000)
 
-        plot_pi(data, "Pi")
+        data = experiment_pi("leibniz", stop, precision)
+
+        data.to_csv("pi_leibniz_" + str(stop) + ".csv")
+        print("Die Ergebnisse wurden in " + "pi_leibniz_" + str(stop) + ".csv im Arbeitsverzeichnis gespeichert.\n")
+
+        plot_pi(data, "Pi", label = "Pi nach Leibniz-Approximation")
+        getcontext().prec = 1010
+        pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
+        pi = Decimal(pi) * Decimal('1')
+        plt.axhline(y=pi, color="red", label = "$\pi$")
+        plt.savefig('Leibniz_Fehlerplot.pdf')
         plt.show()
 
+        plot_pi(data, "Fehler", label = "Fehler der Leibniz-Approximation")
+        plt.savefig('Leibniz_Fehlerplot.pdf')
+        plt.show()
+
+        plot_pi(data, "Laufzeit", label="Leibniz-Approximation")
+        plt.savefig('Leibniz_Laufzeitplot.pdf')
+        plt.show()
+
+        plot_pi(data, "Operationen", label="Leibniz-Approximation")
+        plt.savefig('Leibniz_Operationenplot.pdf')
+        plt.show()
+
+        plot_pi(data, "Laufzeit_Fehler", label="Leibniz-Approximation")
+        plt.savefig('Leibniz_Laufzeit_Fehlerplot.pdf')
+        plt.show()
+
+        print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
 
     if choice == "3":
         print("\nApproximation von Pi mittels Vietas Produktdarstellung\n")
-        print("Vietas Produktdarstellung der Kreiszahl Pi nutzt ein unendliches Produkt, was gegen Pi konvergiert. Je größer der Index des berechneten Partialprodukts, desto genauer die Schätzung von Pi.")
-        print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 20 Eingabewerte zwischen 1 und 10^k\n")
+        print("Vietas Produktdarstellung der Kreiszahl Pi nutzt ein unendliches Produkt, was gegen Pi/2 konvergiert. Je größer der Index des berechneten Partialprodukts, desto genauer die Schätzung von Pi.")
+        print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 30 Eingabewerte zwischen 1 und 10^k\n")
 
         stop = read_number("Bitte den höchsten Index des Partialprodukts für Vietas Produktdarstellung eingeben: 10^", data_type = int, lower_limit = 0)
         
