@@ -288,7 +288,7 @@ def main():
     elif choice == "5":
         stop_montecarlo = read_number("Bitte die Anzahl der Zufallsexperimente für die Monte-Carlo-Methode eingeben: 10^", data_type = int, lower_limit = 0)
         stop_leibniz = read_number("Bitte den höchsten Index der Partialsumme der Leibniz-Reihe eingeben: 10^", data_type = int, lower_limit = 0)
-        stop_viete = read_number("Bitte den höchsten Index des Partialprodukts für Vietas Produktdarstellung eingeben: 10^", data_type = int, lower_limit = 0)
+        stop_viete = read_number("Bitte den höchsten Index des Partialprodukts für Vietes Produktdarstellung eingeben: 10^", data_type = int, lower_limit = 0)
         stop_chudnovsky = read_number("Bitte den höchsten Index der Partialsumme für den Chudnovsky-Algorithmus eingeben: 10^", data_type = int, lower_limit = 0)
 
         precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 1000)
@@ -362,7 +362,87 @@ def main():
 
         print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
 
-    #elif choice == "6":
+    elif choice == "6":
+
+        # Algorithmus auswählen
+        print("\nFür welchen Algorithmus möchten Sie verschiedene Mantissenlängen vergleichen?")
+        while True:
+            algorithm = input("Algorithmus (montecarlo, leibniz, viete, chudnovsky): ")   
+            if algorithm not in ["montecarlo", "leibniz", "viete", "chudnovsky"]:
+                print("Bitte geben Sie eine der folgenden Optionen als Algorithmus an: montecarlo, leibniz, viete, chudnovsky")
+            else:
+                break
+        
+        # Eingabeparameter
+        if algorithm == "montecarlo":
+            stop = read_number("Bitte die Anzahl der Zufallsexperimente für die Monte-Carlo-Methode eingeben: 10^", data_type = int, lower_limit = 0)
+            legend_title = "Monte-Carlo-Methode"
+        elif algorithm == "leibniz":
+            stop = read_number("Bitte den höchsten Index der Partialsumme der Leibniz-Reihe eingeben: 10^", data_type = int, lower_limit = 0)
+            legend_title = "Leibniz-Reihe"
+        elif algorithm == "viete":
+            stop = read_number("Bitte den höchsten Index des Partialprodukts für Vietes Produktdarstellung eingeben: 10^", data_type = int, lower_limit = 0)
+            legend_title = "Vietes Produktdarstellung"
+        elif algorithm == "chudnovsky":
+            stop = read_number("Bitte den höchsten Index der Partialsumme für den Chudnovsky-Algorithmus eingeben: 10^", data_type = int, lower_limit = 0)
+            legend_title = "Chudnovsky-Algorithmus"
+
+        # Mantissenlängen
+        print("\nBitte geben Sie 5 verschiedene Mantissenlängen an, die sie vergleichen möchten.")
+        precision1 = read_number("1. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 1000)
+        precision2 = read_number("2. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 1000)
+        precision3 = read_number("3. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 1000)
+        precision4 = read_number("4. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 1000)
+        precision5 = read_number("5. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 1000)
+
+        # Berechnungen
+        data1 = experiment_pi(algorithm = algorithm, stop = stop, precision = precision1)
+        data1["Mantissenlänge"] = precision1
+        print("Berechnungen für Mantissenlänge " + str(precision1) + " abgeschlossen.")
+        data2 = experiment_pi(algorithm = algorithm, stop = stop, precision = precision2)
+        data2["Mantissenlänge"] = precision2
+        print("Berechnungen für Mantissenlänge " + str(precision2) + " abgeschlossen.")
+        data3 = experiment_pi(algorithm = algorithm, stop = stop, precision = precision3)
+        data3["Mantissenlänge"] = precision3
+        print("Berechnungen für Mantissenlänge " + str(precision3) + " abgeschlossen.")
+        data4 = experiment_pi(algorithm = algorithm, stop = stop, precision = precision4)
+        data4["Mantissenlänge"] = precision4
+        print("Berechnungen für Mantissenlänge " + str(precision4) + " abgeschlossen.")
+        data5 = experiment_pi(algorithm = algorithm, stop = stop, precision = precision5)
+        data5["Mantissenlänge"] = precision5
+        print("Berechnungen für Mantissenlänge " + str(precision5) + " abgeschlossen.")
+
+        # Datensätze mergen
+        data = pd.concat([data1, data2, data3, data4, data5])
+
+        # Daten abspeichern
+        data.to_csv("Mantissenvergleich_" + str(algorithm) + ".csv")
+        print("Die Ergebnisse wurden in " + "Mantissenvergleich_" + str(algorithm) + ".csv im Arbeitsverzeichnis gespeichert.")
+
+        # Plots
+        print("\nDie Auswirkungen verschiedener Mantissenlängen sind nun im Fehler- und Laufzeitplot erkennbar:")
+
+        # Fehlerplot
+        plot_pi(data1, y = "Fehler", linecolor = "red", pointcolor = "darkred", label = "Mantissenlänge " + str(precision1))
+        plot_pi(data2, y = "Fehler", linecolor = "orange", pointcolor = "darkorange", label = "Mantissenlänge " + str(precision2))
+        plot_pi(data3, y = "Fehler", linecolor = "green", pointcolor = "darkgreen", label = "Mantissenlänge " + str(precision3))
+        plot_pi(data4, y = "Fehler", linecolor = "blue", pointcolor = "darkblue", label = "Mantissenlänge " + str(precision4))
+        plot_pi(data5, y = "Fehler", linecolor = "darkviolet", pointcolor = "purple", label = "Mantissenlänge " + str(precision5))
+        plt.legend(title = legend_title)
+        plt.savefig('Mantissenvergleich_Fehlerplot.pdf')
+        plt.show()
+
+        # Laufzeitplot
+        plot_pi(data1, y = "Laufzeit", linecolor = "red", pointcolor = "darkred", label = "Mantissenlänge " + str(precision1))
+        plot_pi(data2, y = "Laufzeit", linecolor = "orange", pointcolor = "darkorange", label = "Mantissenlänge " + str(precision2))
+        plot_pi(data3, y = "Laufzeit", linecolor = "green", pointcolor = "darkgreen", label = "Mantissenlänge " + str(precision3))
+        plot_pi(data4, y = "Laufzeit", linecolor = "blue", pointcolor = "darkblue", label = "Mantissenlänge " + str(precision4))
+        plot_pi(data5, y = "Laufzeit", linecolor = "darkviolet", pointcolor = "purple", label = "Mantissenlänge " + str(precision5))
+        plt.legend(title = legend_title)
+        plt.savefig('Mantissenvergleich_Laufzeitplot.pdf')
+        plt.show()
+
+        print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
 
     elif choice == "0":
         print("Programm beendet.")
