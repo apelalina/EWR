@@ -104,7 +104,7 @@ def plot_pi(data, y = "Pi", linecolor = "blue", pointcolor = "darkblue", label =
     
 
 def main():
-    print("\nIn diesem Experiment wird die Approximation der Kreiszahl Pi mittels verschiedener Methoden untersucht. Bitte wählen Sie eine Approximationsmethode:\n")
+    print("\nIn diesem Experiment wird die Effizienz und Genauigkeit in der Approximation der Kreiszahl Pi mittels ausgew¨ahlter Algorithmen untersucht. Bitte wählen Sie eine Approximationsmethode:\n")
     print("1. Monte-Carlo-Methode")
     print("2. Leibniz-Reihe")
     print("3. Vietas Produktdarstellung")
