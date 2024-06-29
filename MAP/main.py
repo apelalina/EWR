@@ -113,7 +113,13 @@ def main():
     print("6. Mantissenlängen vergleichen")
     print("7. Demonstration eines Minimalbeispiels")
     print("0. Programm beenden")
-    choice = input("\nBitte wählen Sie eine Option:\n")
+
+    while True:
+        choice = input("\nBitte wählen Sie eine Option:\n")
+        if choice in ["1", "2", "3", "4", "5", "6", "7", "0"]:
+            break
+        else:
+            print("Dies ist keine der angebotenen Optionen.")
 
     if choice == "1":
         print("\nApproximation von Pi mit der Monte-Carlo-Methode\n")
@@ -286,6 +292,7 @@ def main():
         print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
 
     elif choice == "5":
+        print("\nVergleich der Algorithmen: Monte-Carlo-Methode, Leibniz-Reihe, Vietes Produktdarstellung, Chudnovsky-Algorithmus \n")
         stop_montecarlo = read_number("Bitte die Anzahl der Zufallsexperimente für die Monte-Carlo-Methode eingeben: 10^", data_type = int, lower_limit = 0)
         stop_leibniz = read_number("Bitte den höchsten Index der Partialsumme der Leibniz-Reihe eingeben: 10^", data_type = int, lower_limit = 0)
         stop_viete = read_number("Bitte den höchsten Index des Partialprodukts für Vietes Produktdarstellung eingeben: 10^", data_type = int, lower_limit = 0)
@@ -394,6 +401,7 @@ def main():
         precision3 = read_number("3. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 1000)
         precision4 = read_number("4. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 1000)
         precision5 = read_number("5. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 1000)
+        print("\n")
 
         # Berechnungen
         data1 = experiment_pi(algorithm = algorithm, stop = stop, precision = precision1)
@@ -429,7 +437,7 @@ def main():
         plot_pi(data4, y = "Fehler", linecolor = "blue", pointcolor = "darkblue", label = "Mantissenlänge " + str(precision4))
         plot_pi(data5, y = "Fehler", linecolor = "darkviolet", pointcolor = "purple", label = "Mantissenlänge " + str(precision5))
         plt.legend(title = legend_title)
-        plt.savefig('Mantissenvergleich_Fehlerplot.pdf')
+        plt.savefig("Mantissenvergleich_Fehlerplot_" + str(algorithm) + ".pdf")
         plt.show()
 
         # Laufzeitplot
@@ -439,15 +447,126 @@ def main():
         plot_pi(data4, y = "Laufzeit", linecolor = "blue", pointcolor = "darkblue", label = "Mantissenlänge " + str(precision4))
         plot_pi(data5, y = "Laufzeit", linecolor = "darkviolet", pointcolor = "purple", label = "Mantissenlänge " + str(precision5))
         plt.legend(title = legend_title)
-        plt.savefig('Mantissenvergleich_Laufzeitplot.pdf')
+        plt.savefig("Mantissenvergleich_Laufzeitplot_" + str(algorithm) + ".pdf")
         plt.show()
 
         print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
 
+    elif choice == "7":
+        print("\nIn diesem Programm wird die Approximation der Kreiszahl Pi experimentell untersucht. Zur Approximation werden folgende Algorithmen genutzt: Monte-Carlo-Methode, Leibniz-Reihe, Vietes Produktdarstellung, Chudnovsky-Algorithmus.")
+        print("\nBei der Monte-Carlo-Methode wird Pi mithilfe eines Zufallsexperiments geschätzt. Je öfter das Zufallsexperiment wiederholt wird (n), desto genauer ist die Schätzung von Pi.")
+        print("\nDie Leibniz-Reihe ist eine Folge von Partialsummen, die im Unendlichen gegen Pi/4 konvergiert. Je größer der Index der berechneten Partialsumme (n), desto genauer die Schätzung von Pi.")
+        print("\nVietes Produktdarstellung der Kreiszahl Pi nutzt ein unendliches Produkt, was gegen Pi/2 konvergiert. Je größer der Index des berechneten Partialprodukts (n), desto genauer die Schätzung von Pi.")
+        print("\nDer Chudnovsky-Algorithmus basiert auf der Konvergenz einer verallgemeinerten hypergeometrischen Reihe gegen 1/Pi. Je größer der Index der berechneten Partialsumme (n), desto genauer die Schätzung von Pi.")
+
+        print("\nEs werden nun folgende Eingabeparameter gewählt:")
+        print("Monte-Carlo-Methode: n = 10^6")
+        print("Leibniz-Reihe: n = 10^6")
+        print("Vietes Produktdarstellung: n = 10^5")
+        print("Chudnovsky-Algorithmus: n = 10^3")
+
+        # Berechnungen
+        print("\nBeginn der Berechnungen...")
+        data_montecarlo = experiment_pi("montecarlo", 6, precision = 150)
+        print("Berechnungen für Monte-Carlo abgeschlossen.")
+        data_leibniz = experiment_pi("leibniz", 6, precision = 150)
+        print("Berechnungen für Leibniz abgeschlossen.")
+        data_viete = experiment_pi("viete", 5, precision = 150)
+        print("Berechnungen für Viete abgeschlossen.")
+        data_chudnovsky = experiment_pi("chudnovsky", 3, precision = 150)
+        print("Berechnungen für Chudnovsky abgeschlossen.")
+
+        # Plots
+        # Konvergenzplot
+        plot_pi(data_montecarlo, y = "Pi", linecolor = "blue", pointcolor = "darkblue", label = "Monte-Carlo-Methode")
+        plot_pi(data_leibniz, y = "Pi", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
+        plot_pi(data_viete, y = "Pi", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
+        plot_pi(data_chudnovsky, y = "Pi", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
+        getcontext().prec = 1010
+        pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
+        pi = Decimal(pi)
+        plt.axhline(y=pi, color="slategrey", label = "$\pi$")
+        plt.grid()
+        plt.legend()
+        plt.savefig('Algorithmenvergleich_Konvergenzplot.pdf')
+        plt.show()
+
+        # Fehlerplot
+        plot_pi(data_montecarlo, y = "Fehler", linecolor = "blue", pointcolor = "darkblue", label = "Monte-Carlo-Methode")
+        plot_pi(data_leibniz, y = "Fehler", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
+        plot_pi(data_viete, y = "Fehler", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
+        plot_pi(data_chudnovsky, y = "Fehler", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
+        plt.savefig('Algorithmenvergleich_Fehlerplot.pdf')
+        plt.show()
+
+        # Laufzeitplot
+        plot_pi(data_montecarlo, y = "Laufzeit", linecolor = "blue", pointcolor = "darkblue", label = "Monte-Carlo-Methode")
+        plot_pi(data_leibniz, y = "Laufzeit", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
+        plot_pi(data_viete, y = "Laufzeit", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
+        plot_pi(data_chudnovsky, y = "Laufzeit", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
+        plt.savefig('Algorithmenvergleich_Laufzeitplot.pdf')
+        plt.show()
+
+        # Operationenplot
+        plot_pi(data_montecarlo, y = "Operationen", linecolor = "blue", pointcolor = "darkblue", label = "Monte-Carlo-Methode")
+        plot_pi(data_leibniz, y = "Operationen", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
+        plot_pi(data_viete, y = "Operationen", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
+        plot_pi(data_chudnovsky, y = "Operationen", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
+        plt.savefig('Algorithmenvergleich_Operationenplot.pdf')
+        plt.show()
+
+        # Laufzeit-Fehler-Plot
+        plot_pi(data_montecarlo, y = "Laufzeit_Fehler", linecolor = "blue", pointcolor = "darkblue", label = "Monte-Carlo-Methode")
+        plot_pi(data_leibniz, y = "Laufzeit_Fehler", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
+        plot_pi(data_viete, y = "Laufzeit_Fehler", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
+        plot_pi(data_chudnovsky, y = "Laufzeit_Fehler", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
+        plt.savefig('Algorithmenvergleich_Laufzeit-Fehler-Plot.pdf')
+        plt.show()
+
+        # Mantissenlänge
+        print("\nAuch die Mantissenlänge des verwendeten Datentyps hat einen Einfluss auf die Genauigkeit der Ergebnisse.")
+        print("Die bisherigen Berechnungen wurden mit einer Mantissenlänge von 150 durchgeführt.")
+        print("Je länger die Mantisse des verwendeten Datentyps, desto genauer die Berechnung, aber auch desto länger die Laufzeit.")
+        print("Dies wird nachfolgend am Beispiel von Vietes Produktdarstellung demonstriert:\n")
+
+        # Berechnungen mit verschiedenen Mantissenlängen
+        precision1 = 50
+        precision2 = 100
+        precision3 = 150
+        precision4 = 200
+        precision5 = 250
+        data1 = experiment_pi(algorithm = "viete", stop = 5, precision = precision1)
+        print("Berechnungen für Mantissenlänge " + str(precision1) + " abgeschlossen.")
+        data2 = experiment_pi(algorithm = "viete", stop = 5, precision = precision2)
+        print("Berechnungen für Mantissenlänge " + str(precision2) + " abgeschlossen.")
+        data3 = experiment_pi(algorithm = "viete", stop = 5, precision = precision3)
+        print("Berechnungen für Mantissenlänge " + str(precision3) + " abgeschlossen.")
+        data4 = experiment_pi(algorithm = "viete", stop = 5, precision = precision4)
+        print("Berechnungen für Mantissenlänge " + str(precision4) + " abgeschlossen.")
+        data5 = experiment_pi(algorithm = "viete", stop = 5, precision = precision5)
+        print("Berechnungen für Mantissenlänge " + str(precision5) + " abgeschlossen.")
+
+        # Fehlerplot
+        plot_pi(data1, y = "Fehler", linecolor = "red", pointcolor = "darkred", label = "Mantissenlänge " + str(precision1))
+        plot_pi(data2, y = "Fehler", linecolor = "orange", pointcolor = "darkorange", label = "Mantissenlänge " + str(precision2))
+        plot_pi(data3, y = "Fehler", linecolor = "green", pointcolor = "darkgreen", label = "Mantissenlänge " + str(precision3))
+        plot_pi(data4, y = "Fehler", linecolor = "blue", pointcolor = "darkblue", label = "Mantissenlänge " + str(precision4))
+        plot_pi(data5, y = "Fehler", linecolor = "darkviolet", pointcolor = "purple", label = "Mantissenlänge " + str(precision5))
+        plt.legend(title = "Vietes Produktdarstellung")
+        plt.show()
+
+        # Laufzeitplot
+        plot_pi(data1, y = "Laufzeit", linecolor = "red", pointcolor = "darkred", label = "Mantissenlänge " + str(precision1))
+        plot_pi(data2, y = "Laufzeit", linecolor = "orange", pointcolor = "darkorange", label = "Mantissenlänge " + str(precision2))
+        plot_pi(data3, y = "Laufzeit", linecolor = "green", pointcolor = "darkgreen", label = "Mantissenlänge " + str(precision3))
+        plot_pi(data4, y = "Laufzeit", linecolor = "blue", pointcolor = "darkblue", label = "Mantissenlänge " + str(precision4))
+        plot_pi(data5, y = "Laufzeit", linecolor = "darkviolet", pointcolor = "purple", label = "Mantissenlänge " + str(precision5))
+        plt.legend(title = "Vietes Produktdarstellung")
+        plt.show()
+
     elif choice == "0":
         print("Programm beendet.")
         sys.exit()
-
 
 
 if __name__ == "__main__":
