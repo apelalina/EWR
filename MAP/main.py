@@ -328,7 +328,41 @@ def main():
         plt.savefig('Algorithmenvergleich_Konvergenzplot.pdf')
         plt.show()
 
-        
+        # Fehlerplot
+        plot_pi(data_montecarlo, y = "Fehler", linecolor = "blue", pointcolor = "darkblue", label = "Monte-Carlo-Methode")
+        plot_pi(data_leibniz, y = "Fehler", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
+        plot_pi(data_viete, y = "Fehler", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
+        plot_pi(data_chudnovsky, y = "Fehler", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
+        plt.savefig('Algorithmenvergleich_Fehlerplot.pdf')
+        plt.show()
+
+        # Laufzeitplot
+        plot_pi(data_montecarlo, y = "Laufzeit", linecolor = "blue", pointcolor = "darkblue", label = "Monte-Carlo-Methode")
+        plot_pi(data_leibniz, y = "Laufzeit", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
+        plot_pi(data_viete, y = "Laufzeit", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
+        plot_pi(data_chudnovsky, y = "Laufzeit", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
+        plt.savefig('Algorithmenvergleich_Laufzeitplot.pdf')
+        plt.show()
+
+        # Operationenplot
+        plot_pi(data_montecarlo, y = "Operationen", linecolor = "blue", pointcolor = "darkblue", label = "Monte-Carlo-Methode")
+        plot_pi(data_leibniz, y = "Operationen", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
+        plot_pi(data_viete, y = "Operationen", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
+        plot_pi(data_chudnovsky, y = "Operationen", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
+        plt.savefig('Algorithmenvergleich_Operationenplot.pdf')
+        plt.show()
+
+        # Laufzeit-Fehler-Plot
+        plot_pi(data_montecarlo, y = "Laufzeit_Fehler", linecolor = "blue", pointcolor = "darkblue", label = "Monte-Carlo-Methode")
+        plot_pi(data_leibniz, y = "Laufzeit_Fehler", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
+        plot_pi(data_viete, y = "Laufzeit_Fehler", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
+        plot_pi(data_chudnovsky, y = "Laufzeit_Fehler", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
+        plt.savefig('Algorithmenvergleich_Laufzeit-Fehler-Plot.pdf')
+        plt.show()
+
+        print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
+
+    #elif choice == "6":
 
     elif choice == "0":
         print("Programm beendet.")
