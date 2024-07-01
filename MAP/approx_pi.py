@@ -1,16 +1,23 @@
 import time # Zeitmessung
 import random # Zufallszahlen
 from decimal import Decimal, getcontext # Datentyp
-import matplotlib.pyplot as plt 
 
 def error_pi(calculated_pi: Decimal) -> (Decimal):
-    
+    """
+    Berechnet den Fehler der Pi-Näherung im Vergleich zu einem bekannten Pi-Wert.
+
+    Inputs:
+    calculated_pi (Decimal): Die berechnete Näherung von Pi.
+
+    Returns:
+    Decimal: Der absolute Fehler der Pi-Näherung.
+    """
     getcontext().prec = 1010
-    
-    pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
-   
-    fehler = Decimal(pi) * Decimal('1') - calculated_pi * Decimal('1')
-    
+
+    known_pi = '3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989'
+
+    fehler = Decimal(known_pi) * Decimal('1') - calculated_pi * Decimal('1')
+
     if fehler < Decimal('0'):
         fehler = Decimal('-1')  * fehler
 
@@ -19,10 +26,10 @@ def error_pi(calculated_pi: Decimal) -> (Decimal):
 def decimal_factorial(n) -> Decimal: 
    """
    Berechnet die Fakultät einer gegebenen Zahl n unter Verwendung des Decimal-Datentyps.
-    
+
    Inputs:
    n (int): Die Zahl, deren Fakultät berechnet werden soll. Muss eine nicht-negative ganze Zahl sein.
-    
+
    Returns:
    Decimal: Die Fakultät der Zahl n als Decimal-Objekt.
    """
@@ -68,7 +75,7 @@ def pi_leibniz(index: int, precision = 100) -> Decimal:
 def pi_montecarlo(num_points, precision = 100) -> Decimal:
     """
     Berechnet eine Näherung von Pi mit dem Monte-Carlo-Algorithmus.
-    
+
     Inputs:
     index (int): Anzahl der zufällig generierten Punkte.
     precision (int): Mantissenlänge des Datentyps Decimal. (default: 50)
@@ -154,15 +161,14 @@ def pi_chudnovsky(index: int, precision = 100) -> Decimal:
         f_k = (Decimal('640320') * Decimal('1'))**(Decimal(3)*(Decimal(k)*Decimal('1'))+(Decimal(3/2)*Decimal('1')))
         partialsumme = partialsumme + (a_k * b_k * c_k) / (d_k * e_k * f_k)
         operations += Decimal('22') * Decimal('1')
-    
+
     pi_approx = Decimal('1')/((Decimal('12')*Decimal('1'))*partialsumme)
     operations += Decimal('3')
-    
+
     end_time = time.time()
     elapsed_time = (Decimal(end_time) * Decimal('1') - Decimal(start_time) * Decimal('1')) * Decimal('1000') * Decimal('1')
     return pi_approx, operations, elapsed_time
 
-    
 
 def main():
     """
@@ -188,7 +194,7 @@ def main():
     fehler = error_pi(pi_montecarlo_approx)
     print(f"Fehler (Monte-Carlo-Algorithmus): {fehler:.100f} (100 Nachkommastellen)")
     print(f"Natürlicher Logarithmus des Fehlers (Monte-Carlo-Algorithmus): {fehler.ln():.50f} (50 Nachkommastellen)")
-    
+
     index = int(input("Bitte den gewünschten Index des Partialproduktes eingeben: "))
     precision = int(input("Bitte die gewünschte Präzision für den Viète-Algorithmus eingeben: "))
     pi_viete_approx, viete_ops, viete_time = pi_viete(index, precision)
@@ -198,7 +204,7 @@ def main():
     fehler = error_pi(pi_viete_approx)
     print(f"Fehler (Viète-Algorithmus): {fehler:.100f} (100 Nachkommastellen)")
     print(f"Natürlicher Logarithmus des Fehlers (Viète-Algorithmus): {fehler.ln():.50f} (50 Nachkommastellen)")
-    
+
     index = int(input("Bitte den gewünschten Index der Partialsumme der hypergeometrischen Reihe eingeben: "))
     precision = int(input("Bitte die gewünschte Präzision für den Chudnovsky-Algorithmus eingeben: "))
     pi_chudnovsky_approx, chudnovsky_ops, chudnovsky_time = pi_chudnovsky(index, precision)
@@ -212,4 +218,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
