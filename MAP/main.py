@@ -368,6 +368,19 @@ def main():
         plot_pi(data_leibniz, y = "Operationen", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
         plot_pi(data_viete, y = "Operationen", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
         plot_pi(data_chudnovsky, y = "Operationen", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
+        # Kurven für O(n) und O(n^2) einfügen
+        getcontext().prec = 1010
+        x_vec = range(max(data["n"]) + 1)
+        f1_vec = []
+        f2_vec = []
+        for x in x_vec:
+            f1_vec.append((Decimal('20')* Decimal('1')) * (Decimal(x) * Decimal('1')))
+        for x in x_vec:
+            f2_vec.append((Decimal('20')* Decimal('1')) * (Decimal(x) * Decimal('1'))**Decimal('2'))
+        plt.plot(x_vec, f1_vec, color = "darkgray", label = "f(x) = 20 * x")
+        plt.plot(x_vec, f2_vec, color = "silver", label = "g(x) = 20 * $x^{2}$")
+
+        plt.legend()
         plt.savefig('Algorithmenvergleich_Operationenplot.pdf')
         plt.show()
 
