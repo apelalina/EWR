@@ -140,9 +140,21 @@ def main():
         data9 = experiment_pi("montecarlo", stop, precision)
         data10 = experiment_pi("montecarlo", stop, precision)
 
+        # Datenreihen zusammenfügen
+        data1["Versuchsreihe"] = 1
+        data2["Versuchsreihe"] = 2
+        data3["Versuchsreihe"] = 3
+        data4["Versuchsreihe"] = 4
+        data5["Versuchsreihe"] = 5
+        data6["Versuchsreihe"] = 6
+        data7["Versuchsreihe"] = 7
+        data8["Versuchsreihe"] = 8
+        data9["Versuchsreihe"] = 9
+        data10["Versuchsreihe"] = 10
+
         data = pd.concat([data1, data2, data3, data4, data5, data6, data7, data8, data9, data10])
 
-        data1.to_csv("pi_montecarlo_" + str(stop) + ".csv")
+        data.to_csv("pi_montecarlo_" + str(stop) + ".csv")
         print("Die Ergebnisse wurden in " + "pi_montecarlo_" + str(stop) + ".csv im Arbeitsverzeichnis gespeichert.\n")
 
         print("\nDa es sich bei der Monte-Carlo-Methode um ein stochastisches Verfahren handelt, wurde das von Ihnen spezifizierte Experiment 10 Mal wiederholt:")
