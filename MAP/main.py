@@ -140,9 +140,21 @@ def main():
         data9 = experiment_pi("montecarlo", stop, precision)
         data10 = experiment_pi("montecarlo", stop, precision)
 
+        # Datenreihen zusammenfügen
+        data1["Versuchsreihe"] = 1
+        data2["Versuchsreihe"] = 2
+        data3["Versuchsreihe"] = 3
+        data4["Versuchsreihe"] = 4
+        data5["Versuchsreihe"] = 5
+        data6["Versuchsreihe"] = 6
+        data7["Versuchsreihe"] = 7
+        data8["Versuchsreihe"] = 8
+        data9["Versuchsreihe"] = 9
+        data10["Versuchsreihe"] = 10
+
         data = pd.concat([data1, data2, data3, data4, data5, data6, data7, data8, data9, data10])
 
-        data1.to_csv("pi_montecarlo_" + str(stop) + ".csv")
+        data.to_csv("pi_montecarlo_" + str(stop) + ".csv")
         print("Die Ergebnisse wurden in " + "pi_montecarlo_" + str(stop) + ".csv im Arbeitsverzeichnis gespeichert.\n")
 
         print("\nDa es sich bei der Monte-Carlo-Methode um ein stochastisches Verfahren handelt, wurde das von Ihnen spezifizierte Experiment 10 Mal wiederholt:")
@@ -310,7 +322,7 @@ def main():
         data_chudnovsky = experiment_pi("chudnovsky", stop_chudnovsky, precision)
         print("Berechnungen für Chudnovsky abgeschlossen.")
 
-        # Datensätze zusammenfügen
+        # Datensätze zusammenfügen und
         data_montecarlo["Algorithmus"] = "montecarlo"
         data_leibniz["Algorithmus"] = "leibniz"
         data_viete["Algorithmus"] = "viete"
@@ -356,6 +368,19 @@ def main():
         plot_pi(data_leibniz, y = "Operationen", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
         plot_pi(data_viete, y = "Operationen", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
         plot_pi(data_chudnovsky, y = "Operationen", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
+        # Kurven für O(n) und O(n^2) einfügen
+        getcontext().prec = 1010
+        x_vec = range(max(data["n"]) + 1)
+        f1_vec = []
+        f2_vec = []
+        for x in x_vec:
+            f1_vec.append((Decimal('20')* Decimal('1')) * (Decimal(x) * Decimal('1')))
+        for x in x_vec:
+            f2_vec.append((Decimal('20')* Decimal('1')) * (Decimal(x) * Decimal('1'))**Decimal('2'))
+        plt.plot(x_vec, f1_vec, color = "darkgray", label = "f(x) = 20 * x")
+        plt.plot(x_vec, f2_vec, color = "silver", label = "g(x) = 20 * $x^{2}$")
+
+        plt.legend()
         plt.savefig('Algorithmenvergleich_Operationenplot.pdf')
         plt.show()
 
@@ -476,6 +501,17 @@ def main():
         data_chudnovsky = experiment_pi("chudnovsky", 3, precision = 150)
         print("Berechnungen für Chudnovsky abgeschlossen.")
 
+        # Datensätze zusammenfügen
+        data_montecarlo["Algorithmus"] = "montecarlo"
+        data_leibniz["Algorithmus"] = "leibniz"
+        data_viete["Algorithmus"] = "viete"
+        data_chudnovsky["Algorithmus"] = "chudnovsky"
+        data = pd.concat([data_montecarlo, data_leibniz, data_viete, data_chudnovsky])
+
+        # Daten abspeichern
+        data.to_csv("Minimalbeispiel_Algorithmenvergleich.csv")
+        print("Die Ergebnisse wurden in " + "Minimalbeispiel_Algorithmenvergleich.csv im Arbeitsverzeichnis gespeichert.\n")
+
         # Plots
         # Konvergenzplot
         plot_pi(data_montecarlo, y = "Pi", linecolor = "blue", pointcolor = "darkblue", label = "Monte-Carlo-Methode")
@@ -496,7 +532,7 @@ def main():
         plot_pi(data_leibniz, y = "Fehler", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
         plot_pi(data_viete, y = "Fehler", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
         plot_pi(data_chudnovsky, y = "Fehler", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
-        plt.savefig('Algorithmenvergleich_Fehlerplot.pdf')
+        plt.savefig('Minimalbeispiel_Fehlerplot.pdf')
         plt.show()
 
         # Laufzeitplot
@@ -504,7 +540,7 @@ def main():
         plot_pi(data_leibniz, y = "Laufzeit", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
         plot_pi(data_viete, y = "Laufzeit", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
         plot_pi(data_chudnovsky, y = "Laufzeit", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
-        plt.savefig('Algorithmenvergleich_Laufzeitplot.pdf')
+        plt.savefig('Minimalbeispiel_Laufzeitplot.pdf')
         plt.show()
 
         # Operationenplot
@@ -512,7 +548,7 @@ def main():
         plot_pi(data_leibniz, y = "Operationen", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
         plot_pi(data_viete, y = "Operationen", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
         plot_pi(data_chudnovsky, y = "Operationen", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
-        plt.savefig('Algorithmenvergleich_Operationenplot.pdf')
+        plt.savefig('Minimalbeispiel_Operationenplot.pdf')
         plt.show()
 
         # Laufzeit-Fehler-Plot
@@ -520,7 +556,7 @@ def main():
         plot_pi(data_leibniz, y = "Laufzeit_Fehler", linecolor = "green", pointcolor = "darkgreen", label = "Leibniz-Reihe")
         plot_pi(data_viete, y = "Laufzeit_Fehler", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
         plot_pi(data_chudnovsky, y = "Laufzeit_Fehler", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
-        plt.savefig('Algorithmenvergleich_Laufzeit-Fehler-Plot.pdf')
+        plt.savefig('Minimalbeispiel_Laufzeit-Fehler-Plot.pdf')
         plt.show()
 
         # Mantissenlänge
@@ -535,6 +571,7 @@ def main():
         precision3 = 150
         precision4 = 200
         precision5 = 250
+
         data1 = experiment_pi(algorithm = "viete", stop = 5, precision = precision1)
         print("Berechnungen für Mantissenlänge " + str(precision1) + " abgeschlossen.")
         data2 = experiment_pi(algorithm = "viete", stop = 5, precision = precision2)
@@ -546,6 +583,18 @@ def main():
         data5 = experiment_pi(algorithm = "viete", stop = 5, precision = precision5)
         print("Berechnungen für Mantissenlänge " + str(precision5) + " abgeschlossen.")
 
+        # Daten mergen
+        data1["Mantissenlänge"] = 50
+        data2["Mantissenlänge"] = 100
+        data3["Mantissenlänge"] = 150
+        data4["Mantissenlänge"] = 200
+        data5["Mantissenlänge"] = 250
+        data = pd.concat([data1, data2, data3, data4, data5])
+
+        # Daten abspeichern
+        data.to_csv("Minimalbeispiel_Mantissenvergleich.csv")
+        print("Die Ergebnisse wurden in " + "Minimalbeispiel_Mantissenvergleich.csv im Arbeitsverzeichnis gespeichert.\n")
+
         # Fehlerplot
         plot_pi(data1, y = "Fehler", linecolor = "red", pointcolor = "darkred", label = "Mantissenlänge " + str(precision1))
         plot_pi(data2, y = "Fehler", linecolor = "orange", pointcolor = "darkorange", label = "Mantissenlänge " + str(precision2))
@@ -553,6 +602,7 @@ def main():
         plot_pi(data4, y = "Fehler", linecolor = "blue", pointcolor = "darkblue", label = "Mantissenlänge " + str(precision4))
         plot_pi(data5, y = "Fehler", linecolor = "darkviolet", pointcolor = "purple", label = "Mantissenlänge " + str(precision5))
         plt.legend(title = "Vietes Produktdarstellung")
+        plt.savefig('Minimalbeispiel_Mantissenlängen_Fehler.pdf')
         plt.show()
 
         # Laufzeitplot
@@ -562,7 +612,10 @@ def main():
         plot_pi(data4, y = "Laufzeit", linecolor = "blue", pointcolor = "darkblue", label = "Mantissenlänge " + str(precision4))
         plot_pi(data5, y = "Laufzeit", linecolor = "darkviolet", pointcolor = "purple", label = "Mantissenlänge " + str(precision5))
         plt.legend(title = "Vietes Produktdarstellung")
+        plt.savefig('Minimalbeispiel_Mantissenlängen_Laufzeit.pdf')
         plt.show()
+
+        print("Alle Abbildungen wurden im Arbeitsverzeichnis gespeichert.")
 
     elif choice == "0":
         print("Programm beendet.")
