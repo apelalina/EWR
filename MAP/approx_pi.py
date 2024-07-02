@@ -48,7 +48,7 @@ def pi_leibniz(index: int, precision = 100) -> Decimal:
 
     Inputs:
     index (int): Index der Partialsumme der Leibniz-Reihe.
-    precision (int): Mantissenlänge des Datentyps Decimal. (default: 50)
+    precision (int): Mantissenlänge des Datentyps Decimal. (default: 100)
 
     Returns:
     Decimal: Eine Näherung von Pi.
@@ -78,7 +78,7 @@ def pi_montecarlo(num_points, precision = 100) -> Decimal:
 
     Inputs:
     index (int): Anzahl der zufällig generierten Punkte.
-    precision (int): Mantissenlänge des Datentyps Decimal. (default: 50)
+    precision (int): Mantissenlänge des Datentyps Decimal. (default: 100)
 
     Returns:
     Decimal: Eine Näherung von Pi.
@@ -108,7 +108,7 @@ def pi_viete(index: int, precision = 100) -> Decimal:
 
     Inputs:
     index (int): Index des Partialproduktes.
-    precision (int): Mantissenlänge des Datentyps Decimal. (default: 50)
+    precision (int): Mantissenlänge des Datentyps Decimal. (default: 100)
 
     Returns:
     Decimal: Eine Näherung von Pi.
@@ -137,7 +137,7 @@ def pi_chudnovsky(index: int, precision = 100) -> Decimal:
 
     Inputs:
     index (int): Index der Partialsumme der verallgemeinerten, hypergeometrischen Reihe.
-    precision (int): Mantissenlänge des Datentyps Decimal. (default: 50)
+    precision (int): Mantissenlänge des Datentyps Decimal. (default: 100)
 
     Returns:
     Decimal: Eine Näherung von Pi.
@@ -175,8 +175,16 @@ def main():
     Hauptfunktion des Programms.
     """
 
-    index = int(input("Bitte den gewünschten Index der Partialsumme der Leibniz-Reihe eingeben: "))
-    precision = int(input("Bitte die gewünschte Präzision für die Leibniz-Reihe eingeben: "))
+    while True:
+        index = input("Bitte den gewünschten Index der Partialsumme der Leibniz-Reihe eingeben: ")
+        precision = input("Bitte die gewünschte Präzision für die Leibniz-Reihe eingeben: ")
+        try:
+            index = int(index)
+            precision = int(precision)
+            break
+        except ValueError:
+            print("Ungültige Eingabe. Bitte Integer eingeben.")
+
     pi_leibniz_approx, leibniz_ops, leibniz_time = pi_leibniz(index, precision)
     print(f"Pi (Leibniz-Reihe): {pi_leibniz_approx}")
     print(f"Anzahl der Operationen (Leibniz-Reihe): {leibniz_ops}")
@@ -185,8 +193,16 @@ def main():
     print(f"Fehler (Leibniz-Reihe): {fehler:.100f} (100 Nachkommastellen)")
     print(f"Natürlicher Logarithmus des Fehlers (Leibniz-Reihe): {fehler.ln():.50f} (50 Nachkommastellen)")
 
-    num_points = int(input("Bitte die Anzahl der Punkte für die Monte-Carlo-Methode eingeben: "))
-    precision = int(input("Bitte die gewünschte Präzision für die Monte-Carlo-Methode eingeben: "))
+    while True:
+        num_points = input("Bitte die Anzahl der Punkte für die Monte-Carlo-Methode eingeben: ")
+        precision = input("Bitte die gewünschte Präzision für die Monte-Carlo-Methode eingeben: ")
+        try:
+            int(num_points)
+            int(precision)
+            break
+        except ValueError:
+            print("Ungültige Eingabe. Bitte Integer eingeben.")
+
     pi_montecarlo_approx, montecarlo_ops, montecarlo_time = pi_montecarlo(num_points, precision)
     print(f"Pi (Monte-Carlo-Methode): {pi_montecarlo_approx}")
     print(f"Anzahl der Operationen (Monte-Carlo-Methode): {montecarlo_ops}")
@@ -195,8 +211,16 @@ def main():
     print(f"Fehler (Monte-Carlo-Algorithmus): {fehler:.100f} (100 Nachkommastellen)")
     print(f"Natürlicher Logarithmus des Fehlers (Monte-Carlo-Algorithmus): {fehler.ln():.50f} (50 Nachkommastellen)")
 
-    index = int(input("Bitte den gewünschten Index des Partialproduktes eingeben: "))
-    precision = int(input("Bitte die gewünschte Präzision für den Viète-Algorithmus eingeben: "))
+    while True:
+        index = input("Bitte den gewünschten Index des Partialproduktes eingeben: ")
+        precision = input("Bitte die gewünschte Präzision für den Viète-Algorithmus eingeben: ")
+        try:
+            int(index)
+            int(precision)
+            break
+        except ValueError:
+            print("Ungültige Eingabe. Bitte Integer eingeben.")
+
     pi_viete_approx, viete_ops, viete_time = pi_viete(index, precision)
     print(f"Pi (Viète-Algorithmus): {pi_viete_approx}")
     print(f"Anzahl der Operationen (Viète-Algorithmus): {viete_ops}")
@@ -205,8 +229,16 @@ def main():
     print(f"Fehler (Viète-Algorithmus): {fehler:.100f} (100 Nachkommastellen)")
     print(f"Natürlicher Logarithmus des Fehlers (Viète-Algorithmus): {fehler.ln():.50f} (50 Nachkommastellen)")
 
-    index = int(input("Bitte den gewünschten Index der Partialsumme der hypergeometrischen Reihe eingeben: "))
-    precision = int(input("Bitte die gewünschte Präzision für den Chudnovsky-Algorithmus eingeben: "))
+    while True:
+        index = input("Bitte den gewünschten Index der Partialsumme der hypergeometrischen Reihe eingeben: ")
+        precision = input("Bitte die gewünschte Präzision für den Chudnovsky-Algorithmus eingeben: ")
+        try:
+            int(index)
+            int(precision)
+            break
+        except ValueError:
+            print("Ungültige Eingabe. Bitte Integer eingeben.")
+
     pi_chudnovsky_approx, chudnovsky_ops, chudnovsky_time = pi_chudnovsky(index, precision)
     print(f"Pi (Chudnovsky-Algorithmus): {pi_chudnovsky_approx}")
     print(f"Anzahl der Operationen (Chudnovsky-Algorithmus): {chudnovsky_ops}")
