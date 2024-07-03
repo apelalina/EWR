@@ -127,7 +127,7 @@ def main():
         print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 30 Eingabewerte zwischen 1 und 10^k\n")
 
         stop = read_number("Bitte die Anzahl der Zufallsexperimente für die Monte-Carlo-Methode eingeben: 10^", data_type = int, lower_limit = 0)
-        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2000)
+        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2001)
 
         data1 = experiment_pi("montecarlo", stop, precision)
         data2 = experiment_pi("montecarlo", stop, precision)
@@ -189,7 +189,7 @@ def main():
         print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 30 Eingabewerte zwischen 1 und 10^k\n")
 
         stop = read_number("Bitte den höchsten Index der Partialsumme der Leibniz-Reihe eingeben: 10^", data_type = int, lower_limit = 0)
-        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2000)
+        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2001)
 
         data = experiment_pi("leibniz", stop, precision)
 
@@ -229,7 +229,7 @@ def main():
         print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 30 Eingabewerte zwischen 1 und 10^k\n")
 
         stop = read_number("Bitte den höchsten Index des Partialprodukts für Vietes Produktdarstellung eingeben: 10^", data_type = int, lower_limit = 0)
-        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2000)
+        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2001)
 
         data = experiment_pi("viete", stop, precision)
 
@@ -269,7 +269,7 @@ def main():
         print("In diesem Experiment werden die Laufzeit und die Approximationsgenauigkeit für mehrere Eingabewerte verglichen. Zuerst wird der höchste Eingabewert des Experiments als Zehnerpotenz (10^k) erwartet. Das Programm approximiert Pi für 30 Eingabewerte zwischen 1 und 10^k\n")
 
         stop = read_number("Bitte den höchsten Index der Partialsumme für den Chudnovsky-Algorithmus eingeben: 10^", data_type = int, lower_limit = 0)
-        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2000)
+        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2001)
 
         data = experiment_pi("chudnovsky", stop, precision)
 
@@ -310,7 +310,7 @@ def main():
         stop_viete = read_number("Bitte den höchsten Index des Partialprodukts für Vietes Produktdarstellung eingeben: 10^", data_type = int, lower_limit = 0)
         stop_chudnovsky = read_number("Bitte den höchsten Index der Partialsumme für den Chudnovsky-Algorithmus eingeben: 10^", data_type = int, lower_limit = 0)
 
-        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2000)
+        precision = read_number("Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2001)
 
         # Experimente durchführen
         data_montecarlo = experiment_pi("montecarlo", stop_montecarlo, precision)
@@ -421,11 +421,11 @@ def main():
 
         # Mantissenlängen
         print("\nBitte geben Sie 5 verschiedene Mantissenlängen an, die sie vergleichen möchten.")
-        precision1 = read_number("1. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2000)
-        precision2 = read_number("2. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2000)
-        precision3 = read_number("3. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2000)
-        precision4 = read_number("4. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2000)
-        precision5 = read_number("5. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2000)
+        precision1 = read_number("1. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2001)
+        precision2 = read_number("2. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2001)
+        precision3 = read_number("3. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2001)
+        precision4 = read_number("4. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2001)
+        precision5 = read_number("5. Mantissenlänge der Zahlendarstellung: ", data_type = int, lower_limit = 1, upper_limit = 2001)
         print("\n")
 
         # Berechnungen
