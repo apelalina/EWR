@@ -1,3 +1,12 @@
+"""
+Dieses Programm implementiert Funktionen zur Approximation von Pi.
+
+pylint 2.16.2
+astroid 2.14.2
+Python 3.11.7 | packaged by Anaconda, Inc. 
+| (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)]
+9.26/10
+"""
 import time # Zeitmessung
 import random # Zufallszahlen
 from decimal import Decimal, getcontext # Datentyp
@@ -23,24 +32,25 @@ def error_pi(calculated_pi: Decimal) -> (Decimal):
 
     return fehler
 
-def decimal_factorial(n) -> Decimal: 
-   """
-   Berechnet die Fakultät einer gegebenen Zahl n unter Verwendung des Decimal-Datentyps.
+def decimal_factorial(n_z) -> Decimal:
+    """
+    Berechnet die Fakultät einer gegebenen Zahl n unter Verwendung des Decimal-Datentyps.
 
-   Inputs:
-   n (int): Die Zahl, deren Fakultät berechnet werden soll. Muss eine nicht-negative ganze Zahl sein.
+    Inputs:
+    n (int): Die Zahl, deren Fakultät berechnet werden soll. Muss eine nicht-negative 
+    ganze Zahl sein.
 
-   Returns:
-   Decimal: Die Fakultät der Zahl n als Decimal-Objekt.
-   """
+    Returns:
+    Decimal: Die Fakultät der Zahl n als Decimal-Objekt.
+    """
 
-   result = Decimal('1')
+    result = Decimal('1')
 
-   #Berechnung der Fakultät mit Decimal
-   for i in range(1, n + 1):
-       result *= Decimal(i) * Decimal('1') 
+    #Berechnung der Fakultät mit Decimal
+    for i in range(1, n_z + 1):
+        result *= Decimal(i) * Decimal('1')
 
-   return result
+    return result
 
 def pi_leibniz(index: int, precision = 100) -> Decimal:
     """
@@ -59,17 +69,19 @@ def pi_leibniz(index: int, precision = 100) -> Decimal:
     getcontext().prec = precision
     pi_approx = Decimal('4')
     a_n = Decimal('8') / (Decimal('15') * Decimal('1'))
-    n = Decimal('1') 
+    n_k = Decimal('1')
     operations = Decimal('2')
 
-    while n <= index :
+    while n_k <= index :
         pi_approx = pi_approx - a_n
-        n += Decimal('1')
-        a_n = Decimal('8') / (Decimal('16') * Decimal('1') * (Decimal(n) * Decimal('1')) * (Decimal(n) * Decimal('1')) - Decimal('1'))
+        n_k += Decimal('1')
+        a_n = (Decimal('8')/(Decimal('16') * Decimal('1') *
+              (Decimal(n_k) * Decimal('1')) * (Decimal(n_k) * Decimal('1')) - Decimal('1')))
         operations += Decimal('9')
     end_time = time.time()
 
-    elapsed_time = ((Decimal(end_time) * Decimal('1')) - (Decimal(start_time) * Decimal('1'))) * (Decimal('1000') * Decimal('1'))
+    elapsed_time = ((Decimal(end_time) * Decimal('1'))
+                    - (Decimal(start_time) * Decimal('1'))) * (Decimal('1000') * Decimal('1'))
     return pi_approx, operations, elapsed_time
 
 def pi_montecarlo(num_points, precision = 100) -> Decimal:
@@ -84,21 +96,23 @@ def pi_montecarlo(num_points, precision = 100) -> Decimal:
     Decimal: Eine Näherung von Pi.
     Decimal: Anzahl der durchgeführten Operationen.
     Decimal: Benötigte Zeit in Millisekunden.
-    """    
-    start_time = time.time()   
+    """
+    start_time = time.time()
     getcontext().prec = precision
-    inside_circle = Decimal('0') 
+    inside_circle = Decimal('0')
     operations = Decimal('0')
-    for p in range(num_points):
-        x = random.uniform(-1,1)
-        y = random.uniform(-1,1)
-        if x * x + y * y <= 1:
+    for p_k in range(num_points):
+        x_k = random.uniform(-1,1)
+        y_k = random.uniform(-1,1)
+        if x_k * x_k + y_k * y_k <= 1:
             inside_circle += Decimal('1')
             operations += Decimal('5')
-    pi_approx = ((inside_circle * Decimal('1')) / (Decimal(num_points) * Decimal('1'))) * Decimal('4')
+    pi_approx = ((inside_circle * Decimal('1'))
+                 / (Decimal(num_points) * Decimal('1'))) * Decimal('4')
     operations += Decimal('4')
     end_time = time.time()
-    elapsed_time = ((Decimal(end_time) * Decimal('1')) - (Decimal(start_time) * Decimal('1'))) * (Decimal('1000') * Decimal('1'))
+    elapsed_time = ((Decimal(end_time) * Decimal('1'))
+                    - (Decimal(start_time) * Decimal('1'))) * (Decimal('1000') * Decimal('1'))
     return pi_approx, operations, elapsed_time
 
 
@@ -122,13 +136,14 @@ def pi_viete(index: int, precision = 100) -> Decimal:
     operations = Decimal('3')
 
     for k in range(2,index+1):
-        a = Decimal('2')+ a_n
-        a_n = Decimal(a).sqrt()
+        a_k = Decimal('2')+ a_n
+        a_n = Decimal(a_k).sqrt()
         pi_approx = pi_approx * (Decimal('2') / a_n)
         operations += Decimal('4')
     end_time = time.time()
 
-    elapsed_time = ((Decimal(end_time) * Decimal('1')) - (Decimal(start_time) * Decimal('1'))) * (Decimal('1000') * Decimal('1'))
+    elapsed_time = ((Decimal(end_time) * Decimal('1'))
+                    - (Decimal(start_time) * Decimal('1'))) * (Decimal('1000') * Decimal('1'))
     return pi_approx, operations, elapsed_time
 
 def pi_chudnovsky(index: int, precision = 100) -> Decimal:
@@ -143,7 +158,7 @@ def pi_chudnovsky(index: int, precision = 100) -> Decimal:
     Decimal: Eine Näherung von Pi.
     int: Anzahl der durchgeführten Operationen.
     float: Benötigte Zeit in Millisekunden.
-    """ 
+    """
     getcontext().prec = precision
     partialsumme = Decimal('0')
     operations = Decimal('0')
@@ -153,12 +168,14 @@ def pi_chudnovsky(index: int, precision = 100) -> Decimal:
         a_k = Decimal('-1') ** (Decimal(k) * Decimal('1'))
         b_k = decimal_factorial(6*k) * Decimal('1')
         operations += Decimal(6*k)
-        c_k = (Decimal('545140134') * Decimal('1')) * (Decimal(k) * Decimal('1')) + Decimal('13591409') 
+        c_k = ((Decimal('545140134') * Decimal('1')) *
+               (Decimal(k) * Decimal('1')) + Decimal('13591409'))
         d_k = decimal_factorial(3*k) * Decimal('1')
         operations += Decimal(3*k)
         e_k = (decimal_factorial(k) * Decimal('1')) ** Decimal('3')
         operations += Decimal(k)
-        f_k = (Decimal('640320') * Decimal('1'))**(Decimal(3)*(Decimal(k)*Decimal('1'))+(Decimal(3/2)*Decimal('1')))
+        f_k = (Decimal('640320') * Decimal('1'))**(Decimal(3)*
+              (Decimal(k)*Decimal('1'))+(Decimal(3/2)*Decimal('1')))
         partialsumme = partialsumme + (a_k * b_k * c_k) / (d_k * e_k * f_k)
         operations += Decimal('22') * Decimal('1')
 
@@ -166,7 +183,8 @@ def pi_chudnovsky(index: int, precision = 100) -> Decimal:
     operations += Decimal('3')
 
     end_time = time.time()
-    elapsed_time = (Decimal(end_time) * Decimal('1') - Decimal(start_time) * Decimal('1')) * Decimal('1000') * Decimal('1')
+    elapsed_time = (Decimal(end_time) * Decimal('1')
+                    - Decimal(start_time) * Decimal('1')) * Decimal('1000') * Decimal('1')
     return pi_approx, operations, elapsed_time
 
 
@@ -197,8 +215,8 @@ def main():
         num_points = input("Bitte die Anzahl der Punkte für die Monte-Carlo-Methode eingeben: ")
         precision = input("Bitte die gewünschte Präzision für die Monte-Carlo-Methode eingeben: ")
         try:
-            int(num_points)
-            int(precision)
+            num_points= int(num_points)
+            precision= int(precision)
             break
         except ValueError:
             print("Ungültige Eingabe. Bitte Integer eingeben.")
@@ -215,8 +233,8 @@ def main():
         index = input("Bitte den gewünschten Index des Partialproduktes eingeben: ")
         precision = input("Bitte die gewünschte Präzision für den Viète-Algorithmus eingeben: ")
         try:
-            int(index)
-            int(precision)
+            index= int(index)
+            precision= int(precision)
             break
         except ValueError:
             print("Ungültige Eingabe. Bitte Integer eingeben.")
@@ -233,8 +251,8 @@ def main():
         index = input("Bitte den gewünschten Index der Partialsumme der hypergeometrischen Reihe eingeben: ")
         precision = input("Bitte die gewünschte Präzision für den Chudnovsky-Algorithmus eingeben: ")
         try:
-            int(index)
-            int(precision)
+            index= int(index)
+            precision= int(precision)
             break
         except ValueError:
             print("Ungültige Eingabe. Bitte Integer eingeben.")
