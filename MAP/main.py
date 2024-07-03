@@ -102,6 +102,23 @@ def plot_pi(data, y = "Pi", linecolor = "blue", pointcolor = "darkblue", label =
         plt.grid()
         plt.legend()
     
+    if y == "Montecarlo_Standardabweichung":
+        # Vorbereitung: Standardabweichung berechnen
+        grouped = data.groupby('n')
+        std_devs = grouped['Pi'].apply(lambda x: float(pd.Series([float(val) for val in x]).std()))
+        std_devs_df = std_devs.reset_index(name='Standardabweichung')
+        data = data.merge(std_devs_df, on='n')
+        # Der Plot selbst:
+        plt.figure()
+        plt.scatter(data['n'], data['Standardabweichung'], color='darkblue', s = 8, label = "Standardabweichung der Monte-Carlo-Schätzungen")
+        plt.xscale('log')
+        plt.yscale('log')
+        plt.yticks([10**i for i in range(-4, 0)])
+        plt.xlabel('Eingabeparameter n (Anzahl der Punkte)')
+        plt.ylabel('Standardabweichung der Schätzung von $\pi$')
+        plt.grid()
+        plt.legend()
+    
 
 def main():
     print("\nIn diesem Experiment wird die Effizienz und Genauigkeit in der Approximation der Kreiszahl Pi mittels ausgew¨ahlter Algorithmen untersucht. Bitte wählen Sie eine Approximationsmethode:\n")
@@ -163,7 +180,13 @@ def main():
         plt.savefig('Montecarlo_Konvergenzplot.pdf')
         plt.show()
 
-        print("In der Abbildung ist jedoch erkennbar, dass die verschiedenen Durchgänge für große n immer ähnlichere Ergebnisse liefern. Deshalb wird nachfolgend zur Übersichtlichkeit nur noch eine einzige Datenreihe dargestellt.\n")
+        print("In der Abbildung ist jedoch erkennbar, dass die verschiedenen Durchgänge für große n immer ähnlichere Ergebnisse liefern. Dies zeigt sich auch in der Betrachtung der Standardabweichungen über die 10 Versuchsreihen:")
+        
+        plot_pi(data, y = "Montecarlo_Standardabweichung")
+        plt.savefig('MonteCarlo_Standardabweichungen.pdf')
+        plt.show()
+        
+        print("Deshalb wird nachfolgend zur Übersichtlichkeit nur noch eine einzige Datenreihe dargestellt.\n")
 
         plot_pi(data1, "Fehler", label = "Monte-Carlo-Methode")
         plt.savefig('Montecarlo_Fehlerplot.pdf')
@@ -322,7 +345,7 @@ def main():
         data_chudnovsky = experiment_pi("chudnovsky", stop_chudnovsky, precision)
         print("Berechnungen für Chudnovsky abgeschlossen.")
 
-        # Datensätze zusammenfügen und
+        # Datensätze zusammenfügen
         data_montecarlo["Algorithmus"] = "montecarlo"
         data_leibniz["Algorithmus"] = "leibniz"
         data_viete["Algorithmus"] = "viete"
@@ -390,6 +413,36 @@ def main():
         plot_pi(data_viete, y = "Laufzeit_Fehler", linecolor = "red", pointcolor = "darkred", label = "Vietes Produktdarstellung")
         plot_pi(data_chudnovsky, y = "Laufzeit_Fehler", linecolor = "orange", pointcolor = "darkorange", label = "Chudnovsky-Algorithmus")
         plt.savefig('Algorithmenvergleich_Laufzeit-Fehler-Plot.pdf')
+        plt.show()
+
+        # Fehlerplot, logarithmische Skala
+        print("Fehlerplot: Für sehr kleine Fehler kann die Achsenskalierung von matplotlib fehlerhaft sein. Deshalb wird abschließend noch der Logarithmus zur Basis 10 des Fehlers graphisch dargestellt.")
+        print("Berechne log10(Fehler), Monte-Carlo.")
+        for i in range(30):
+            data_montecarlo.iloc[i, 2] = Decimal.log10(data_montecarlo.iloc[i, 2])
+        print("Berechne log10(Fehler), Leibniz.")
+        for i in range(30):
+            data_leibniz.iloc[i, 2] = Decimal.log10(data_leibniz.iloc[i, 2])
+        print("Berechne log10(Fehler), Viete.")
+        for i in range(30):
+            data_viete.iloc[i, 2] = Decimal.log10(data_viete.iloc[i, 2])
+        print("Berechne log10(Fehler), Chudnovsky.")
+        for i in range(30):
+            data_chudnovsky.iloc[i, 2] = Decimal.log10(data_chudnovsky.iloc[i, 2])
+
+        plt.semilogx(data_montecarlo["n"], data_montecarlo["Fehler"], color = "blue")
+        plt.plot(data["n"], data["Fehler"], color = "darkblue",   marker = '.', linestyle = '', label = "Monte-Carlo-Methode")
+        plt.semilogx(data_leibniz["n"], data_leibniz["Fehler"], color = "green")
+        plt.plot(data_leibniz["n"], data_leibniz["Fehler"], color = "darkgreen",   marker = '.', linestyle = '', label = "Leibniz-Reihe")
+        plt.semilogx(data_viete["n"], data_viete["Fehler"], color = "red")
+        plt.plot(data_viete["n"], data_viete["Fehler"], color = "darkred",   marker = '.', linestyle = '', label = "Vietes Produktdarstellung")
+        plt.semilogx(data_chudnovsky["n"], data_chudnovsky["Fehler"], color = "orange")
+        plt.plot(data_chudnovsky["n"], data_chudnovsky["Fehler"], color = "darkorange",   marker = '.', linestyle = '', label = "Chudnovsky-Algorithmus")
+        plt.xlabel("Eingabeparameter n")
+        plt.ylabel("$\log_{10}$(Fehler)")
+        plt.legend()
+        plt.grid()
+        plt.savefig('Algorithmenvergleich_Fehlerplot_log10.pdf')
         plt.show()
 
         print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
@@ -473,6 +526,41 @@ def main():
         plot_pi(data5, y = "Laufzeit", linecolor = "darkviolet", pointcolor = "purple", label = "Mantissenlänge " + str(precision5))
         plt.legend(title = legend_title)
         plt.savefig("Mantissenvergleich_Laufzeitplot_" + str(algorithm) + ".pdf")
+        plt.show()
+
+        # Fehlerplot, logarithmische Skala
+        print("Fehlerplot: Für sehr kleine Fehler kann die Achsenskalierung von matplotlib fehlerhaft sein. Deshalb wird abschließend noch der Logarithmus zur Basis 10 des Fehlers graphisch dargestellt.")
+        print("Berechne log10(Fehler), Mantissenlänge " + str(precision1))
+        for i in range(30):
+            data1.iloc[i, 2] = Decimal.log10(data1.iloc[i, 2])
+        print("Berechne log10(Fehler), Mantissenlänge " + str(precision2))
+        for i in range(30):
+            data2.iloc[i, 2] = Decimal.log10(data2.iloc[i, 2])
+        print("Berechne log10(Fehler), Mantissenlänge " + str(precision3))
+        for i in range(30):
+            data3.iloc[i, 2] = Decimal.log10(data3.iloc[i, 2])
+        print("Berechne log10(Fehler), Mantissenlänge " + str(precision4))
+        for i in range(30):
+            data4.iloc[i, 2] = Decimal.log10(data4.iloc[i, 2])
+        print("Berechne log10(Fehler), Mantissenlänge " + str(precision5))
+        for i in range(30):
+            data5.iloc[i, 2] = Decimal.log10(data5.iloc[i, 2])
+        
+        plt.semilogx(data1["n"], data1["Fehler"], color = "red")
+        plt.plot(data1["n"], data1["Fehler"], color = "darkred",   marker = '.', linestyle = '', label = "Monte-Carlo-Methode")
+        plt.semilogx(data2["n"], data2["Fehler"], color = "orange")
+        plt.plot(data2["n"], data2["Fehler"], color = "darkorange",   marker = '.', linestyle = '', label = "Leibniz-Reihe")
+        plt.semilogx(data3["n"], data3["Fehler"], color = "green")
+        plt.plot(data3["n"], data3["Fehler"], color = "darkgreen",   marker = '.', linestyle = '', label = "Vietes Produktdarstellung")
+        plt.semilogx(data4["n"], data4["Fehler"], color = "blue")
+        plt.plot(data4["n"], data4["Fehler"], color = "darkblue",   marker = '.', linestyle = '', label = "Chudnovsky-Algorithmus")
+        plt.semilogx(data5["n"], data5["Fehler"], color = "darkviolet")
+        plt.plot(data5["n"], data5["Fehler"], color = "purple",   marker = '.', linestyle = '', label = "Chudnovsky-Algorithmus")
+        plt.xlabel("Eingabeparameter n")
+        plt.ylabel("$\log_{10}$(Fehler)")
+        plt.legend(title = legend_title)
+        plt.grid()
+        plt.savefig('Mantissenvergleich_Fehlerplot_log10.pdf')
         plt.show()
 
         print("\nAlle Plots wurden im Arbeitsverzeichnis gespeichert.\n")
