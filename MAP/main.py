@@ -779,19 +779,19 @@ def main():
         # der Plot selbst
         plt.semilogx(data1["n"], data1["Fehler"], color = "red")
         plt.plot(data1["n"], data1["Fehler"], color = "darkred",
-                 marker = '.', linestyle = '', label = "Monte-Carlo-Methode")
+                 marker = '.', linestyle = '', label = "Mantissenlänge " + str(precision1))
         plt.semilogx(data2["n"], data2["Fehler"], color = "orange")
         plt.plot(data2["n"], data2["Fehler"], color = "darkorange",
-                 marker = '.', linestyle = '', label = "Leibniz-Reihe")
+                 marker = '.', linestyle = '', label = "Mantissenlänge " + str(precision2))
         plt.semilogx(data3["n"], data3["Fehler"], color = "green")
         plt.plot(data3["n"], data3["Fehler"], color = "darkgreen",
-                 marker = '.', linestyle = '', label = "Vietes Produktdarstellung")
+                 marker = '.', linestyle = '', label = "Mantissenlänge " + str(precision3))
         plt.semilogx(data4["n"], data4["Fehler"], color = "blue")
         plt.plot(data4["n"], data4["Fehler"], color = "darkblue",
-                 marker = '.', linestyle = '', label = "Chudnovsky-Algorithmus")
+                 marker = '.', linestyle = '', label = "Mantissenlänge " + str(precision4))
         plt.semilogx(data5["n"], data5["Fehler"], color = "darkviolet")
         plt.plot(data5["n"], data5["Fehler"], color = "purple",
-                 marker = '.', linestyle = '', label = "Chudnovsky-Algorithmus")
+                 marker = '.', linestyle = '', label = "Mantissenlänge " + str(precision5))
         plt.xlabel("Eingabeparameter n")
         plt.ylabel("$\\log_{10}$(Fehler)")
         plt.legend(title = legend_title)
