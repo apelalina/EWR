@@ -10,10 +10,11 @@ Your code has been rated at 6.75/10
 """
 
 import sys # für Option, das Programm zu beenden
-import pandas as pd # Datensätze
 from decimal import Decimal, getcontext # Datentyp
+import pandas as pd # Datensätze
 import matplotlib.pyplot as plt # Plots
-from approx_pi import * # Algorithmen zur Approximation von Pi
+# Algorithmen zur Approximation von Pi:
+from approx_pi import pi_leibniz, pi_viete, pi_chudnovsky, pi_montecarlo, error_pi
 from py_logspace import py_logspace
 from tools_read_save import read_number # pylint: disable=import-error
 
@@ -218,8 +219,7 @@ def main():
         choice = input("\nBitte wählen Sie eine Option:\n")
         if choice in ["1", "2", "3", "4", "5", "6", "7", "0"]:
             break
-        else:
-            print("Dies ist keine der angebotenen Optionen.")
+        print("Dies ist keine der angebotenen Optionen.")
 
     # Monte-Carlo-Methode --------------------------------------------------------------------------
     if choice == "1":
@@ -251,21 +251,15 @@ def main():
         data9 = experiment_pi("montecarlo", stop, precision)
         data10 = experiment_pi("montecarlo", stop, precision)
 
-        # Datenreihen zusammenfügen
-        data1["Versuchsreihe"] = 1 # neue Spalte, damit Versuchsreihen unterscheidbar bleiben
-        data2["Versuchsreihe"] = 2
-        data3["Versuchsreihe"] = 3
-        data4["Versuchsreihe"] = 4
-        data5["Versuchsreihe"] = 5
-        data6["Versuchsreihe"] = 6
-        data7["Versuchsreihe"] = 7
-        data8["Versuchsreihe"] = 8
-        data9["Versuchsreihe"] = 9
-        data10["Versuchsreihe"] = 10
+        # 10 Datenreihen berechnen, zusammenfügen und abspeichern
+        i = 0
+        for df in [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10]:
+            i += 1
+            df = experiment_pi("montecarlo", stop, precision)
+            df["Versuchsreihe"] = i # neue Spalte, damit Versuchsreihen unterscheidbar bleiben
         data = pd.concat([data1, data2, data3, data4, data5, data6, data7, data8, data9, data10])
 
-        # Datensatz exportieren
-        data.to_csv("pi_montecarlo_" + str(stop) + ".csv")
+        data.to_csv("pi_montecarlo_" + str(stop) + ".csv") # Datensatz exportieren
         print("Die Ergebnisse wurden in " + "pi_montecarlo_" + str(stop) +
               ".csv im Arbeitsverzeichnis gespeichert.\n")
 
@@ -733,40 +727,30 @@ def main():
               "und Laufzeitplot erkennbar:")
 
         # Fehlerplot
-        plot_pi(data1, y = "Fehler",
-                linecolor = "red", pointcolor = "darkred",
+        plot_pi(data1, y = "Fehler", linecolor = "red", pointcolor = "darkred",
                 label = "Mantissenlänge " + str(precision1))
-        plot_pi(data2, y = "Fehler",
-                linecolor = "orange", pointcolor = "darkorange",
+        plot_pi(data2, y = "Fehler", linecolor = "orange", pointcolor = "darkorange",
                 label = "Mantissenlänge " + str(precision2))
-        plot_pi(data3, y = "Fehler",
-                linecolor = "green", pointcolor = "darkgreen",
+        plot_pi(data3, y = "Fehler", linecolor = "green", pointcolor = "darkgreen",
                 label = "Mantissenlänge " + str(precision3))
-        plot_pi(data4, y = "Fehler",
-                linecolor = "blue", pointcolor = "darkblue",
+        plot_pi(data4, y = "Fehler", linecolor = "blue", pointcolor = "darkblue",
                 label = "Mantissenlänge " + str(precision4))
-        plot_pi(data5, y = "Fehler",
-                linecolor = "darkviolet", pointcolor = "purple",
+        plot_pi(data5, y = "Fehler", linecolor = "darkviolet", pointcolor = "purple",
                 label = "Mantissenlänge " + str(precision5))
         plt.legend(title = legend_title)
         plt.savefig("Mantissenvergleich_Fehlerplot_" + str(algorithm) + ".pdf")
         plt.show()
 
         # Laufzeitplot
-        plot_pi(data1, y = "Laufzeit",
-                linecolor = "red", pointcolor = "darkred",
+        plot_pi(data1, y = "Laufzeit", linecolor = "red", pointcolor = "darkred",
                 label = "Mantissenlänge " + str(precision1))
-        plot_pi(data2, y = "Laufzeit",
-                linecolor = "orange", pointcolor = "darkorange",
+        plot_pi(data2, y = "Laufzeit", linecolor = "orange", pointcolor = "darkorange",
                 label = "Mantissenlänge " + str(precision2))
-        plot_pi(data3, y = "Laufzeit",
-                linecolor = "green", pointcolor = "darkgreen",
+        plot_pi(data3, y = "Laufzeit", linecolor = "green", pointcolor = "darkgreen",
                 label = "Mantissenlänge " + str(precision3))
-        plot_pi(data4, y = "Laufzeit",
-                linecolor = "blue", pointcolor = "darkblue",
+        plot_pi(data4, y = "Laufzeit", linecolor = "blue", pointcolor = "darkblue",
                 label = "Mantissenlänge " + str(precision4))
-        plot_pi(data5, y = "Laufzeit",
-                linecolor = "darkviolet", pointcolor = "purple",
+        plot_pi(data5, y = "Laufzeit", linecolor = "darkviolet", pointcolor = "purple",
                 label = "Mantissenlänge " + str(precision5))
         plt.legend(title = legend_title)
         plt.savefig("Mantissenvergleich_Laufzeitplot_" + str(algorithm) + ".pdf")
@@ -969,40 +953,30 @@ def main():
               "Minimalbeispiel_Mantissenvergleich.csv im Arbeitsverzeichnis gespeichert.\n")
 
         # Fehlerplot
-        plot_pi(data1, y = "Fehler",
-                linecolor = "red", pointcolor = "darkred",
+        plot_pi(data1, y = "Fehler", linecolor = "red", pointcolor = "darkred",
                 label = "Mantissenlänge " + str(precision1))
-        plot_pi(data2, y = "Fehler",
-                linecolor = "orange", pointcolor = "darkorange",
+        plot_pi(data2, y = "Fehler", linecolor = "orange", pointcolor = "darkorange",
                 label = "Mantissenlänge " + str(precision2))
-        plot_pi(data3, y = "Fehler",
-                linecolor = "green", pointcolor = "darkgreen",
+        plot_pi(data3, y = "Fehler", linecolor = "green", pointcolor = "darkgreen",
                 label = "Mantissenlänge " + str(precision3))
-        plot_pi(data4, y = "Fehler",
-                linecolor = "blue", pointcolor = "darkblue",
+        plot_pi(data4, y = "Fehler", linecolor = "blue", pointcolor = "darkblue",
                 label = "Mantissenlänge " + str(precision4))
-        plot_pi(data5, y = "Fehler",
-                linecolor = "darkviolet", pointcolor = "purple",
+        plot_pi(data5, y = "Fehler", linecolor = "darkviolet", pointcolor = "purple",
                 label = "Mantissenlänge " + str(precision5))
         plt.legend(title = "Vietes Produktdarstellung")
         plt.savefig('Minimalbeispiel_Mantissenlängen_Fehler.pdf')
         plt.show()
 
         # Laufzeitplot
-        plot_pi(data1, y = "Laufzeit",
-                linecolor = "red", pointcolor = "darkred",
+        plot_pi(data1, y = "Laufzeit", linecolor = "red", pointcolor = "darkred",
                 label = "Mantissenlänge " + str(precision1))
-        plot_pi(data2, y = "Laufzeit",
-                linecolor = "orange", pointcolor = "darkorange",
+        plot_pi(data2, y = "Laufzeit", linecolor = "orange", pointcolor = "darkorange",
                 label = "Mantissenlänge " + str(precision2))
-        plot_pi(data3, y = "Laufzeit",
-                linecolor = "green", pointcolor = "darkgreen",
+        plot_pi(data3, y = "Laufzeit", linecolor = "green", pointcolor = "darkgreen",
                 label = "Mantissenlänge " + str(precision3))
-        plot_pi(data4, y = "Laufzeit",
-                linecolor = "blue", pointcolor = "darkblue",
+        plot_pi(data4, y = "Laufzeit", linecolor = "blue", pointcolor = "darkblue",
                 label = "Mantissenlänge " + str(precision4))
-        plot_pi(data5, y = "Laufzeit",
-                linecolor = "darkviolet", pointcolor = "purple",
+        plot_pi(data5, y = "Laufzeit", linecolor = "darkviolet", pointcolor = "purple",
                 label = "Mantissenlänge " + str(precision5))
         plt.legend(title = "Vietes Produktdarstellung")
         plt.savefig('Minimalbeispiel_Mantissenlängen_Laufzeit.pdf')
