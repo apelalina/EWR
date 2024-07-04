@@ -2,11 +2,10 @@
 Dieses Programm implementiert die Funktion py_logspace,
 die eine Liste von ganzen Zahlen auf einer logarithmischen Skala generiert.
 
-pylint 2.16.2
-astroid 2.14.2
-Python 3.11.7 | packaged by Anaconda, Inc. 
-| (main, Dec 15 2023, 18:05:47) [MSC v.1916 64 bit (AMD64)]
-9.71/10
+pylint 3.1.0
+astroid 3.1.0
+Python 3.12.4 (tags/v3.12.4:8e8a4ba, Jun  6 2024, 19:30:16) [MSC v.1940 64 bit (AMD64)]
+Your code has been rated at 10.00/10
 """
 
 import numpy
@@ -63,7 +62,7 @@ def main():
             break
         except ValueError:
             start = input("Bitte geben Sie eine ganze Zahl ein. Start: ")
-    
+
     stop = input("Stop: ")
     while True:
         try:
@@ -78,11 +77,10 @@ def main():
             num = int(num)
             if num >= 2:
                 break
-            else:
-                num = input("Bitte geben Sie eine Zahl >= 2 ein. Num: ")
+            num = input("Bitte geben Sie eine Zahl >= 2 ein. Num: ")
         except ValueError:
             num = input("Bitte geben Sie eine ganze Zahl ein. Num: ")
-    
+
     basis = input("Basis: ")
     while True:
         try:
@@ -95,7 +93,7 @@ def main():
         ergebnis = py_logspace(start, stop, num, basis) # Funktionsaufruf
     except ValueError:
         print("Funktionsaufruf gescheitert. Bitte neu aufrufen.")
-        
+
 
     # Vergleich mit numpy.logspace
     print("py_logspace(): ", ergebnis)
@@ -112,6 +110,6 @@ def main():
     ylabel= "Logarithmische Skalierung zur Basis "+str(basis)
     plt.ylabel(ylabel)
     plt.show()
-   
+
 if __name__ == "__main__":
     main()
