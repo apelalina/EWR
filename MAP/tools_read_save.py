@@ -3,9 +3,10 @@ Dieses Modul ermöglicht die Eingabe sowie das Speichern und Laden von Daten.
 
 pylint 3.1.0
 astroid 3.1.0
-Python 3.12.3 (tags/v3.12.3:f6650f9, Apr  9 2024, 14:05:25) [MSC v.1938 64 bit (AMD64)]
-9.45/10
+Python 3.12.4 (tags/v3.12.4:8e8a4ba, Jun  6 2024, 19:30:16) [MSC v.1940 64 bit (AMD64)]
+Your code has been rated at 10.00/10
 """
+import sys # für Option, das Programm zu beenden
 import numpy as np # zum einlesen und speichern von Daten
 
 def read_number(question: str,
@@ -62,8 +63,8 @@ def save_data(data, filepath: str):
     try:
         np.savetxt(filepath, data, delimiter=',') # delimiter: "," als Trennzeichen
         print(str(filepath) + " erfolgreich gespeichert.")
-    except:
-        raise FileNotFoundError("Speichern der Datei fehlgeschlagen.")
+    except Exception as exc:
+        raise FileNotFoundError('Speichern der Datei fehlgeschlagen.') from exc
 
 def load_data(filepath: str):
     """
@@ -77,8 +78,8 @@ def load_data(filepath: str):
         npliste = np.loadtxt(filepath, delimiter=',', dtype=float) # delimiter: "," als Trennzeichen
         print(str(filepath) + " erfolgreich eingelesen.")
         return npliste.tolist() # kein numpy-Array, sondern eine Liste zurueckgeben
-    except:
-        raise FileNotFoundError("Einlesen der Datei fehlgeschlagen.")
+    except Exception as exc:
+        raise FileNotFoundError('Speichern der Datei fehlgeschlagen.') from exc
 
 def main():
     """Anwednungsbeispiele"""
@@ -94,7 +95,7 @@ def main():
               str(type(eingabe_zahl)))
     except ValueError:
         print("Abbruch des Tests.")
-        exit()
+        sys.exit()
 
     # save_data()
     print("")
